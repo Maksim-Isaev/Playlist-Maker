@@ -1,4 +1,6 @@
 package com.practicum.playlistmaker
+
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -17,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         // Реализация нажатия на первую кнопку через анонимный класс
         button1.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "Button 1 - Анонимный класс", Toast.LENGTH_SHORT).show()
+               val intent = Intent(this@MainActivity, SearchActivity::class.java)
+                startActivity(intent)
             }
         })
 
@@ -29,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         // Реализация нажатия на третью кнопку через анонимный класс
         button3.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "Button 3 - Анонимный класс", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity,SettingsActivity::class.java)
+                startActivity(intent)
             }
         })
     }
