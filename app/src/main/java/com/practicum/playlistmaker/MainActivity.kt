@@ -26,7 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         // Реализация нажатия на вторую кнопку через лямбда-выражение
         button2.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Button 2 - Лямбда-выражение", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this@MainActivity, "Button 2 - Лямбда-выражение", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@MainActivity, MediaActivity::class.java)
+            startActivity(intent)
         }
 
         // Реализация нажатия на третью кнопку через анонимный класс
