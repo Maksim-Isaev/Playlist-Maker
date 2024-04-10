@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Playlist Maker</string>
     <string name="search">Поиск</string>
@@ -8,5 +9,4 @@
     <string name="Support">Написать в поддержку</string>
     <string name="Agreement">Пользовательское соглашение</string>
     <string name="TBD">Раздел в разработке</string>
-
 </resources>
