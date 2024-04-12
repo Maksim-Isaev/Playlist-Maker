@@ -2,38 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/set_LinearLayout_For_All_Layout_Without_Main_Layout">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/YP_White"
+    android:orientation="vertical"
+    android:padding="@dimen/Padding_20">
 
     <androidx.appcompat.widget.Toolbar style="@style/toolbar_Dimensions"
         android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:title="@string/settings" >
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout style="@style/setting_Layout_Items">
-        <TextView style="@style/setting_Layout_Items_Text"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/Top_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            style="@style/setting_Layout_Items_Text"
             android:text="@string/Night_mode"/>
-        <Switch style="@style/Switch_Settings_Layout"
+        <Switch
             android:id="@+id/Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_off"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </FrameLayout>
 
-    <FrameLayout style="@style/setting_Layout_Items">
-        <TextView style="@style/setting_Layout_Items_Text"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/Top_20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            style="@style/setting_Layout_Items_Text"
             android:text="@string/Share"/>
         <ImageView style="@style/settings_Layout_Image"
             android:src="@drawable/ic_share" />
     </FrameLayout>
 
-    <FrameLayout style="@style/setting_Layout_Items">
-        <TextView style="@style/setting_Layout_Items_Text"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/Top_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            style="@style/setting_Layout_Items_Text"
             android:text="@string/Support"/>
         <ImageView style="@style/settings_Layout_Image"
              android:src="@drawable/ic_support"/>
     </FrameLayout>
 
-    <FrameLayout style="@style/setting_Layout_Items">
-        <TextView style="@style/setting_Layout_Items_Text"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/Top_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            style="@style/setting_Layout_Items_Text"
             android:text="@string/Agreement"/>
         <ImageView style="@style/settings_Layout_Image"
             android:src="@drawable/ic_galochka" />

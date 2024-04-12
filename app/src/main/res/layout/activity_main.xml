@@ -7,24 +7,38 @@
     android:orientation="vertical"
     android:padding="@dimen/Padding_20">
 
-    <androidx.appcompat.widget.Toolbar style="@style/main_Layout_Toolbar">
-
-        <TextView style="@style/main_Layout_TextToolbar"
-            android:text="@string/app_name"/>
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_name"
+            style="@style/main_Layout_TextToolbar"/>
     </androidx.appcompat.widget.Toolbar>
 
     <Button style="@style/main_Layout_Button_Style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/Main_height_butt"
+        android:layout_weight="@dimen/Main_weight_butt"
         android:id="@+id/button_search"
         android:text="@string/search"
         app:icon="@drawable/ic_search"/>
 
     <Button style="@style/main_Layout_Button_Style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/Main_height_butt"
+        android:layout_weight="@dimen/Main_weight_butt"
         android:id="@+id/button_media"
         android:text="@string/media"
         app:icon="@drawable/ic_library"/>
 
     <Button style="@style/main_Layout_Button_Style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/Main_height_butt"
+        android:layout_weight="@dimen/Main_weight_butt"
         android:id="@+id/button_settings"
         android:text="@string/settings"
         app:icon="@drawable/ic_settings"/>
