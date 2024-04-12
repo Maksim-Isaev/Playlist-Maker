@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ________________________________Стили для Activity_main________________________________ -->
+
+    <style name="main_Layout_Button_Style"> <!-- Стиль для кнопок главного экрана -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/Main_height_butt</item>
+        <item name="android:layout_weight">@dimen/Main_weight_butt</item>
+        <item name="backgroundTint">@color/YP_White</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textSize">@dimen/text_22</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="cornerRadius">@dimen/Rad_Butt_main</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/Int_Butt_main</item>
+        <item name="iconTint">@color/YP_Black</item>
+    </style>
+    <style name="main_Layout_Toolbar"> <!-- Стиль для тулбара главного экрана -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="main_Layout_TextToolbar"> <!-- Стиль для текста тулбара главного экрана -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/YP_White</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+    <!-- ______________________________Стили для Activity_settings______________________________ -->
+    <style name="set_LinearLayout_For_All_Layout_Without_Main_Layout"> <!-- Стиль для главного Layout для все экранов кроме главного меню -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/YP_White</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/Padding_20</item>
+    </style>
+    <style name="setting_Layout_Items"> <!-- Стиль для расположения строки на экране настройки -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/Top_20</item>
+    </style>
+    <style name="setting_Layout_Items_Text"> <!-- Стиль для текстов на экране настройки -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+    <style name="Switch_Settings_Layout"> <!-- Стиль для переключателя на экране настройки -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:src">@drawable/ic_off</item>
+    </style>
+    <style name="settings_Layout_Image"> <!-- Стиль для картинок на экране настройки -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">end</item>
+    </style>
+    <!-- __________________Стили для тулбара на всех activity кроме main________________________ -->
+    <style name="toolbar_Dimensions"> <!-- Стиль для тулбара -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="navigationIcon">@drawable/ic_left_arrow</item>
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+    <!-- _______________________________Стили для Work in progress______________________________ -->
+    <style name="work_In_Progress_Image"> <!-- Стиль для картинки заглушки -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:src">@drawable/work_in_progress</item>
+    </style>
+    <style name="work_In_Progress_Text"> <!-- Стиль для текста заглушки -->
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/Padding_20</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:text">@string/TBD</item>
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textSize">@dimen/text_22</item>
+    </style>
+
+</resources>
+
+
+
+
+
+
