@@ -3,29 +3,29 @@
     <!-- ________________________________Стили для Activity_main________________________________ -->
 
     <style name="main_Layout_Button_Style"> <!-- Стиль для кнопок главного экрана -->
-        <item name="backgroundTint">@color/YP_White</item>
+        <item name="backgroundTint">?attr/colorSecondary</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textColor">"?attr/colorOnPrimary"</item>
         <item name="android:textSize">@dimen/text_22</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
         <item name="cornerRadius">@dimen/Rad_Butt_main</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/Int_Butt_main</item>
-        <item name="iconTint">@color/YP_Black</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
     </style>
 
     <style name="main_Layout_TextToolbar"> <!-- Стиль для текста тулбара главного экрана -->
-        <item name="android:textColor">@color/YP_White</item>
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
     <!-- ______________________________Стили для Activity_settings______________________________ -->
 
 
        <style name="setting_Layout_Items_Text"> <!-- Стиль для текстов на экране настройки -->
-        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_16</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
@@ -38,7 +38,7 @@
     <!-- __________________Стили для тулбара на всех activity кроме main________________________ -->
     <style name="toolbar_Dimensions"> <!-- Стиль для тулбара -->
         <item name="navigationIcon">@drawable/ic_left_arrow</item>
-        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>
@@ -51,7 +51,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/Padding_20</item>
         <item name="android:text">@string/TBD</item>
-        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_22</item>
     </style>
 

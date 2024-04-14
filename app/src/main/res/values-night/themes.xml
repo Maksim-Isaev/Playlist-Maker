@@ -1,7 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/YP_Black</item> <!-- Цвет главного activity-->
+       <!-- <item name="colorPrimaryVariant">@color/YP_Black</item> -->
+        <item name="colorOnPrimary">@color/YP_White</item> <!--Цвет иконок и текстов в кнопках -->
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/YP_White</item> <!-- Цвет текста в тулбаре главного activity, а так же кнопок-->
+        <!-- <item name="colorSecondaryVariant">@color/teal_200</item> -->
+        <item name="colorOnSecondary">@color/YP_White</item> <!-- Цвет текста и эконок в тулбара остальных activity-->
+
     </style>
+
 </resources>
+
