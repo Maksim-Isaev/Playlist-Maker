@@ -5,6 +5,11 @@
     <dimen name="Rad_Butt_main">16dp</dimen>
     <dimen name="Padding_20">20dp</dimen>
     <dimen name="Top_20">20dp</dimen>
+    <dimen name="Top_10">10dp</dimen>
     <dimen name="Main_height_butt">0dp</dimen>
     <dimen name="Main_weight_butt">1</dimen>
+    <dimen name="Sett_item_height">61dp</dimen>
+    <dimen name="Sett_item_marginTop">24dp</dimen>
 </resources>
+
+

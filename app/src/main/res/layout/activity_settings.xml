@@ -4,79 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/Padding_20">
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar style="@style/toolbar_Dimensions"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/toolbar_Dimensions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/settings" >
-
-    </androidx.appcompat.widget.Toolbar>
+        app:title="@string/settings" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/Top_20">
+        android:layout_height="@dimen/Sett_item_height"
+        android:layout_marginTop="@dimen/Sett_item_marginTop"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            style="@style/setting_Layout_Items_Text"
-            android:text="@string/Night_mode"/>
-        <Switch
-            android:id="@+id/Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_off"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/night_Mode"
+            style="@style/setting_Layout_switch"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:padding="@dimen/Padding_20"
+            android:text="@string/Night_mode" />
+
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/share"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/Top_20">
+        android:layout_height="@dimen/Sett_item_height"
+        android:padding="@dimen/Padding_20">
+
         <TextView
+            style="@style/setting_Layout_Items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            style="@style/setting_Layout_Items_Text"
-            android:text="@string/Share"/>
-        <ImageView style="@style/settings_Layout_Image"
+            android:text="@string/Share" />
+
+        <ImageView
+            style="@style/settings_Layout_Image"
             android:src="@drawable/ic_share" />
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/support"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/Top_20">
+        android:layout_height="@dimen/Sett_item_height"
+        android:padding="@dimen/Padding_20">
 
         <TextView
+            style="@style/setting_Layout_Items_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            style="@style/setting_Layout_Items_Text"
-            android:text="@string/Support"/>
-        <ImageView style="@style/settings_Layout_Image"
-             android:src="@drawable/ic_support"/>
+            android:text="@string/Support" />
+
+        <ImageView
+            style="@style/settings_Layout_Image"
+            android:src="@drawable/ic_support" />
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/agreement"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/Top_20">
+        android:layout_height="@dimen/Sett_item_height"
+        android:padding="@dimen/Padding_20">
 
         <TextView
+            style="@style/setting_Layout_Items_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            style="@style/setting_Layout_Items_Text"
-            android:text="@string/Agreement"/>
-        <ImageView style="@style/settings_Layout_Image"
+            android:text="@string/Agreement" />
+
+        <ImageView
+            style="@style/settings_Layout_Image"
             android:src="@drawable/ic_galochka" />
 
     </FrameLayout>
+
 </LinearLayout>
