@@ -1,12 +1,14 @@
 package com.practicum.playlistmaker
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
-import com.practicum.playlistmaker.R
 
 class SettingsActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
@@ -24,6 +26,33 @@ class SettingsActivity : AppCompatActivity() {
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
-
+        val lineShare = findViewById<FrameLayout>(R.id.share)
+        lineShare.setOnClickListener {
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.Practicum_Web))
+                setType("text/plain")
+            }, null)
+            startActivity(share)
+        }
+        val lineSupport = findViewById<FrameLayout>(R.id.support)
+        lineSupport.setOnClickListener {
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SENDTO
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_contact)))
+                putExtra(Intent.EXTRA_TITLE, getString(R.string.support_Title))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.sup_text))
+            }, null)
+            startActivity(share)
+        }
+        val lineAgreement = findViewById<FrameLayout>(R.id.agreement)
+        lineAgreement.setOnClickListener {
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse(getString(R.string.Agreement_link))
+            }, null)
+            startActivity(share)
+        }
     }
 }
