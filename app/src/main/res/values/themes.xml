@@ -12,6 +12,8 @@
         <item name="colorPrimary">@color/YP_White</item>
         <item name="colorOnPrimary">@color/YP_Black</item>
         <item name="colorSecondary">@color/YP_Black</item>
+        <item name="colorPrimaryVariant">@color/Search_bar_day</item>
+        <item name="colorSecondaryVariant">@color/Search_bar_day_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
     </style>
 

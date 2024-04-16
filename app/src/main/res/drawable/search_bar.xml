@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--  res/drawable/rounded_edittext.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    android:padding="10dp">
+
+    <solid android:color="?attr/colorPrimaryVariant" />
+    <corners
+        android:bottomRightRadius="@dimen/Rad_search_bar"
+        android:bottomLeftRadius="@dimen/Rad_search_bar"
+        android:topLeftRadius="@dimen/Rad_search_bar"
+        android:topRightRadius="@dimen/Rad_search_bar" />
+</shape>

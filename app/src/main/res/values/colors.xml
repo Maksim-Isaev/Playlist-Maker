@@ -16,6 +16,9 @@
     <color name="S7_Purple">#512D6D</color>
     <color name="YP_Blue_Light">#9FBBF3</color>
     <color name="YP_Light_Gray">#E6E8EB</color>
-
+    <color name="Search_bar_day">#E6E8EB</color>
+    <color name="Search_bar_night">#FFFFFF</color>
+    <color name="Search_bar_day_text">#AEAFB4</color>
+    <color name="Search_bar_night_text">#1A1B22</color>
 
 </resources>

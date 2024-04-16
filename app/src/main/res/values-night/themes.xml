@@ -11,7 +11,9 @@
     <style name="Theme.PlaylistMakerSearch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/YP_Black</item>
         <item name="colorOnPrimary">@color/YP_White</item>
-        <item name="colorSecondary">@color/YP_White</item>
+        <item name="colorSecondary">@color/YP_Black</item>
+        <item name="colorPrimaryVariant">@color/Search_bar_night</item>
+        <item name="colorSecondaryVariant">@color/Search_bar_night_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
     </style>
 
