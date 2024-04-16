@@ -27,6 +27,8 @@
         <item name="colorOnPrimary">@color/YP_White</item>
         <item name="colorSecondary">@color/YP_White</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="thumbTint">@color/YP_Blue</item>
+        <item name="trackTint">@color/YP_Blue_Light</item>
     </style>
 
     <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -34,6 +36,7 @@
         <item name="colorOnPrimary">@color/YP_White</item>
         <item name="colorSecondary">@color/YP_Black</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+
     </style>
 
 </resources>
