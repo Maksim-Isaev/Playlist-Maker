@@ -25,18 +25,18 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
+        // Реализация тулбара - Обработка навигации назад
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
+        // Реализация поиска
         val searchBar = findViewById<EditText>(R.id.search_bar)
-        searchBar.requestFocus()
-        searchBar.hint = "Поиск" // Set the hint for the search bar
-        searchBar.setText(searchValue)
+        searchBar.requestFocus() // Запрос фокуса на строку поиска
+        searchBar.hint = "Поиск" // Установка подсказки для строки поиска
+        searchBar.setText(searchValue) // Установка текущего значения поиска в строку поиска
 
-        // TextWatcher to handle clear button visibility and searchValue updates
+        // TextWatcher отслеживает изменения в EditText
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // empty
@@ -54,7 +54,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchBar.addTextChangedListener(simpleTextWatcher)
 
-        // TouchListener to handle the clear button functionality
+        // Добавляем TextWatcher к строке поиска
         searchBar.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 searchBar.postDelayed({
@@ -72,18 +72,19 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    // Handle saving and restoring of searchValue
+    // Сохраняем текущее значение поиска в Bundle outState
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SEARCH_TEXT, searchValue)
     }
 
+    // Восстанавливаем значение поиска из Bundle savedInstanceState
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         searchValue = savedInstanceState.getString(SEARCH_TEXT, TEXT_DEF)
     }
 
-    // Method to update clear button visibility based on search text
+    // Метод для обновления видимости кнопки очистки и установки соответствующих иконок
     private fun clearButtonVisibility(s: CharSequence?, v: EditText) {
         clearButtonVisibility = if (s.isNullOrEmpty()) {
             v.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
