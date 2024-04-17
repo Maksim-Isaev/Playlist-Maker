@@ -25,11 +25,18 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        // Восстанавливаем значение поиска, если оно было сохранено
+        if (savedInstanceState != null) {
+            searchValue = savedInstanceState.getString(SEARCH_TEXT, TEXT_DEF)
+        }
+
         // Реализация тулбара - Обработка навигации назад
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
         // Реализация поиска
         val searchBar = findViewById<EditText>(R.id.search_bar)
         searchBar.requestFocus() // Запрос фокуса на строку поиска
@@ -39,7 +46,6 @@ class SearchActivity : AppCompatActivity() {
         // TextWatcher отслеживает изменения в EditText
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // empty
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -48,13 +54,12 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // empty
             }
         }
 
         searchBar.addTextChangedListener(simpleTextWatcher)
 
-        // Добавляем TextWatcher к строке поиска
+        // Обработка касаний для строки поиска
         searchBar.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 searchBar.postDelayed({
@@ -82,6 +87,8 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         searchValue = savedInstanceState.getString(SEARCH_TEXT, TEXT_DEF)
+        val searchBar = findViewById<EditText>(R.id.search_bar)
+        searchBar.setText(searchValue)
     }
 
     // Метод для обновления видимости кнопки очистки и установки соответствующих иконок

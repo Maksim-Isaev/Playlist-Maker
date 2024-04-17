@@ -41,7 +41,7 @@ class SettingsActivity : AppCompatActivity() {
                 action = Intent.ACTION_SENDTO
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_contact)))
-                putExtra(Intent.EXTRA_TITLE, getString(R.string.support_Title))
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.support_Title))
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.sup_text))
             }, null)
             startActivity(share)
