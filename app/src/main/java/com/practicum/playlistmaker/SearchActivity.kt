@@ -20,11 +20,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        // Восстанавливаем значение поиска, если оно было сохранено
-        if (savedInstanceState != null) {
-            searchValue = savedInstanceState.getString(SEARCH_TEXT, TEXT_DEF)
-        }
-
         // Реализация тулбара - Обработка навигации назад
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
