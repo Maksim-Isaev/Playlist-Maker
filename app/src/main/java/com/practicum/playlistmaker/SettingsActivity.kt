@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity() {
         lineShare.setOnClickListener {
             val share = Intent.createChooser(Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, getString(R.string.Practicum_Web))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.practicum_Web))
                 setType("text/plain")
             }, null)
             startActivity(share)
@@ -50,7 +50,7 @@ class SettingsActivity : AppCompatActivity() {
         lineAgreement.setOnClickListener {
             val share = Intent.createChooser(Intent().apply {
                 action = Intent.ACTION_VIEW
-                data = Uri.parse(getString(R.string.Agreement_link))
+                data = Uri.parse(getString(R.string.agreement_link))
             }, null)
             startActivity(share)
         }

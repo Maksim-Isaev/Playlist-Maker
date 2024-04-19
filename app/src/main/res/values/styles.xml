@@ -2,8 +2,8 @@
 <resources>
     <!-- ________________________________Стили для Activity_main________________________________ -->
 
-    <style name="main_Layout_Button_Style" parent="Widget.MaterialComponents.Button.UnelevatedButton"> <!-- Стиль для кнопок главного экрана -->
-        <item name="iconPadding">@dimen/Int_Butt_main</item>
+    <style name="main_layout_button_style" parent="Widget.MaterialComponents.Button.UnelevatedButton"> <!-- Стиль для кнопок главного экрана -->
+        <item name="iconPadding">@dimen/int_butt_main</item>
         <item name="iconGravity">textStart</item>
         <item name="iconTint">?attr/colorOnPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
@@ -12,17 +12,17 @@
         <item name="android:textSize">@dimen/text_22</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
-        <item name="cornerRadius">@dimen/Rad_Butt_main</item>
+        <item name="cornerRadius">@dimen/rad_butt_main</item>
     </style>
 
-    <style name="main_Layout_TextToolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"> <!-- Стиль для текста тулбара главного экрана -->
+    <style name="main_layout_text_toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"> <!-- Стиль для текста тулбара главного экрана -->
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
     <!-- ______________________________Стили для Activity_settings______________________________ -->
-    <style name="setting_Layout_switch"> <!-- Стиль для switch на экране настройки -->
+    <style name="setting_layout_switch"> <!-- Стиль для switch на экране настройки -->
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_16</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
@@ -30,7 +30,7 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="setting_Layout_Items"> <!-- Сроки /кнопки -->
+    <style name="setting_layout_items"> <!-- Сроки /кнопки -->
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_16</item>
@@ -39,7 +39,7 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-    <style name="setting_Layout_Items_Text"> <!-- Стиль для текстов на экране настройки -->
+    <style name="setting_layout_items_text"> <!-- Стиль для текстов на экране настройки -->
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_16</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
@@ -47,7 +47,7 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-    <style name="settings_Layout_Image"> <!-- Стиль для картинок на экране настройки -->
+    <style name="settings_layout_image"> <!-- Стиль для картинок на экране настройки -->
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">end</item>
@@ -57,22 +57,22 @@
         <item name="tint">?attr/colorOnPrimary</item>
     </style>
     <!-- __________________Стили для тулбара на всех activity кроме main________________________ -->
-    <style name="toolbar_Dimensions" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"> <!-- Стиль для тулбара -->
+    <style name="toolbar_dimensions" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"> <!-- Стиль для тулбара -->
         <item name="navigationIcon">@drawable/ic_left_arrow</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>
     <!-- _______________________________Стили для Work in progress______________________________ -->
-    <style name="work_In_Progress_Image"> <!-- Стиль для картинки заглушки -->
+    <style name="work_in_progress_image"> <!-- Стиль для картинки заглушки -->
         <item name="android:orientation">vertical</item>
         <item name="android:src">@drawable/work_in_progress</item>
     </style>
 
-    <style name="work_In_Progress_Text"> <!-- Стиль для текста заглушки -->
+    <style name="work_in_progress_text"> <!-- Стиль для текста заглушки -->
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/Padding_20</item>
-        <item name="android:text">@string/TBD</item>
+        <item name="android:padding">@dimen/padding_20</item>
+        <item name="android:text">@string/tbd</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_22</item>
     </style>

@@ -1,18 +1,18 @@
 <resources>
     <dimen name="text_22">22sp</dimen>
     <dimen name="text_16">16sp</dimen>
-    <dimen name="Int_Butt_main">8dp</dimen>
-    <dimen name="Rad_Butt_main">16dp</dimen>
-    <dimen name="Padding_20">20dp</dimen>
-    <dimen name="Top_20">20dp</dimen>
-    <dimen name="Top_10">10dp</dimen>
-    <dimen name="Main_height_butt">0dp</dimen>
-    <dimen name="Main_weight_butt">1</dimen>
-    <dimen name="Sett_item_height">61dp</dimen>
-    <dimen name="Sett_item_marginTop">24dp</dimen>
+    <dimen name="int_butt_main">8dp</dimen>
+    <dimen name="rad_butt_main">16dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="top_20">20dp</dimen>
+    <dimen name="top_10">10dp</dimen>
+    <dimen name="main_height_butt">0dp</dimen>
+    <dimen name="main_weight_butt">1</dimen>
+    <dimen name="sett_item_height">61dp</dimen>
+    <dimen name="sett_item_marginTop">24dp</dimen>
     <dimen name="search_bar_padding_horizontal">16dp</dimen>
     <dimen name="search_bar_padding_vertical">8dp</dimen>
-    <dimen name="Rad_search_bar">8dp</dimen>
+    <dimen name="rad_search_bar">8dp</dimen>
 </resources>
 
 

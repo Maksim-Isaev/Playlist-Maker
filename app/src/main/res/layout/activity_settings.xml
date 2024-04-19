@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
@@ -9,75 +8,75 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/toolbar_Dimensions"
+        style="@style/toolbar_dimensions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/settings" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/Sett_item_height"
-        android:layout_marginTop="@dimen/Sett_item_marginTop"
+        android:layout_height="@dimen/sett_item_height"
+        android:layout_marginTop="@dimen/sett_item_marginTop"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/night_Mode"
-            style="@style/setting_Layout_switch"
+            style="@style/setting_layout_switch"
             android:layout_width="match_parent"
             android:layout_height="61dp"
-            android:padding="@dimen/Padding_20"
-            android:text="@string/Night_mode" />
+            android:padding="@dimen/padding_20"
+            android:text="@string/night_mode" />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/share"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/Sett_item_height"
-        android:padding="@dimen/Padding_20">
+        android:layout_height="@dimen/sett_item_height"
+        android:padding="@dimen/padding_20">
 
         <TextView
-            style="@style/setting_Layout_Items"
+            style="@style/setting_layout_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Share" />
+            android:text="@string/share" />
 
         <ImageView
-            style="@style/settings_Layout_Image"
+            style="@style/settings_layout_image"
             android:src="@drawable/ic_share" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/support"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/Sett_item_height"
-        android:padding="@dimen/Padding_20">
+        android:layout_height="@dimen/sett_item_height"
+        android:padding="@dimen/padding_20">
 
         <TextView
-            style="@style/setting_Layout_Items_Text"
+            style="@style/setting_layout_items_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Support" />
+            android:text="@string/support" />
 
         <ImageView
-            style="@style/settings_Layout_Image"
+            style="@style/settings_layout_image"
             android:src="@drawable/ic_support" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/agreement"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/Sett_item_height"
-        android:padding="@dimen/Padding_20">
+        android:layout_height="@dimen/sett_item_height"
+        android:padding="@dimen/padding_20">
 
         <TextView
-            style="@style/setting_Layout_Items_Text"
+            style="@style/setting_layout_items_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Agreement" />
+            android:text="@string/agreement" />
 
         <ImageView
-            style="@style/settings_Layout_Image"
+            style="@style/settings_layout_image"
             android:src="@drawable/ic_galochka" />
 
     </FrameLayout>
