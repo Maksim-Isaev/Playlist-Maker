@@ -14,14 +14,28 @@
         app:title="@string/search"
         app:titleTextColor="?attr/colorOnPrimary" />
 
-    <EditText
-        android:id="@+id/search_bar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginHorizontal="@dimen/search_bar_padding_horizontal"
-        android:layout_marginVertical="@dimen/search_bar_padding_vertical"
-        style="@style/search_bar" />
+        android:layout_height="wrap_content">
 
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_search_bar"
+            android:layout_marginHorizontal="@dimen/search_bar_padding_horizontal"
+            android:layout_marginVertical="@dimen/search_bar_padding_vertical"
+            style="@style/search_bar" />
+
+        <ImageView
+            android:id="@+id/cancel_button"
+            android:layout_width="@dimen/search_bar_padding_horizontal"
+            android:layout_height="@dimen/search_bar_padding_horizontal"
+            android:layout_gravity="center_vertical|end"
+            android:src="@drawable/ic_cancel"
+            app:tint="?attr/colorOnSecondary"
+            android:layout_marginEnd="@dimen/margin_end_search"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <ImageView
         style="@style/work_in_progress_image"

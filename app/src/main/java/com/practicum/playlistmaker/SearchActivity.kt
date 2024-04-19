@@ -29,7 +29,7 @@ class SearchActivity : AppCompatActivity() {
         // Реализация поиска
         val searchBar = findViewById<EditText>(R.id.search_bar)
         searchBar.requestFocus() // Запрос фокуса на строку поиска
-        searchBar.hint = "Поиск" // Установка подсказки для строки поиска
+        searchBar.hint = getString(R.string.search) // Установка подсказки для строки поиска
         searchBar.setText(searchValue) // Установка текущего значения поиска в строку поиска
 
         // TextWatcher отслеживает изменения в EditText

@@ -23,7 +23,7 @@
             android:id="@+id/night_Mode"
             style="@style/setting_layout_switch"
             android:layout_width="match_parent"
-            android:layout_height="61dp"
+            android:layout_height="@dimen/height_switch_widget"
             android:padding="@dimen/padding_20"
             android:text="@string/night_mode" />
 
