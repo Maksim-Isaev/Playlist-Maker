@@ -1,7 +1,44 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<resources>
+
+    <style name="Theme.PlaylistMakerMain" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_black</item>
+        <item name="colorPrimaryVariant">@color/yp_white</item>
+        <item name="colorOnPrimary">@color/yp_black</item>
+        <item name="colorSecondary">@color/yp_white</item>
+
     </style>
+
+    <style name="Theme.PlaylistMakerSearch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_black</item>
+        <item name="colorOnPrimary">@color/yp_white</item>
+        <item name="colorSecondary">@color/yp_black</item>
+        <item name="colorPrimaryVariant">@color/search_bar_night</item>
+        <item name="colorSecondaryVariant">@color/search_bar_night_text</item>
+        <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+    </style>
+
+    <style name="Theme.PlaylistMakerMedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_black</item>
+        <item name="colorOnPrimary">@color/yp_white</item>
+        <item name="colorSecondary">@color/yp_white</item>
+        <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+    </style>
+
+    <style name="Theme.PlaylistMakerSettings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_black</item>
+        <item name="colorOnPrimary">@color/yp_white</item>
+        <item name="colorSecondary">@color/yp_white</item>
+        <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="thumbTint">@color/yp_blue</item>
+        <item name="trackTint">@color/yp_blue_light</item>
+    </style>
+
+    <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_black</item>
+        <item name="colorOnPrimary">@color/yp_white</item>
+        <item name="colorSecondary">@color/yp_black</item>
+        <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+
+    </style>
+
 </resources>

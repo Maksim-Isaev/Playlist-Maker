@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/Padding_20">
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/toolbar_dimensions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:navigationIcon="@drawable/ic_left_arrow"
-        app:title="@string/search" >
+        app:title="@string/search"
+        app:titleTextColor="?attr/colorOnPrimary" />
 
-    </androidx.appcompat.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_search_bar"
+            android:layout_marginHorizontal="@dimen/search_bar_padding_horizontal"
+            android:layout_marginVertical="@dimen/search_bar_padding_vertical"
+            style="@style/search_bar" />
+
+        <ImageView
+            android:id="@+id/cancel_button"
+            android:layout_width="@dimen/search_bar_padding_horizontal"
+            android:layout_height="@dimen/search_bar_padding_horizontal"
+            android:layout_gravity="center_vertical|end"
+            android:src="@drawable/ic_cancel"
+            app:tint="?attr/colorOnSecondary"
+            android:layout_marginEnd="@dimen/margin_end_search"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <ImageView
+        style="@style/work_in_progress_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:src="@drawable/work_in_progress"/>
+        android:layout_gravity="center" />
 
     <TextView
-        android:orientation="vertical"
-        android:padding="@dimen/Padding_20"
+        style="@style/work_in_progress_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/TBD"
-        android:textColor="@color/black_setting_menu"
-        android:textSize="@dimen/text_normal" />
+        app:titleTextColor="?attr/colorOnPrimary" />
 
 </LinearLayout>
+
