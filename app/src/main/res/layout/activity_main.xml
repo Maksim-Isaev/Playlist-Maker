@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
-    android:padding="@dimen/padding_20">
+    android:padding="@dimen/padding_20dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,8 +22,8 @@
     <Button
         style="@style/main_layout_button_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_height_butt"
-        android:layout_weight="@dimen/main_weight_butt"
+        android:layout_height="@dimen/height_0dp"
+        android:layout_weight="@dimen/weight_1"
         android:id="@+id/button_search"
         android:text="@string/search"
         app:icon="@drawable/ic_search"/>
@@ -31,8 +31,8 @@
     <Button
         style="@style/main_layout_button_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_height_butt"
-        android:layout_weight="@dimen/main_weight_butt"
+        android:layout_height="@dimen/height_0dp"
+        android:layout_weight="@dimen/weight_1"
         android:id="@+id/button_media"
         android:text="@string/media"
         app:icon="@drawable/ic_library"/>
@@ -40,8 +40,8 @@
     <Button
         style="@style/main_layout_button_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_height_butt"
-        android:layout_weight="@dimen/main_weight_butt"
+        android:layout_height="@dimen/height_0dp"
+        android:layout_weight="@dimen/weight_1"
         android:id="@+id/button_settings"
         android:text="@string/settings"
         app:icon="@drawable/ic_settings"/>

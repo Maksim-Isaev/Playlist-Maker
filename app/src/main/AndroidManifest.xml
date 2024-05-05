@@ -22,6 +22,7 @@
             android:name=".SearchActivity"
             android:exported="false"
             android:theme="@style/Theme.PlaylistMakerSearch"/>
+
         <activity
             android:name=".SettingsActivity"
             android:exported="false"

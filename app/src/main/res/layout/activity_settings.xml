@@ -15,16 +15,16 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/sett_item_height"
-        android:layout_marginTop="@dimen/sett_item_marginTop"
+        android:layout_height="@dimen/height_61dp"
+        android:layout_marginTop="@dimen/top_24"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/night_Mode"
             style="@style/setting_layout_switch"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_switch_widget"
-            android:padding="@dimen/padding_20"
+            android:layout_height="@dimen/height_61dp"
+            android:padding="@dimen/padding_20dp"
             android:text="@string/night_mode" />
 
     </FrameLayout>
@@ -32,8 +32,8 @@
     <FrameLayout
         android:id="@+id/share"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/sett_item_height"
-        android:padding="@dimen/padding_20">
+        android:layout_height="@dimen/height_61dp"
+        android:padding="@dimen/padding_20dp">
 
         <TextView
             style="@style/setting_layout_items"
@@ -49,8 +49,8 @@
     <FrameLayout
         android:id="@+id/support"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/sett_item_height"
-        android:padding="@dimen/padding_20">
+        android:layout_height="@dimen/height_61dp"
+        android:padding="@dimen/padding_20dp">
 
         <TextView
             style="@style/setting_layout_items_text"
@@ -66,8 +66,8 @@
     <FrameLayout
         android:id="@+id/agreement"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/sett_item_height"
-        android:padding="@dimen/padding_20">
+        android:layout_height="@dimen/height_61dp"
+        android:padding="@dimen/padding_20dp">
 
         <TextView
             style="@style/setting_layout_items_text"

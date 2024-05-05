@@ -5,8 +5,8 @@
 
     <solid android:color="?attr/colorPrimaryVariant" />
     <corners
-        android:bottomRightRadius="@dimen/rad_search_bar"
-        android:bottomLeftRadius="@dimen/rad_search_bar"
-        android:topLeftRadius="@dimen/rad_search_bar"
-        android:topRightRadius="@dimen/rad_search_bar" />
+        android:bottomRightRadius="@dimen/padding_8dp"
+        android:bottomLeftRadius="@dimen/padding_8dp"
+        android:topLeftRadius="@dimen/padding_8dp"
+        android:topRightRadius="@dimen/padding_8dp" />
 </shape>
