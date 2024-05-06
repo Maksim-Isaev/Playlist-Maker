@@ -20,6 +20,12 @@ class SearchActivity : AppCompatActivity() {
     private var searchValue = TEXT_DEF
     lateinit var adapter: TrackAdapter
 
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
+        const val TEXT_DEF = ""
+        const val DRAWABLE_RIGHT = 2
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,14 +111,8 @@ class SearchActivity : AppCompatActivity() {
             )
             true
         }
-
     }
 
-    companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
-        const val TEXT_DEF = ""
-        const val DRAWABLE_RIGHT = 2
-    }
 
     fun createList(): List<Track> {
         return listOf(
