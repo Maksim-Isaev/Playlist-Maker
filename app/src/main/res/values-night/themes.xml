@@ -12,6 +12,7 @@
         <item name="colorPrimary">@color/yp_black</item>
         <item name="colorOnPrimary">@color/yp_white</item>
         <item name="colorSecondary">@color/yp_black</item>
+        <item name="colorOnSecondary">@color/yp_text_gray</item>
         <item name="colorPrimaryVariant">@color/search_bar_night</item>
         <item name="colorSecondaryVariant">@color/search_bar_night_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
@@ -38,6 +39,7 @@
         <item name="colorOnPrimary">@color/yp_white</item>
         <item name="colorSecondary">@color/yp_black</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="colorSecondaryVariant">@color/yp_text_gray</item>
 
     </style>
 

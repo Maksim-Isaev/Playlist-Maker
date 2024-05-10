@@ -15,4 +15,5 @@
     <string name="support_Title">Message to the developers of the Playlist Maker app</string>
     <string name="sup_text">Thanks to the developers for the cool app!</string>
     <string name="search_title">Search</string>
+    <string name="text_separator">" • "</string>
 </resources>

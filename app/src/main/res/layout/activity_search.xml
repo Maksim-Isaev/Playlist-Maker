@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
@@ -20,35 +21,32 @@
 
         <EditText
             android:id="@+id/search_bar"
+            style="@style/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_search_bar"
-            android:layout_marginHorizontal="@dimen/search_bar_padding_horizontal"
-            android:layout_marginVertical="@dimen/search_bar_padding_vertical"
-            style="@style/search_bar" />
+            android:layout_height="@dimen/height_36dp"
+            android:layout_marginHorizontal="@dimen/padding_16dp"
+            android:layout_marginVertical="@dimen/padding_8dp" />
 
         <ImageView
             android:id="@+id/cancel_button"
-            android:layout_width="@dimen/search_bar_padding_horizontal"
-            android:layout_height="@dimen/search_bar_padding_horizontal"
+            android:layout_width="@dimen/padding_16dp"
+            android:layout_height="@dimen/padding_16dp"
             android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/end_14dp"
             android:src="@drawable/ic_cancel"
-            app:tint="?attr/colorOnSecondary"
-            android:layout_marginEnd="@dimen/margin_end_search"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:tint="?attr/colorOnSecondary" />
     </FrameLayout>
 
-    <ImageView
-        style="@style/work_in_progress_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/music_search_item"
+        tools:listitem="@layout/activity_music_search_item">
 
-    <TextView
-        style="@style/work_in_progress_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:titleTextColor="?attr/colorOnPrimary" />
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </LinearLayout>
 
