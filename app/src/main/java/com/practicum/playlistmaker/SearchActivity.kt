@@ -18,7 +18,7 @@ import com.practicum.playlistmaker.recycleView.TrackAdapter
 class SearchActivity : AppCompatActivity() {
     private var clearButtonVisibility = false
     private var searchValue = TEXT_DEF
-    lateinit var adapter: TrackAdapter
+    private lateinit var adapter: TrackAdapter
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
