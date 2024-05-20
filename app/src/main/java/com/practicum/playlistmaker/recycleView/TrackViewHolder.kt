@@ -24,7 +24,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         trackTime.text = model.trackTime
         Glide.with(itemView)
             .load(model.artworkUrl100)
-            .placeholder(R.drawable.ic_snake)
+            .placeholder(R.drawable.`ic_placeholder.xml`)
             .centerCrop()
             .transform(RoundedCorners(dpToPx(2f, itemView.context)))
             .into(albumImage)

@@ -43,10 +43,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/music_search_item"
-        tools:listitem="@layout/activity_music_search_item">
+        tools:listitem="@layout/activity_music_search_item" />
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-
+    <TextView
+        android:id="@+id/placeholderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="No results found"
+        android:textColor="?attr/colorOnPrimary"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp" />
 </LinearLayout>
-
