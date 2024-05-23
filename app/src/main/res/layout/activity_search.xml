@@ -70,7 +70,7 @@
             android:textAlignment="center"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="@dimen/text_19"
-            tools:text="@string/connect_err_mess"
+            tools:text="@string/connect_error"
             android:textFontWeight="@dimen/weight_400"
             android:fontFamily="@font/ys_display_medium" />
 
