@@ -1,14 +1,12 @@
 package com.practicum.playlistmaker
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MotionEvent
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -33,8 +31,10 @@ class SearchActivity : AppCompatActivity() {
     private var clearButtonVisibility = false
     private var searchValue = TEXT_DEF
     private val baseUrl = "https://itunes.apple.com/"
+
     private lateinit var adapter: TrackAdapter
     private val tracks = ArrayList<Track>()
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var placeholderMessage: TextView
     private lateinit var placeholderImage: ImageView
@@ -49,7 +49,6 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val TEXT_DEF = ""
-        const val DRAWABLE_RIGHT = 2
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -90,27 +89,19 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchBar.addTextChangedListener(simpleTextWatcher)
-
-        // Обработка касаний для строки поиска
-        searchBar.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                searchBar.postDelayed({
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(searchBar, InputMethodManager.SHOW_IMPLICIT)
-                }, 100)
-            }
-            if (clearButtonVisibility && event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (searchBar.right - searchBar.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                    searchBar.setText("")
-                    return@setOnTouchListener true
-                }
+        searchBar.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                search()
+                true
             }
             false
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
+        recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TrackAdapter()
+        adapter.trackList = tracks
         recyclerView.adapter = adapter
+
         placeholderImage = findViewById(R.id.placeholderImage)
         placeholderMessage = findViewById(R.id.placeholderMessage)
         updateButton = findViewById(R.id.updateResponse)
