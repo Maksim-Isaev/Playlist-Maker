@@ -20,6 +20,7 @@ import com.practicum.playlistmaker.api.ItunesResponse
 import com.practicum.playlistmaker.api.ResultResponse
 import com.practicum.playlistmaker.api.api
 import com.practicum.playlistmaker.recycleView.TrackAdapter
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -80,7 +81,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                clearButtonVisibility(s, searchBar)
+                clearButtonVisibility(s, cancelBtn)
                 searchValue = s.toString()
             }
 
@@ -125,23 +126,17 @@ class SearchActivity : AppCompatActivity() {
     }
 
     // Метод для обновления видимости кнопки очистки и установки соответствующих иконок
-    private fun clearButtonVisibility(s: CharSequence?, v: EditText) {
-        clearButtonVisibility = if (s.isNullOrEmpty()) {
-            v.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
-            false
+    private fun clearButtonVisibility(s: CharSequence?, cancelBtn: ImageView) {
+        if (s.isNullOrEmpty()) {
+            cancelBtn.visibility = GONE
         } else {
-            v.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_search,
-                0,
-                R.drawable.ic_cancel,
-                0
-            )
-            true
+            cancelBtn.visibility = VISIBLE
         }
     }
+
     private fun search() {
         iTunesService.search(searchValue)
-            .enqueue(object : Callback<ItunesResponse> {
+            .enqueue(object : retrofit2.Callback<ItunesResponse> {
                 override fun onResponse(
                     call: Call<ItunesResponse>,
                     response: Response<ItunesResponse>,
