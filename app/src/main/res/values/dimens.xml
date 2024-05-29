@@ -35,6 +35,7 @@
     <!--end-->
     <dimen name="end_12dp">12dp</dimen>
     <dimen name="end_14dp">14dp</dimen>
+    <dimen name="end_30dp">30dp</dimen>
 
 
     <!--for music item -->

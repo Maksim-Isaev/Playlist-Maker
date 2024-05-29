@@ -20,7 +20,6 @@ import com.practicum.playlistmaker.api.ItunesResponse
 import com.practicum.playlistmaker.api.ResultResponse
 import com.practicum.playlistmaker.api.api
 import com.practicum.playlistmaker.recycleView.TrackAdapter
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,6 +74,7 @@ class SearchActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
             showMessage("", "", ResultResponse.SUCCESS)
         }
+
         // TextWatcher отслеживает изменения в EditText
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -94,10 +94,11 @@ class SearchActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 search()
                 true
+            } else {
+                false
             }
-            false
         }
-        recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
+        recyclerView = findViewById(R.id.recycle_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TrackAdapter()
         adapter.trackList = tracks
@@ -126,17 +127,19 @@ class SearchActivity : AppCompatActivity() {
     }
 
     // Метод для обновления видимости кнопки очистки и установки соответствующих иконок
-    private fun clearButtonVisibility(s: CharSequence?, cancelBtn: ImageView) {
+    private fun clearButtonVisibility(s: CharSequence?, v: ImageView) {
         if (s.isNullOrEmpty()) {
-            cancelBtn.visibility = GONE
+            v.visibility = GONE
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
         } else {
-            cancelBtn.visibility = VISIBLE
+            v.visibility = VISIBLE
         }
     }
-
     private fun search() {
         iTunesService.search(searchValue)
-            .enqueue(object : retrofit2.Callback<ItunesResponse> {
+            .enqueue(object : Callback<ItunesResponse> {
                 override fun onResponse(
                     call: Call<ItunesResponse>,
                     response: Response<ItunesResponse>,
@@ -216,5 +219,4 @@ class SearchActivity : AppCompatActivity() {
             }
         }
     }
-
 }

@@ -16,6 +16,7 @@
         <item name="colorPrimaryVariant">@color/search_bar_day</item>
         <item name="colorSecondaryVariant">@color/search_bar_day_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="tabTextColor">@color/yp_black</item>
 
     </style>
 

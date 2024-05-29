@@ -35,7 +35,7 @@
             android:layout_width="@dimen/padding_16dp"
             android:layout_height="@dimen/padding_16dp"
             android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/end_14dp"
+            android:layout_marginEnd="@dimen/end_30dp"
             android:src="@drawable/ic_cancel"
 
             app:tint="?attr/colorOnSecondary" />
@@ -82,7 +82,8 @@
             style="@style/SearchButtonUpdateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/update" />
+            android:text="@string/update"
+            android:textColor="?attr/colorPrimary" />
 
     </LinearLayout>
 
