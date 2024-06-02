@@ -16,6 +16,7 @@
         <item name="colorPrimaryVariant">@color/search_bar_night</item>
         <item name="colorSecondaryVariant">@color/search_bar_night_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="textFillColor">@color/yp_white</item>
     </style>
 
     <style name="Theme.PlaylistMakerMedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">

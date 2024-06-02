@@ -16,4 +16,7 @@
     <string name="sup_text">Thanks to the developers for the cool app!</string>
     <string name="search_title">Search</string>
     <string name="text_separator">" • "</string>
+    <string name="nothing">Nothing was found</string>
+    <string name="connect_error">Communication problems\n\nThe download failed. Check your internet connection</string>
+    <string name="update">"Refresh "</string>
 </resources>

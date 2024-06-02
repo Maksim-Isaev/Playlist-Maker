@@ -102,6 +102,18 @@
         <item name="fontFamily">@font/ys_display_regular</item>
     </style>
 
+    <style name="SearchButtonUpdateStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">@dimen/radius_16dp</item>
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:backgroundTint">?attr/colorOnPrimary</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/top_24</item>
+    </style>
+
+
 </resources>
 
 
