@@ -12,6 +12,8 @@
     <dimen name="padding_14dp">14dp</dimen>
     <dimen name="padding_16dp">16dp</dimen>
     <dimen name="padding_20dp">20dp</dimen>
+    <dimen name="extra_padding">24dp</dimen>
+
     <!--radius-->
     <dimen name="radius_16dp">16dp</dimen>
     <!--height-->
@@ -41,7 +43,7 @@
     <!--for music item -->
     <dimen name="music_search_item">16dp</dimen>
     <dimen name="music_image_size">45dp</dimen>
-    <dimen name="small_icon_size">16dp</dimen>
+    <dimen name="small_icon_size">18dp</dimen>
     <dimen name="big_icon_size">24dp</dimen>
 
     <!--for search page -->

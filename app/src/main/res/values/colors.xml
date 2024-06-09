@@ -20,5 +20,9 @@
     <color name="search_bar_night">#FFFFFF</color>
     <color name="search_bar_day_text">#AEAFB4</color>
     <color name="search_bar_night_text">#1A1B22</color>
+    <color name="main_status_bar">@color/yp_blue</color>
+    <color name="status_bar">@color/yp_blue_light</color>
+    <color name="main_navigation_bar">@color/yp_blue</color>
+    <color name="navigation_bar">@color/white</color>
 
 </resources>

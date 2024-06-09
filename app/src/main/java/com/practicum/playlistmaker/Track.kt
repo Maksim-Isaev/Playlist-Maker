@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 data class Track(
+    val trackId: String,
     val trackName: String,      //Track Name
     val artistName: String,     //Artist Name
     val trackTimeMillis: Long,  //Track duration

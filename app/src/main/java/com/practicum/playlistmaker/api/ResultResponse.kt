@@ -4,8 +4,10 @@ package com.practicum.playlistmaker.api
 enum class ResultResponse {
     SUCCESS,
     EMPTY,
-    ERROR
+    ERROR,
+    HISTORY
 // Успешный ответ от API
 // Отсутствие результатов (пустой ответ)
 // Ошибка при выполнении запроса
+// История запросов
 }
