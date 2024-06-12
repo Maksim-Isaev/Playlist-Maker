@@ -50,7 +50,6 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
-
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
@@ -69,10 +68,10 @@ class SearchActivity : AppCompatActivity() {
 
         window.statusBarColor = resources.getColor(R.color.status_bar, theme)
         window.navigationBarColor = resources.getColor(R.color.navigation_bar, theme)
-        placeholderImage = findViewById(R.id.placeholder_image)
-        placeholderMessage = findViewById(R.id.placeholder_message)
-        updateButton = findViewById(R.id.update_response)
-        placeholderLayout = findViewById(R.id.placeholder_layout)
+        placeholderImage = findViewById(R.id.placeholderImage)
+        placeholderMessage = findViewById(R.id.placeholderMessage)
+        updateButton = findViewById(R.id.updateResponse)
+        placeholderLayout = findViewById(R.id.placeholder)
         recyclerView = findViewById(R.id.recycle_view)
         historyRecyclerView = findViewById(R.id.recycle_history_view)
         historyLayout = findViewById(R.id.history_layout)
@@ -252,6 +251,7 @@ class SearchActivity : AppCompatActivity() {
 
             ResultResponse.EMPTY -> {
                 recyclerView.visibility = GONE
+                placeholderLayout.visibility = VISIBLE
                 placeholderMessage.visibility = VISIBLE
                 placeholderImage.visibility = VISIBLE
                 updateButton.visibility = GONE
@@ -274,6 +274,7 @@ class SearchActivity : AppCompatActivity() {
             }
             ResultResponse.ERROR -> {
                 recyclerView.visibility = GONE
+                placeholderLayout.visibility = VISIBLE
                 placeholderMessage.visibility = VISIBLE
                 placeholderImage.visibility = VISIBLE
                 updateButton.visibility = VISIBLE
