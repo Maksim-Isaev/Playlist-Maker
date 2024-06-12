@@ -33,12 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class SearchActivity : AppCompatActivity() {
-    private var clearButtonVisibility = false
     private var searchValue = TEXT_DEF
     private val baseUrl = "https://itunes.apple.com/"
 
-    private lateinit var searchAdapter: TrackAdapter
-    private lateinit var historyAdapter: TrackAdapter
+
     private val tracks = ArrayList<Track>()
 
     private lateinit var recyclerView: RecyclerView
@@ -48,6 +46,9 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var updateButton: Button
     private lateinit var placeholderLayout: LinearLayout
     private lateinit var historyLayout: LinearLayout
+    private lateinit var searchAdapter: TrackAdapter
+
+    private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
 
     private val retrofit = Retrofit.Builder()
@@ -61,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
         const val TEXT_DEF = ""
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -145,6 +146,7 @@ class SearchActivity : AppCompatActivity() {
         historyAdapter = TrackAdapter(onHistoryItemClickListener)
         historyRecyclerView.layoutManager = LinearLayoutManager(this)
         historyRecyclerView.adapter = historyAdapter
+
         searchHistory = SearchHistory(
             getSharedPreferences(
                 PLAYLISTMAKER_PREFERENCES,
@@ -198,6 +200,7 @@ class SearchActivity : AppCompatActivity() {
     private fun search() {
         iTunesService.search(searchValue)
             .enqueue(object : Callback<ItunesResponse> {
+                @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(
                     call: Call<ItunesResponse>,
                     response: Response<ItunesResponse>,
@@ -237,6 +240,7 @@ class SearchActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showMessage(text: String, additionalMessage: String, errorType: ResultResponse) {
         when (errorType) {
             ResultResponse.SUCCESS -> {
@@ -248,11 +252,11 @@ class SearchActivity : AppCompatActivity() {
 
             ResultResponse.EMPTY -> {
                 recyclerView.visibility = GONE
-                historyLayout.visibility = GONE
-                placeholderLayout.visibility = VISIBLE
+                placeholderMessage.visibility = VISIBLE
+                placeholderImage.visibility = VISIBLE
                 updateButton.visibility = GONE
                 tracks.clear()
-                searchAdapter.notifyDataSetChanged()
+                historyAdapter.notifyDataSetChanged()
                 placeholderMessage.text = text
                 placeholderImage.setImageResource(R.drawable.nothing)
                 if (additionalMessage.isNotEmpty()) {
