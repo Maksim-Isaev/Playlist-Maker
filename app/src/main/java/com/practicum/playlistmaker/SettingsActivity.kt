@@ -20,12 +20,18 @@ class SettingsActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
         val swDarkTheme = findViewById<SwitchCompat>(R.id.night_Mode)
-        swDarkTheme.setOnClickListener {
-            if (swDarkTheme.isChecked)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            else
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        swDarkTheme.isChecked = (applicationContext as App).nightMode
+        swDarkTheme.setOnCheckedChangeListener { _, checked ->
+            (applicationContext as App).switchTheme(checked)
         }
+        //Старое, пока оставлю в комментариях
+        // val swDarkTheme = findViewById<SwitchCompat>(R.id.night_Mode)
+        // swDarkTheme.setOnClickListener {
+        //    if (swDarkTheme.isChecked)
+        //    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        //    else
+        //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        // }
         val lineShare = findViewById<FrameLayout>(R.id.share)
         lineShare.setOnClickListener {
             val share = Intent.createChooser(Intent().apply {

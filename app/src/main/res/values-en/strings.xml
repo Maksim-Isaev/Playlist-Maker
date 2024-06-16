@@ -19,4 +19,7 @@
     <string name="nothing">Nothing was found</string>
     <string name="connect_error">Communication problems\n\nThe download failed. Check your internet connection</string>
     <string name="update">"Refresh "</string>
+    <string name="history_title">You looked</string>
+    <string name="clear_history">Clear History</string>
+    <string name="clear_text">Clear Text</string>
 </resources>
