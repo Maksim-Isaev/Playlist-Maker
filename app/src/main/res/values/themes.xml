@@ -46,6 +46,7 @@
 
     <style name="Theme.PlaylistMakerPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/yp_white</item>
+        <item name="colorOnSecondary">@color/yp_text_gray</item>
         <item name="colorOnPrimary">@color/yp_black</item>
         <item name="colorSecondary">@color/yp_white</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
