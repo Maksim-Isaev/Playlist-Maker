@@ -44,4 +44,12 @@
         <item name="colorSecondaryVariant">@color/yp_text_gray</item>
     </style>
 
+    <style name="Theme.PlaylistMakerPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_white</item>
+        <item name="colorOnPrimary">@color/yp_black</item>
+        <item name="colorSecondary">@color/yp_white</item>
+        <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="colorSecondaryVariant">@color/yp_text_gray</item>
+    </style>
+
 </resources>
