@@ -36,34 +36,28 @@
         android:layout_marginTop="@dimen/dp_26"
         app:layout_constrainedWidth="true"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@+id/space"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toTopOf="@+id/tv_main_album"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:srcCompat="@drawable/ic_placeholder" />
 
 
-    <Space
-        android:id="@+id/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/tv_main_album"
         style="@style/TitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_24"
         android:ellipsize="end"
         android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/space"
+        app:layout_constraintTop_toBottomOf="@+id/iv_album"
         tools:text="Yesterday (Remastered 2009) Yesterday (Remastered 2009)" />
 
     <TextView
