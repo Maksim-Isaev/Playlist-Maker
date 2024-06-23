@@ -8,7 +8,7 @@ import retrofit2.http.Query
 // Объявление метода для поиска песен. Метод использует HTTP GET запрос с параметром "term".
 // Параметр "term" будет содержать текст для поиска, и запрос будет добавлять к URL параметр "?entity=song".
 // Возвращается объект Call, обёрнутый в ItunesResponse.
-interface api {
+interface   api {
     @GET("/search?entity=song")
     fun search(@Query("term") text: String): Call<ItunesResponse>
 }

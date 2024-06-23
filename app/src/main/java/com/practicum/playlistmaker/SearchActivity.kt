@@ -46,7 +46,6 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var placeholderLayout: LinearLayout
     private lateinit var historyLayout: LinearLayout
     private lateinit var searchAdapter: TrackAdapter
-    private lateinit var trackAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
     private val retrofit = Retrofit.Builder()
