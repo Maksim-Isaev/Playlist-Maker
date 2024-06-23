@@ -16,7 +16,7 @@ data class Track(
     val country: String = ""
 ) : Serializable {
     val artworkUrl512: String
-    get() = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
-    val trackTime: String get() =
-    SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackTimeMillis)
+        get() = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
+    val trackTime: String
+        get() = SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackTimeMillis)
 }

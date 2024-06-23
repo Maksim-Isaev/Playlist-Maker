@@ -23,17 +23,13 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     // Метод для привязки данных трека к элементам интерфейса
     fun bind(model: Track) {
-        // Установка имени трека
         trackName.text = model.trackName
-        // Установка исполнителя
         artistName.text = model.artistName
-        // Форматирование и установка времени трека
         trackTime.text =
             SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTimeMillis)
-        // Загрузка изображения альбома с использованием библиотеки Glide
         Glide.with(itemView)
             .load(model.artworkUrl100)
-            .placeholder(R.drawable.ic_placeholder) // Плейсхолдер на время загрузки изображения
+            .placeholder(R.drawable.ic_placeholder)
             .centerCrop()
             .transform(
                 RoundedCorners(
@@ -42,8 +38,8 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                         itemView.context
                     )
                 )
-            ) // Закругление углов изображения
-            .into(albumImage) // Установка изображения в ImageView
+            )
+            .into(albumImage)
     }
 
     // Преобразование значения из dp в px

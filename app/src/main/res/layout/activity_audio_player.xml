@@ -12,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="25dp" />
+        app:layout_constraintGuide_begin="@dimen/dp_25" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/rightBorder"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="24dp"
+        app:layout_constraintGuide_end="@dimen/dp_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -25,7 +25,7 @@
         android:id="@+id/toolbar"
         style="@style/toolbar_dimensions"
         android:layout_width="wrap_content"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/dp_56"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -33,7 +33,7 @@
         android:id="@+id/iv_album"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="@dimen/dp_26"
         app:layout_constrainedWidth="true"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/space"
@@ -57,7 +57,7 @@
         style="@style/TitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/dp_16"
         android:ellipsize="end"
         android:maxLines="1"
         android:singleLine="true"
@@ -71,21 +71,21 @@
         style="@style/TitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="14sp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:textSize="@dimen/text_14"
         android:ellipsize="end"
         android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/tv_main_album"
-        tools:text="Yesterday (Remastered 2009) Yesterday (Remastered 2009)" />
+        tools:text="Beatles" />
 
     <ImageView
         android:id="@+id/iv_play_or_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/dp_16"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/tv_artist"
@@ -111,7 +111,7 @@
 
     <TextView
         android:id="@+id/tv_track_timer"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/dp_8"
         android:text="0:00"
         android:gravity="center"
         style="@style/AudioPlayerRightText"
@@ -123,7 +123,7 @@
     <TextView
         android:id="@+id/tv_country"
         android:text="@string/country"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/dp_8"
         style="@style/AudioPlayerLeftText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/leftBorder" />
@@ -132,7 +132,7 @@
         android:id="@+id/tv_country_value"
         style="@style/AudioPlayerRightText"
         android:text="@string/no_data_available"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/dp_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@+id/tv_country" />
@@ -184,6 +184,7 @@
 
     <TextView
         android:id="@+id/tv_track_time"
+
         android:text="@string/duration"
         style="@style/AudioPlayerLeftText"
         app:layout_constraintBottom_toTopOf="@+id/tv_album"

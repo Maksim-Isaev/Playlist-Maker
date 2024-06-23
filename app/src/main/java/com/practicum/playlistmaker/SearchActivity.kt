@@ -2,6 +2,7 @@ package com.practicum.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -31,11 +32,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class SearchActivity : AppCompatActivity() {
     private var searchValue = TEXT_DEF
     private val baseUrl = "https://itunes.apple.com/"
-
 
     private val tracks = ArrayList<Track>()
 
@@ -47,7 +46,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var placeholderLayout: LinearLayout
     private lateinit var historyLayout: LinearLayout
     private lateinit var searchAdapter: TrackAdapter
-
+    private lateinit var trackAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
     private val retrofit = Retrofit.Builder()
@@ -58,6 +57,7 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
+        const val INTENT_TRACK_KEY = "intent_track"
         const val TEXT_DEF = ""
     }
 
@@ -101,11 +101,11 @@ class SearchActivity : AppCompatActivity() {
                 showMessage("", "", ResultResponse.SUCCESS)
             }
         }
-            val clearHistoryBtn = findViewById<Button>(R.id.clear_history)
-            clearHistoryBtn.setOnClickListener {
-                searchHistory.clearHistory()
-                historyLayout.visibility = GONE
-            }
+        val clearHistoryBtn = findViewById<Button>(R.id.clear_history)
+        clearHistoryBtn.setOnClickListener {
+            searchHistory.clearHistory()
+            historyLayout.visibility = GONE
+        }
 
         // TextWatcher отслеживает изменения в EditText
         val simpleTextWatcher = object : TextWatcher {
@@ -135,12 +135,17 @@ class SearchActivity : AppCompatActivity() {
                 false
             }
         }
+
         val onHistoryItemClickListener = OnItemClickListener { item ->
             Toast.makeText(
                 this@SearchActivity,
                 "Track: " + item.artistName + " - " + item.trackName,
                 Toast.LENGTH_SHORT
             ).show()
+            val intent = Intent(this, AudioPlayer::class.java)
+            intent.putExtra(INTENT_TRACK_KEY, item)
+            startActivity(intent)
+
         }
         historyAdapter = TrackAdapter(onHistoryItemClickListener)
         historyRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -153,13 +158,13 @@ class SearchActivity : AppCompatActivity() {
             ), historyAdapter
         )
 
-
         val onItemClickListener = OnItemClickListener { item ->
             searchHistory.addTrack(item)
+            // Запуск AudioPlayer с передачей данных трека
+            val intent = Intent(this, AudioPlayer::class.java)
+            intent.putExtra(INTENT_TRACK_KEY, item)
+            startActivity(intent)
         }
-
-
-
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         searchAdapter = TrackAdapter(onItemClickListener)
@@ -196,6 +201,7 @@ class SearchActivity : AppCompatActivity() {
             v.visibility = VISIBLE
         }
     }
+
     private fun search() {
         iTunesService.search(searchValue)
             .enqueue(object : Callback<ItunesResponse> {
@@ -243,13 +249,14 @@ class SearchActivity : AppCompatActivity() {
     private fun showMessage(text: String, additionalMessage: String, errorType: ResultResponse) {
         when (errorType) {
             ResultResponse.SUCCESS -> {
-
                 recyclerView.visibility = VISIBLE
                 placeholderLayout.visibility = GONE
                 historyLayout.visibility = GONE
             }
 
-            ResultResponse.EMPTY -> {
+            ResultResponse.EMPTY ->
+
+            {
                 recyclerView.visibility = GONE
                 placeholderLayout.visibility = VISIBLE
                 placeholderMessage.visibility = VISIBLE
@@ -260,8 +267,7 @@ class SearchActivity : AppCompatActivity() {
                 placeholderMessage.text = text
                 placeholderImage.setImageResource(R.drawable.nothing)
                 if (additionalMessage.isNotEmpty()) {
-                    Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG).show()
                 }
             }
             ResultResponse.HISTORY -> {
@@ -283,8 +289,7 @@ class SearchActivity : AppCompatActivity() {
                 placeholderMessage.text = text
                 placeholderImage.setImageResource(R.drawable.connect_error)
                 if (additionalMessage.isNotEmpty()) {
-                    Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG).show()
                 }
             }
         }
