@@ -1,4 +1,5 @@
 package com.practicum.playlistmaker
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -14,6 +15,7 @@ class AudioPlayer : AppCompatActivity() {
     companion object {
         const val CURRENT_TRACK = "current_track"
     }
+
     private lateinit var track: Track
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +47,19 @@ class AudioPlayer : AppCompatActivity() {
         artistText.text = track.artistName
         trackTimeText.text = track.trackTime
         albumSecondText.text = track.trackName
-        if(track.releaseDate!=null){ yearText.text = track.releaseDate.substring(0, 4) }
-        if(track.primaryGenreName!=null){ genreText.text = track.primaryGenreName }
-        if(track.country!=null){ countryText.text = track.country }
+        if (track.releaseDate != null) {
+            yearText.text = track.releaseDate.substring(0, 4)
+        }
+        if (track.primaryGenreName != null) {
+            genreText.text = track.primaryGenreName
+        }
+        if (track.country != null) {
+            countryText.text = track.country
+        }
 
 
     }
+
     // Сохранение текущего трека при выходе в фоновый режим
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

@@ -141,9 +141,7 @@ class SearchActivity : AppCompatActivity() {
                 "Track: " + item.artistName + " - " + item.trackName,
                 Toast.LENGTH_SHORT
             ).show()
-            val intent = Intent(this, AudioPlayer::class.java)
-            intent.putExtra(INTENT_TRACK_KEY, item)
-            startActivity(intent)
+            startAudioPlayerActivity(item)
 
         }
         historyAdapter = TrackAdapter(onHistoryItemClickListener)
@@ -160,9 +158,7 @@ class SearchActivity : AppCompatActivity() {
         val onItemClickListener = OnItemClickListener { item ->
             searchHistory.addTrack(item)
             // Запуск AudioPlayer с передачей данных трека
-            val intent = Intent(this, AudioPlayer::class.java)
-            intent.putExtra(INTENT_TRACK_KEY, item)
-            startActivity(intent)
+            startAudioPlayerActivity(item)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -174,6 +170,16 @@ class SearchActivity : AppCompatActivity() {
         }
         showMessage("", "", ResultResponse.HISTORY)
     }
+
+    // Запуск аудиоплеера
+    fun Context.startAudioPlayerActivity(trackItem: Track) {
+        val intent = Intent(this, AudioPlayer::class.java).apply {
+            putExtra(INTENT_TRACK_KEY, trackItem)
+        }
+        startActivity(intent)
+    }
+
+
 
     // Сохраняем текущее значение поиска в Bundle outState
     override fun onSaveInstanceState(outState: Bundle) {
@@ -253,9 +259,7 @@ class SearchActivity : AppCompatActivity() {
                 historyLayout.visibility = GONE
             }
 
-            ResultResponse.EMPTY ->
-
-            {
+            ResultResponse.EMPTY -> {
                 recyclerView.visibility = GONE
                 placeholderLayout.visibility = VISIBLE
                 placeholderMessage.visibility = VISIBLE
@@ -269,6 +273,7 @@ class SearchActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG).show()
                 }
             }
+
             ResultResponse.HISTORY -> {
                 recyclerView.visibility = GONE
                 placeholderLayout.visibility = GONE
@@ -277,6 +282,7 @@ class SearchActivity : AppCompatActivity() {
                 else
                     historyLayout.visibility = GONE
             }
+
             ResultResponse.ERROR -> {
                 recyclerView.visibility = GONE
                 placeholderLayout.visibility = VISIBLE
