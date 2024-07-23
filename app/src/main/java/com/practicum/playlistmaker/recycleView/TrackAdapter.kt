@@ -15,10 +15,8 @@ class TrackAdapter(
 
     // Создание нового ViewHolder при необходимости
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        // Машстабирование макета для элемента списка
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.activity_music_search_item, parent, false)
-        // Возвращаем новый экземпляр TrackViewHolder
         return TrackViewHolder(view)
     }
 
@@ -29,9 +27,7 @@ class TrackAdapter(
 
     // Привязка данных трека к ViewHolder для отображения
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        // Передача трека из списка на указанной позиции ViewHolder'у
         holder.bind(items[position])
-        holder.itemView.setOnClickListener { onItemClickListener.onItemClick(items[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener { onItemClickListener.onItemClick(items[position]) }
     }
-
 }
