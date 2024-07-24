@@ -190,7 +190,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun updateSearchHistoryAdapter() {
         historyAdapter.items.clear()
-        historyAdapter.items.addAll(searchHistory.updateTracks())
+        historyAdapter.items.addAll(searchHistory.updateAdapter())
         historyAdapter.notifyDataSetChanged()
     }
 
@@ -198,10 +198,10 @@ class SearchActivity : AppCompatActivity() {
     fun Context.startAudioPlayerActivity(trackItem: Track) {
         if (clickDebounce()) {
 
-            val intent = Intent(this, PlayerActivity::class.java)
-            intent.putExtra(TRACK_DATA, track)
+            val intent = Intent(this, AudioPlayer::class.java)
+            intent.putExtra(INTENT_TRACK_KEY, trackItem)
             startActivity(intent)
-            searchHistory.addTrack(track)
+            searchHistory.addTrack(trackItem)
             updateSearchHistoryAdapter()
         }
     }
@@ -235,6 +235,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun search() {
+        progressBar.visibility = VISIBLE
         iTunesService.search(searchValue)
             .enqueue(object : Callback<ItunesResponse> {
                 @SuppressLint("NotifyDataSetChanged")

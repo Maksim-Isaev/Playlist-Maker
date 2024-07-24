@@ -63,6 +63,7 @@ class AudioPlayer : AppCompatActivity() {
         val genreText = findViewById<TextView>(R.id.tv_genre_value)
         val countryText = findViewById<TextView>(R.id.tv_country_value)
         playButton = findViewById(R.id.iv_play_or_stop)
+        playingTime = findViewById(R.id.tv_track_timer)
 
 
         Glide.with(this)
@@ -77,15 +78,9 @@ class AudioPlayer : AppCompatActivity() {
         trackTimeText.text =
             SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
         albumSecondText.text = track.trackName
-        if (track.releaseDate != null) {
-            yearText.text = track.releaseDate.substring(0, 4)
-        }
-        if (track.primaryGenreName != null) {
-            genreText.text = track.primaryGenreName
-        }
-        if (track.country != null) {
-            countryText.text = track.country
-        }
+        yearText.text = track.releaseDate.substring(0, 4)
+        genreText.text = track.primaryGenreName
+        countryText.text = track.country
 
         playButton.isEnabled = false
         preparePlayer(track.previewUrl)
