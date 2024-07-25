@@ -77,11 +77,11 @@
         android:id="@+id/iv_play_or_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/ic_play"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/tv_artist"
-        android:background="@drawable/ic_play" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_artist" />
 
     <ImageView
         android:id="@+id/iv_add"

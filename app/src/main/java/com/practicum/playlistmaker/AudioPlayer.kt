@@ -110,7 +110,7 @@ class AudioPlayer : AppCompatActivity() {
         mediaPlayer.setOnCompletionListener {
             handler.removeCallbacks(timerRunnable)
             playerState = STATE_PREPARED
-            playButton.setImageResource(R.drawable.ic_play)
+            playButton.setBackgroundResource(R.drawable.ic_play)
             playingTime.text = dateFormat.format(0)
         }
     }
@@ -129,14 +129,14 @@ class AudioPlayer : AppCompatActivity() {
 
     private fun startPlayer() {
         mediaPlayer.start()
-        playButton.setImageResource(R.drawable.ic_pause)
+        playButton.setBackgroundResource(R.drawable.ic_pause)
         playerState = STATE_PLAYING
         handler.post(timerRunnable)
     }
 
     private fun pausePlayer() {
         mediaPlayer.pause()
-        playButton.setImageResource(R.drawable.ic_play)
+        playButton.setBackgroundResource(R.drawable.ic_play)
         playerState = STATE_PAUSED
         handler.removeCallbacks(timerRunnable)
     }
