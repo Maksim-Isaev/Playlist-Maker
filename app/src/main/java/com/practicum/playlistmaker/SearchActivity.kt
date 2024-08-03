@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View.GONE
@@ -14,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +51,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
+    private lateinit var progressBar: ProgressBar
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
@@ -58,7 +62,13 @@ class SearchActivity : AppCompatActivity() {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val INTENT_TRACK_KEY = "intent_track"
         const val TEXT_DEF = ""
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
+
+    private val searchRunnable = Runnable { search() }
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +84,7 @@ class SearchActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycle_view)
         historyRecyclerView = findViewById(R.id.recycle_history_view)
         historyLayout = findViewById(R.id.history_layout)
+        progressBar = findViewById(R.id.progress_bar)
 
         // Реализация тулбара - Обработка навигации назад
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -117,6 +128,7 @@ class SearchActivity : AppCompatActivity() {
                 if (searchBar.hasFocus() && s?.isEmpty() == true) {
                     showMessage("", "", ResultResponse.HISTORY)
                 } else {
+                    searchDebounce()
                     showMessage("", "", ResultResponse.SUCCESS)
                 }
             }
@@ -156,7 +168,7 @@ class SearchActivity : AppCompatActivity() {
         )
 
         val onItemClickListener = OnItemClickListener { item ->
-            searchHistory.addTrack(item)
+
             // Запуск AudioPlayer с передачей данных трека
             startAudioPlayerActivity(item)
         }
@@ -171,12 +183,27 @@ class SearchActivity : AppCompatActivity() {
         showMessage("", "", ResultResponse.HISTORY)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(searchRunnable)
+    }
+
+    private fun updateSearchHistoryAdapter() {
+        historyAdapter.items.clear()
+        historyAdapter.items.addAll(searchHistory.updateAdapter())
+        historyAdapter.notifyDataSetChanged()
+    }
+
     // Запуск аудиоплеера
     fun Context.startAudioPlayerActivity(trackItem: Track) {
-        val intent = Intent(this, AudioPlayer::class.java).apply {
-            putExtra(INTENT_TRACK_KEY, trackItem)
+        if (clickDebounce()) {
+
+            val intent = Intent(this, AudioPlayer::class.java)
+            intent.putExtra(INTENT_TRACK_KEY, trackItem)
+            startActivity(intent)
+            searchHistory.addTrack(trackItem)
+            updateSearchHistoryAdapter()
         }
-        startActivity(intent)
     }
 
 
@@ -208,6 +235,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun search() {
+        progressBar.visibility = VISIBLE
         iTunesService.search(searchValue)
             .enqueue(object : Callback<ItunesResponse> {
                 @SuppressLint("NotifyDataSetChanged")
@@ -252,6 +280,7 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showMessage(text: String, additionalMessage: String, errorType: ResultResponse) {
+        progressBar.visibility = GONE
         when (errorType) {
             ResultResponse.SUCCESS -> {
                 recyclerView.visibility = VISIBLE
@@ -298,5 +327,19 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
     }
 }

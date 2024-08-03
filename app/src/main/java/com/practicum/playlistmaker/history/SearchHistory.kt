@@ -17,26 +17,25 @@ class SearchHistory(
 ) {
 
     init {
-        updateAdapter(preferences)
+        updateAdapter()
         listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
 
                 if (key == HISTORY_KEY) {
-                    updateAdapter(sharedPreferences)
+                    updateAdapter()
                 }
             }
 
         preferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
-    private fun updateAdapter(sharedPreferences: SharedPreferences?) {
-        val jsonTracks = sharedPreferences?.getString(HISTORY_KEY, null)
+    fun updateAdapter(): ArrayList<Track> {
+        var tracks = ArrayList<Track>()
+        val jsonTracks = preferences.getString(HISTORY_KEY, null)
         if (jsonTracks != null) {
-            val tracks = createTracksFromJson(jsonTracks)
-            adapter.items.clear()
-            adapter.items.addAll(tracks)
-            adapter.notifyDataSetChanged()
+            tracks = createTracksFromJson(jsonTracks)
         }
+        return tracks
     }
 
     fun addTrack(newTrack: Track) {
