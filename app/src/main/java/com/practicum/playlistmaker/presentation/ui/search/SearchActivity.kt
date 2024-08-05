@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation.ui.search
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -23,15 +23,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.api.ItunesResponse
-import com.practicum.playlistmaker.api.ResultResponse
-import com.practicum.playlistmaker.api.api
-import com.practicum.playlistmaker.history.SearchHistory
-import com.practicum.playlistmaker.recycleView.OnItemClickListener
-import com.practicum.playlistmaker.recycleView.TrackAdapter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.creator.Creator
+import com.practicum.playlistmaker.creator.Creator.provideSearchHistoryRepository
+import com.practicum.playlistmaker.data.network.ItunesApi
+import com.practicum.playlistmaker.domain.api.OnItemClickListener
+import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
+import com.practicum.playlistmaker.domain.api.TrackInteractor
+import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.presentation.ui.player.AudioPlayer
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -39,7 +39,7 @@ class SearchActivity : AppCompatActivity() {
     private var searchValue = TEXT_DEF
     private val baseUrl = "https://itunes.apple.com/"
 
-    private val tracks = ArrayList<Track>()
+    private val tracks = mutableListOf<Track>()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var historyRecyclerView: RecyclerView
@@ -50,13 +50,13 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var historyLayout: LinearLayout
     private lateinit var searchAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
-    private lateinit var searchHistory: SearchHistory
+    private lateinit var searchHistory: SearchHistoryRepository
     private lateinit var progressBar: ProgressBar
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    private val iTunesService = retrofit.create(api::class.java)
+    private val iTunesService = retrofit.create(ItunesApi::class.java)
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
@@ -115,6 +115,8 @@ class SearchActivity : AppCompatActivity() {
         clearHistoryBtn.setOnClickListener {
             searchHistory.clearHistory()
             historyLayout.visibility = GONE
+            historyAdapter.notifyDataSetChanged()
+            historyAdapter.items.clear()
         }
 
         // TextWatcher отслеживает изменения в EditText
@@ -148,11 +150,6 @@ class SearchActivity : AppCompatActivity() {
         }
 
         val onHistoryItemClickListener = OnItemClickListener { item ->
-            Toast.makeText(
-                this@SearchActivity,
-                "Track: " + item.artistName + " - " + item.trackName,
-                Toast.LENGTH_SHORT
-            ).show()
             startAudioPlayerActivity(item)
 
         }
@@ -160,12 +157,10 @@ class SearchActivity : AppCompatActivity() {
         historyRecyclerView.layoutManager = LinearLayoutManager(this)
         historyRecyclerView.adapter = historyAdapter
 
-        searchHistory = SearchHistory(
-            getSharedPreferences(
-                PLAYLISTMAKER_PREFERENCES,
-                MODE_PRIVATE
-            ), historyAdapter
-        )
+        searchHistory = provideSearchHistoryRepository()
+        historyAdapter.items = searchHistory.updateTracks().toMutableList() as ArrayList<Track>
+        historyRecyclerView.adapter = historyAdapter
+
 
         val onItemClickListener = OnItemClickListener { item ->
 
@@ -175,8 +170,9 @@ class SearchActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         searchAdapter = TrackAdapter(onItemClickListener)
-        searchAdapter.items = tracks
+        searchAdapter.items = tracks as ArrayList<Track>
         recyclerView.adapter = searchAdapter
+
         updateButton.setOnClickListener {
             search()
         }
@@ -190,12 +186,12 @@ class SearchActivity : AppCompatActivity() {
 
     private fun updateSearchHistoryAdapter() {
         historyAdapter.items.clear()
-        historyAdapter.items.addAll(searchHistory.updateAdapter())
+        historyAdapter.items.addAll(searchHistory.updateTracks())
         historyAdapter.notifyDataSetChanged()
     }
 
     // Запуск аудиоплеера
-    fun Context.startAudioPlayerActivity(trackItem: Track) {
+    private fun Context.startAudioPlayerActivity(trackItem: Track) {
         if (clickDebounce()) {
 
             val intent = Intent(this, AudioPlayer::class.java)
@@ -236,38 +232,26 @@ class SearchActivity : AppCompatActivity() {
 
     private fun search() {
         progressBar.visibility = VISIBLE
-        iTunesService.search(searchValue)
-            .enqueue(object : Callback<ItunesResponse> {
-                @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(
-                    call: Call<ItunesResponse>,
-                    response: Response<ItunesResponse>,
-                ) {
-                    when (response.code()) {
-                        200 -> {
-                            if (response.body()?.results?.isNotEmpty() == true) {
-                                tracks.clear()
-                                tracks.addAll(response.body()?.results!!)
-                                searchAdapter.notifyDataSetChanged()
-                                showMessage("", "", ResultResponse.SUCCESS)
-                            } else {
-                                showMessage(
-                                    getString(R.string.nothing),
-                                    "",
-                                    ResultResponse.EMPTY
-                                )
-                            }
+        Creator.provideTrackInteractor()
+            .search(searchValue, object : TrackInteractor.TrackConsumer {
+                override fun consume(foundTracks: List<Track>) {
+                    runOnUiThread {
+                        progressBar.visibility = GONE
+
+                        if (foundTracks.isNotEmpty()) {
+                            tracks.clear()
+                            tracks.addAll(foundTracks)
+                            searchAdapter.notifyDataSetChanged()
+                            showMessage("", "", ResultResponse.SUCCESS)
+                        } else {
+                            showMessage(getString(R.string.nothing), "", ResultResponse.EMPTY)
                         }
 
-                        else -> showMessage(
-                            getString(R.string.connect_error),
-                            response.code().toString(),
-                            ResultResponse.ERROR
-                        )
                     }
                 }
 
-                override fun onFailure(call: Call<ItunesResponse>, t: Throwable) {
+
+                override fun onFailure(t: Throwable) {
                     showMessage(
                         getString(R.string.connect_error),
                         t.message.toString(),

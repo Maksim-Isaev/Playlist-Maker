@@ -1,32 +1,30 @@
-package com.practicum.playlistmaker.history
+package com.practicum.playlistmaker.data.repository
 
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.practicum.playlistmaker.Track
-import com.practicum.playlistmaker.recycleView.TrackAdapter
+import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
+import com.practicum.playlistmaker.domain.model.Track
 
 private const val HISTORY_KEY = "track_history"
 private const val MAX_HISTORY_SIZE = 10
 private lateinit var listener: SharedPreferences.OnSharedPreferenceChangeListener
 
-class SearchHistory(
-    private val preferences: SharedPreferences,
-    private val adapter: TrackAdapter,
-) {
+class SearchHistoryRepositoryImpl(private val preferences: SharedPreferences) :
+    SearchHistoryRepository {
+    companion object {
+        private const val HISTORY_KEY = "track_history"
+        private const val MAX_HISTORY_SIZE = 10
+    }
 
-    init {
-        updateAdapter()
-        listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-
-                if (key == HISTORY_KEY) {
-                    updateAdapter()
-                }
-            }
-
-        preferences.registerOnSharedPreferenceChangeListener(listener)
+    override fun updateTracks(): List<Track> {
+        var tracks = ArrayList<Track>()
+        val jsonTracks = preferences.getString(HISTORY_KEY, null)
+        if (jsonTracks != null) {
+            tracks = createTracksFromJson(jsonTracks)
+        }
+        return tracks
     }
 
     fun updateAdapter(): ArrayList<Track> {
@@ -38,7 +36,7 @@ class SearchHistory(
         return tracks
     }
 
-    fun addTrack(newTrack: Track) {
+    override fun addTrack(newTrack: Track) {
         var trackList = ArrayList<Track>()
         val jsonTracks = preferences.getString(HISTORY_KEY, null)
         if (jsonTracks != null) {
@@ -52,11 +50,10 @@ class SearchHistory(
         preferences.edit().putString(HISTORY_KEY, createJsonFromTracks(trackList)).apply()
     }
 
-    fun clearHistory() {
+    override fun clearHistory() {
         preferences.edit().remove(HISTORY_KEY).apply()
-        adapter.items.clear()
-        adapter.notifyDataSetChanged()
     }
+
     private fun createJsonFromTracks(tracks: ArrayList<Track>): String {
         return Gson().toJson(tracks)
     }
