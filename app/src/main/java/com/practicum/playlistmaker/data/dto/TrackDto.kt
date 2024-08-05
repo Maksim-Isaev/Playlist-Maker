@@ -2,6 +2,7 @@ package com.practicum.playlistmaker.data.dto
 
 // Класс данных, представляющий музыкальный трек.
 data class TrackDto(
+
     val trackId: String,
     val trackName: String,
     val artistName: String,

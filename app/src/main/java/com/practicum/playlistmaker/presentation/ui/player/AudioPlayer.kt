@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -56,6 +57,8 @@ class AudioPlayer : AppCompatActivity() {
         }
 
         val track = intent.getSerializableExtra(SearchActivity.INTENT_TRACK_KEY) as Track
+        Log.d("AudioPlayer", "Track Release Date: ${track.releaseDate}")
+        Log.d("AudioPlayer", "Track Genre: ${track.primaryGenreName}")
 
         val albumImage = findViewById<ImageView>(R.id.iv_album)
         val albumMainText = findViewById<TextView>(R.id.tv_main_album)

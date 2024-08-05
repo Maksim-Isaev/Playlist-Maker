@@ -6,10 +6,10 @@ import java.util.Locale
 
 data class Track(
     val trackId: String,
-    val trackName: String,      //Track Name
-    val artistName: String,     //Artist Name
-    val trackTimeMillis: Long,  //Track duration
-    val artworkUrl100: String,   //Link to the cover image
+    val trackName: String,
+    val artistName: String,
+    val trackTimeMillis: Long,
+    val artworkUrl100: String,
     val collectionName: String,
     val releaseDate: String,
     val primaryGenreName: String,
