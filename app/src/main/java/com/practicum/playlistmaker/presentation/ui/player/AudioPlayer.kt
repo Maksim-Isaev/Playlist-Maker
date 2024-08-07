@@ -50,7 +50,8 @@ class AudioPlayer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player)
-
+        window.statusBarColor = resources.getColor(R.color.main_status_bar, theme)
+        window.navigationBarColor = resources.getColor(R.color.main_navigation_bar, theme)
         val backButton = findViewById<Toolbar>(R.id.toolbar)
         backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()

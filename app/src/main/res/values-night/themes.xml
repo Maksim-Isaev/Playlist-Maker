@@ -5,6 +5,8 @@
         <item name="colorPrimaryVariant">@color/yp_white</item>
         <item name="colorOnPrimary">@color/yp_black</item>
         <item name="colorSecondary">@color/yp_white</item>
+        <item name="android:statusBarColor">@color/yp_black</item>
+        <item name="android:navigationBarColor">@color/yp_black</item>
 
     </style>
 
@@ -17,6 +19,9 @@
         <item name="colorSecondaryVariant">@color/search_bar_night_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="textFillColor">@color/yp_white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="Theme.PlaylistMakerMedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -24,6 +29,9 @@
         <item name="colorOnPrimary">@color/yp_white</item>
         <item name="colorSecondary">@color/yp_white</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="Theme.PlaylistMakerSettings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -33,6 +41,9 @@
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="thumbTint">@color/yp_blue</item>
         <item name="trackTint">@color/yp_blue_light</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -41,6 +52,8 @@
         <item name="colorSecondary">@color/yp_black</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="colorSecondaryVariant">@color/yp_text_gray</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
     </style>
 
@@ -51,6 +64,8 @@
         <item name="colorSecondary">@color/yp_black</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="colorSecondaryVariant">@color/yp_text_gray</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
     </style>
 </resources>

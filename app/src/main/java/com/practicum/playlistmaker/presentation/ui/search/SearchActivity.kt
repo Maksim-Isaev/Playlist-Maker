@@ -75,8 +75,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        window.statusBarColor = resources.getColor(R.color.status_bar, theme)
-        window.navigationBarColor = resources.getColor(R.color.navigation_bar, theme)
+
         placeholderImage = findViewById(R.id.placeholderImage)
         placeholderMessage = findViewById(R.id.placeholderMessage)
         updateButton = findViewById(R.id.updateResponse)
