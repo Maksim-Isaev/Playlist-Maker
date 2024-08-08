@@ -245,19 +245,20 @@ class SearchActivity : AppCompatActivity() {
                         } else {
                             showMessage(getString(R.string.nothing), "", ResultResponse.EMPTY)
                         }
-
                     }
                 }
 
 
                 override fun onFailure(t: Throwable) {
-                    showMessage(
-                        getString(R.string.connect_error),
-                        t.message.toString(),
-                        ResultResponse.ERROR
-                    )
+                    runOnUiThread {
+                        progressBar.visibility = GONE
+                        showMessage(
+                            getString(R.string.connect_error),
+                            t.message.toString(),
+                            ResultResponse.ERROR
+                        )
+                    }
                 }
-
             })
     }
 

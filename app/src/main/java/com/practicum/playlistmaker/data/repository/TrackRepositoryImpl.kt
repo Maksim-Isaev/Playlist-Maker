@@ -33,7 +33,8 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
                 )
             }
         } else {
-            return emptyList()
+            // Выбрасываем исключение в случае ошибки
+            throw Throwable("Network error: ${response.resultCode}")
         }
     }
 }
