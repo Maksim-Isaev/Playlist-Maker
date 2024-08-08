@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.api
+package com.practicum.playlistmaker.presentation.ui.search
 
 // Перечисления (enum) для представления различных состояний ответа API
 enum class ResultResponse {

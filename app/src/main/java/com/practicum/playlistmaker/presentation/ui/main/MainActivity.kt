@@ -1,12 +1,14 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation.ui.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.presentation.ui.media.MediaActivity
+import com.practicum.playlistmaker.presentation.ui.search.SearchActivity
+import com.practicum.playlistmaker.presentation.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         // Реализация нажатия на первую кнопку (поиск) через лямбда-выражение (скорректированно после 8 спринта)
         buttonSearch.setOnClickListener{
-            val intent = Intent(this@MainActivity,SearchActivity::class.java)
+            val intent = Intent(this@MainActivity, SearchActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation.ui.settings
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,15 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
+import com.practicum.playlistmaker.App
+import com.practicum.playlistmaker.R
 
 class SettingsActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
         val backButton = findViewById<Toolbar>(R.id.toolbar)
         backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -24,14 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         swDarkTheme.setOnCheckedChangeListener { _, checked ->
             (applicationContext as App).switchTheme(checked)
         }
-        //Старое, пока оставлю в комментариях
-        // val swDarkTheme = findViewById<SwitchCompat>(R.id.night_Mode)
-        // swDarkTheme.setOnClickListener {
-        //    if (swDarkTheme.isChecked)
-        //    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        //    else
-        //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        // }
+
         val lineShare = findViewById<FrameLayout>(R.id.share)
         lineShare.setOnClickListener {
             val share = Intent.createChooser(Intent().apply {

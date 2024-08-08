@@ -3,6 +3,8 @@ package com.practicum.playlistmaker
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
+import com.practicum.playlistmaker.creator.Creator.initApplication
+import com.practicum.playlistmaker.creator.Creator.provideSharedPreferences
 
 // Константа для имени файла с настройками
 const val PLAYLISTMAKER_PREFERENCES = "_preferences"
@@ -24,21 +26,16 @@ class App : Application() {
     // Метод, который вызывается при создании приложения
     override fun onCreate() {
         super.onCreate()
-        // Инициализация sharedPrefs с файлом настроек
-        sharedPrefs = getSharedPreferences(
-            PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE
-        )
-        // Переключение темы на основе сохраненной настройки
+        initApplication(this)
+        sharedPrefs = provideSharedPreferences()
+
         switchTheme(sharedPrefs.getBoolean(NIGHTMODE_ENABLED, nightMode))
     }
 
     // Метод для переключения темы приложения
     fun switchTheme(darkThemeEnabled: Boolean) {
-        // Установка значения ночного режима
         nightMode = darkThemeEnabled
-        // Сохранение значения ночного режима в настройки
         sharedPrefs.edit().putBoolean(NIGHTMODE_ENABLED, nightMode).apply()
-        // Установка темы для приложения
         AppCompatDelegate.setDefaultNightMode(
             if (darkThemeEnabled) {
                 AppCompatDelegate.MODE_NIGHT_YES
