@@ -1,10 +1,11 @@
-package com.practicum.playlistmaker.recycleView
+package com.practicum.playlistmaker.presentation.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.Track
+import com.practicum.playlistmaker.domain.api.OnItemClickListener
+import com.practicum.playlistmaker.domain.model.Track
 
 // Адаптер для отображения списка треков в RecyclerView
 

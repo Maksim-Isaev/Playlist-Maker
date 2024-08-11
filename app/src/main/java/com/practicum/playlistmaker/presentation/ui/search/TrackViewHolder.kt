@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.recycleView
+package com.practicum.playlistmaker.presentation.ui.search
 
 import android.content.Context
 import android.icu.text.SimpleDateFormat
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.Track
+import com.practicum.playlistmaker.domain.model.Track
 import java.util.Locale
 
 // ViewHolder для отображения отдельного элемента трека в RecyclerView

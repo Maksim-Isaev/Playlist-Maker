@@ -1,9 +1,10 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation.ui.player
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,13 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.presentation.ui.search.SearchActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayer : AppCompatActivity() {
 
     companion object {
-        const val CURRENT_TRACK = "current_track"
+
         private const val STATE_DEFAULT = 0
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
@@ -25,7 +29,7 @@ class AudioPlayer : AppCompatActivity() {
         private const val TIMER_UPDATE_DELAY = 250L
     }
 
-    private lateinit var track: Track
+
     private var playerState = STATE_DEFAULT
     private var mediaPlayer = MediaPlayer()
     private lateinit var playButton: ImageButton
@@ -46,13 +50,16 @@ class AudioPlayer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player)
-
+        window.statusBarColor = resources.getColor(R.color.main_status_bar, theme)
+        window.navigationBarColor = resources.getColor(R.color.main_navigation_bar, theme)
         val backButton = findViewById<Toolbar>(R.id.toolbar)
         backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        track = intent.getSerializableExtra(SearchActivity.INTENT_TRACK_KEY) as Track
+        val track = intent.getSerializableExtra(SearchActivity.INTENT_TRACK_KEY) as Track
+        Log.d("AudioPlayer", "Track Release Date: ${track.releaseDate}")
+        Log.d("AudioPlayer", "Track Genre: ${track.primaryGenreName}")
 
         val albumImage = findViewById<ImageView>(R.id.iv_album)
         val albumMainText = findViewById<TextView>(R.id.tv_main_album)
@@ -65,7 +72,8 @@ class AudioPlayer : AppCompatActivity() {
         playButton = findViewById(R.id.iv_play_or_stop)
         playingTime = findViewById(R.id.tv_track_timer)
 
-
+        if (track != null) {
+            preparePlayer(track.previewUrl)
         Glide.with(this)
             .load(track.artworkUrl512)
             .placeholder(R.drawable.ic_placeholder)
@@ -81,11 +89,11 @@ class AudioPlayer : AppCompatActivity() {
         yearText.text = track.releaseDate.substring(0, 4)
         genreText.text = track.primaryGenreName
         countryText.text = track.country
-
-        playButton.isEnabled = false
-        preparePlayer(track.previewUrl)
-        playButton.setOnClickListener {
-            playbackControl()
+            playButton.setOnClickListener {
+                playbackControl()
+            }
+        } else {
+            albumImage.setImageResource(R.drawable.nothing)
         }
     }
 
@@ -140,22 +148,6 @@ class AudioPlayer : AppCompatActivity() {
         playerState = STATE_PAUSED
         handler.removeCallbacks(timerRunnable)
     }
-
-    // Сохранение текущего трека при выходе в фоновый режим
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(CURRENT_TRACK, track)
-    }
-
-    // Восстановление текущего трека при возврате из фонового режима
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        track = savedInstanceState.getSerializable(CURRENT_TRACK) as Track
-    }
-
-    // Обработка нажатия на системную кнопку «Назад»
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-    }
 }
+
+

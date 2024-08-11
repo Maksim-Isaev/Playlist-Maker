@@ -5,6 +5,8 @@
         <item name="colorPrimaryVariant">@color/yp_white</item>
         <item name="colorOnPrimary">@color/yp_black</item>
         <item name="colorSecondary">@color/yp_white</item>
+        <item name="android:statusBarColor">@color/yp_blue</item>
+        <item name="android:navigationBarColor">@color/yp_blue</item>
 
     </style>
 
@@ -17,7 +19,9 @@
         <item name="colorSecondaryVariant">@color/search_bar_day_text</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="tabTextColor">@color/yp_black</item>
-
+        <item name="android:statusBarColor">@color/yp_white</item>
+        <item name="android:navigationBarColor">@color/yp_white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.PlaylistMakerMedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -25,6 +29,10 @@
         <item name="colorOnPrimary">@color/yp_black</item>
         <item name="colorSecondary">@color/yp_black</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
+        <item name="android:statusBarColor">@color/yp_white</item>
+        <item name="android:navigationBarColor">@color/yp_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+
     </style>
 
     <style name="Theme.PlaylistMakerSettings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -34,6 +42,9 @@
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="thumbTint">@color/yp_text_gray</item>
         <item name="trackTint">@color/yp_light_gray</item>
+        <item name="android:statusBarColor">@color/yp_white</item>
+        <item name="android:navigationBarColor">@color/yp_white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -42,6 +53,10 @@
         <item name="colorSecondary">@color/yp_white</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="colorSecondaryVariant">@color/yp_text_gray</item>
+        <item name="android:statusBarColor">@color/yp_white</item>
+        <item name="android:navigationBarColor">@color/yp_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+
     </style>
 
     <style name="Theme.PlaylistMakerPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -51,6 +66,10 @@
         <item name="colorSecondary">@color/yp_white</item>
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="colorSecondaryVariant">@color/yp_text_gray</item>
+        <item name="android:statusBarColor">@color/yp_white</item>
+        <item name="android:navigationBarColor">@color/yp_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+
     </style>
 
 </resources>
