@@ -9,6 +9,7 @@
     <string name="agreement">Пользовательское соглашение</string>
     <string name="tbd">Раздел в разработке</string>
     <string name="practicum_Web">https://practicum.yandex.ru/learn/android-developer</string>
+    <string name="practikumHeader">Yandex Practucum</string>
     <string name="support_contact">m.isaev96@yandex.ru</string>
     <string name="support_Title">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="sup_text">Спасибо разработчикам и разработчицам за крутое приложение!</string>
@@ -27,4 +28,5 @@
     <string name="genre">Жанр</string>
     <string name="country">Страна</string>
     <string name="album">Альбом</string>
+
 </resources>
