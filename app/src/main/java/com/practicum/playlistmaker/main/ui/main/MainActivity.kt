@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.buttonSearch.setOnClickListener {
+        binding.btnSearch.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnLibrary.setOnClickListener(buttonMediaClickListener)
 
-        binding.buttonSettings.setOnClickListener {
+        binding.btnSettings.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
     }
 }
-}
+

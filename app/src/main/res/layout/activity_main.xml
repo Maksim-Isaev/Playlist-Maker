@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         android:layout_weight="@dimen/weight_1"
-        android:id="@+id/button_search"
+        android:id="@+id/btn_search"
         android:text="@string/search"
         app:icon="@drawable/ic_search"/>
 
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         android:layout_weight="@dimen/weight_1"
-        android:id="@+id/button_media"
+        android:id="@+id/btn_library"
         android:text="@string/media"
         app:icon="@drawable/ic_library"/>
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         android:layout_weight="@dimen/weight_1"
-        android:id="@+id/button_settings"
+        android:id="@+id/btn_settings"
         android:text="@string/settings"
         app:icon="@drawable/ic_settings"/>
 
