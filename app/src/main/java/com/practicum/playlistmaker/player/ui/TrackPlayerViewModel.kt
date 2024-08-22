@@ -53,6 +53,13 @@ class TrackPlayerViewModel(
         trackPlayerInteractor.pause()
         playingState.postValue(PlayingState.Paused)
         pauseTimer()
+
+    }
+    private fun onComplete() {
+        trackPlayerInteractor.pause()
+        playingState.postValue(PlayingState.Complete)
+        pauseTimer()
+        positionState.postValue(0)
     }
 
     fun stateControl() {

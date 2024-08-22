@@ -51,7 +51,6 @@ class TrackPlayerActivity : AppCompatActivity() {
             viewModel.observePositionState().observe(this) {
                 binding.playingTime.text = dateFormat.format(it)
             }
-
         } else {
             binding.albumCover.setImageResource(R.drawable.nothing)
         }
