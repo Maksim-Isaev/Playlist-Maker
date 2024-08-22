@@ -43,19 +43,19 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.share.setOnClickListener {
-            viewModel.observeShareState().observe(this) { sData ->
+            viewModel.shareState.observe(this) { sData ->
                 shareTo(sData)
             }
         }
 
         binding.support.setOnClickListener {
-            viewModel.observeSupportState().observe(this) { mData ->
+            viewModel.supportState.observe(this) { mData ->
                 supportTo(mData)
             }
         }
 
         binding.terms.setOnClickListener {
-            viewModel.observeTermsState().observe(this) { tData ->
+            viewModel.termsState.observe(this) { tData ->
                 termsTo(tData)
             }
         }

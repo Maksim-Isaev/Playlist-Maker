@@ -29,14 +29,19 @@ class SettingsViewModel(
         }
     }
 
-    private val termsState = SingleLiveEvent<TermsData>()
-    private val shareState = SingleLiveEvent<ShareData>()
-    private val supportState = SingleLiveEvent<MailData>()
+    private val _termsState = MutableLiveData<TermsData>()
+    val termsState: LiveData<TermsData> get() = _termsState
+
+    private val _shareState = MutableLiveData<ShareData>()
+    val shareState: LiveData<ShareData> get() = _shareState
+
+    private val _supportState = MutableLiveData<MailData>()
+    val supportState: LiveData<MailData> get() = _supportState
 
     init {
-        termsState.postValue(sharingRepository.getTermsData())
-        shareState.postValue(sharingRepository.getShareData())
-        supportState.postValue(sharingRepository.getMailData())
+        _termsState.postValue(sharingRepository.getTermsData())
+        _shareState.postValue(sharingRepository.getShareData())
+        _supportState.postValue(sharingRepository.getMailData())
     }
 
     fun observeTermsState(): LiveData<TermsData> = termsState

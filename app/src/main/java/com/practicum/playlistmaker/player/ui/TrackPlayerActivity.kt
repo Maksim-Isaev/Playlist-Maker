@@ -78,19 +78,18 @@ class TrackPlayerActivity : AppCompatActivity() {
     }
 
     private fun setButtonImage(state: PlayingState) {
-        binding.playButton.setImageDrawable(
-            AppCompatResources.getDrawable(
-                this, when (state) {
-                    is PlayingState.Default,
-                    PlayingState.Prepared,
-                    PlayingState.Paused,
-                    PlayingState.Complete,
-                    -> R.drawable.ic_play
+        binding.playButton.setImageDrawable(null)
+        val drawable = when (state) {
+            is PlayingState.Default,
+            PlayingState.Prepared,
+            PlayingState.Paused,
+            PlayingState.Complete,
+            -> R.drawable.ic_play
 
-                    is PlayingState.Playing -> R.drawable.ic_pause
-                }
-            )
-        )
+            is PlayingState.Playing -> R.drawable.ic_pause
+        }
+        binding.playButton.setImageResource(drawable)
     }
+
 
 }

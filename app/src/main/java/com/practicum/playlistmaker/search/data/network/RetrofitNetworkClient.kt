@@ -30,7 +30,11 @@ class RetrofitNetworkClient : NetworkClient {
                 return Response().apply { resultCode = 400 }
             }
         } catch (error: IOException) {
-            Response().apply { resultCode = 500 }
+            Response().apply {
+                resultCode = 500
+
+                error.printStackTrace()
+            }
         }
     }
 }
