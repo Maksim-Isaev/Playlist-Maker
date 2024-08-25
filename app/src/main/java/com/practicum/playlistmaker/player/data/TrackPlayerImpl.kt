@@ -18,7 +18,6 @@ class TrackPlayerImpl(
         }
         mediaPlayer.setOnCompletionListener {
             state = PlayingState.Complete
-            onComplete()
         }
     }
 
@@ -39,7 +38,5 @@ class TrackPlayerImpl(
     override fun getCurrentPosition(): Int {
         return mediaPlayer.currentPosition
     }
-    private fun onComplete() {
-        state = PlayingState.Complete
-    }
+
 }

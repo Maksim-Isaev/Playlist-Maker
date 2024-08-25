@@ -43,14 +43,13 @@ class TrackPlayerActivity : AppCompatActivity() {
             render(track)
 
             viewModel.observePlayingState().observe(this) { state ->
-                binding.playButton.isEnabled = state != PlayingState.Default
-                setButtonImage(state)
-                viewModel.stateControl()
+                updateState(state)
             }
 
             viewModel.observePositionState().observe(this) {
                 binding.playingTime.text = dateFormat.format(it)
             }
+
         } else {
             binding.albumCover.setImageResource(R.drawable.nothing)
         }
@@ -77,19 +76,26 @@ class TrackPlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun setButtonImage(state: PlayingState) {
-        binding.playButton.setImageDrawable(null)
-        val drawable = when (state) {
+    private fun updateState(state: PlayingState) {
+        when (state) {
             is PlayingState.Default,
             PlayingState.Prepared,
-            PlayingState.Paused,
-            PlayingState.Complete,
-            -> R.drawable.ic_play
-
-            is PlayingState.Playing -> R.drawable.ic_pause
+            PlayingState.Paused -> {
+                binding.playButton.setImageDrawable(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_play)
+                )
+            }
+            PlayingState.Playing -> {
+                binding.playButton.setImageDrawable(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_pause)
+                )
+            }
+            PlayingState.Complete -> {
+                binding.playButton.setImageDrawable(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_play)
+                )
+                binding.playingTime.text = getString(R.string.time_zero)
+            }
         }
-        binding.playButton.setImageResource(drawable)
     }
-
-
 }
