@@ -57,7 +57,7 @@ class TrackPlayerActivity : AppCompatActivity() {
     }
 
     private fun render(track: Track) {
-        binding.playButton.isEnabled = false
+
         Glide.with(this)
             .load(track.getCoverArtwork())
             .placeholder(R.drawable.ic_placeholder)
