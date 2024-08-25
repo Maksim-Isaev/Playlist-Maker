@@ -55,6 +55,9 @@ class TrackPlayerViewModel(
         pauseTimer()
 
     }
+    fun stateControl() {
+        playingState.postValue(trackPlayerInteractor.state)
+    }
 
     fun playingControl() {
         if (playingState.value is PlayingState.Playing) onPause()
