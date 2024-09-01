@@ -138,7 +138,7 @@
 
     </style>
 
-    <style name="TrackPlayerActivityLeftText">
+    <style name="AudioPlayerLeftText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
@@ -153,7 +153,7 @@
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="TrackPlayerActivityRightText" parent="TrackPlayerActivityLeftText">
+    <style name="AudioPlayerRightText" parent="AudioPlayerLeftText">
         <item name="android:layout_width">0dp</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:gravity">end</item>
