@@ -19,6 +19,8 @@ val settingsModule = module {
     }
 
     viewModel {
-        SettingsViewModel(get())
+        SettingsViewModel(
+            sharingRepository = get(),
+            themeInteractor = get())
     }
 }

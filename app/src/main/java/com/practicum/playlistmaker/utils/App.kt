@@ -3,11 +3,17 @@ package com.practicum.playlistmaker.utils
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.practicum.playlistmaker.utils.Creator.initApplication
-import com.practicum.playlistmaker.utils.Creator.provideSharedPreferences
+
+import com.practicum.playlistmaker.di.playerModule
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import com.practicum.playlistmaker.di.searchModule
+import com.practicum.playlistmaker.di.settingsModule
+import com.practicum.playlistmaker.settings.domain.MainThemeInteractor
 
 
-const val DARKTHEME_ENABLED = "darktheme_enabled"
 
 class App : Application() {
     var darkTheme = false
@@ -17,9 +23,17 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initApplication(this)
-        sharedPrefs = provideSharedPreferences()
-        switchTheme(sharedPrefs.getBoolean(DARKTHEME_ENABLED, darkTheme))
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(
+                searchModule,
+                playerModule,
+                settingsModule,
+            )
+        }
+        val mainThemeInt: MainThemeInteractor by inject()
+        switchTheme(mainThemeInt.isNightTheme())
     }
 
     fun switchTheme(darkThemeEnabled: Boolean) {
