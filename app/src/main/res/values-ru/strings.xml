@@ -7,13 +7,14 @@
     <string name="agreement">Пользовательское соглашение</string>
     <string name="tbd">Раздел в разработке</string>
     <string name="practicum_Web">https://practicum.yandex.ru/learn/android-developer</string>
-    <string name="agreement_link">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="termsLink">https://yandex.ru/legal/practicum_offer/</string>
     <string name="night_mode">Темная тема</string>
     <string name="share">Поделиться приложением</string>
     <string name="support">Написать в поддержку</string>
-    <string name="support_contact">m.isaev96@yandex.ru</string>
-    <string name="support_Title">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
-    <string name="sup_text">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="practikumHeader">Yandex Practucum</string>
+    <string name="supportMail">m.isaev96@yandex.ru</string>
+    <string name="suportSubject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="supportText">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="search_title">Поиск</string>
     <string name="text_separator">" • "</string>
     <string name="nothing">Ничего не нашлось</string>
@@ -28,4 +29,6 @@
     <string name="genre">Жанр</string>
     <string name="country">Страна</string>
     <string name="album">Альбом</string>
+    <string name="time_zero">00:00</string>
+    <string name="application_not_found">Не удалось найти приложение!</string>
 </resources>
