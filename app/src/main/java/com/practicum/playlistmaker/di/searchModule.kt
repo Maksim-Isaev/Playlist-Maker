@@ -21,7 +21,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.practicum.playlistmaker.utils.PLAYLISTMAKER_PREFERENCES
 
-
 val searchModule = module {
     single {
         androidContext().getSharedPreferences(PLAYLISTMAKER_PREFERENCES, Context.MODE_PRIVATE)
@@ -35,10 +34,13 @@ val searchModule = module {
             .create(ItunesApi::class.java)
     }
     single<NetworkClient> { RetrofitNetworkClient() }
-    single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
-    single<SearchHistoryInteractor> { SearchHistoryInteractorImpl(get()) }
+
+
     single<TrackRepository> { TrackRepositoryImpl(get()) }
-    single<TrackInteractor> { TrackInteractorImpl(get()) }
+    single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
+
+    factory<SearchHistoryInteractor> { SearchHistoryInteractorImpl(get()) }
+    factory<TrackInteractor> { TrackInteractorImpl(get()) }
 
     viewModel {
         SearchViewModel(get(),

@@ -5,7 +5,6 @@ import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,6 +25,12 @@ class TrackPlayerActivity : AppCompatActivity() {
 
     private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
 
+    // Инициализация ViewModel через Koin
+    private val viewModel: TrackPlayerViewModel by viewModel {
+        val track = intent.getParcelableExtra<Track>(SearchActivity.TRACK_DATA)
+        parametersOf(track?.previewUrl)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -34,12 +39,9 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        val track = intent.getParcelableExtra(SearchActivity.TRACK_DATA) as? Track
 
+        val track = intent.getParcelableExtra<Track>(SearchActivity.TRACK_DATA)
         if (track != null) {
-            val viewModel: TrackPlayerViewModel by viewModel {
-                parametersOf(track.previewUrl)
-            }
             render(track, viewModel)
 
             viewModel.observePlayingState().observe(this) { state ->
@@ -106,5 +108,10 @@ class TrackPlayerActivity : AppCompatActivity() {
 
     private fun dpToPx(dp: Float, context: Context): Int {
         return (dp * context.resources.displayMetrics.density).toInt()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.release()
     }
 }

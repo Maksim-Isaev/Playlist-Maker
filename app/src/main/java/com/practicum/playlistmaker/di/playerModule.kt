@@ -9,6 +9,7 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 val playerModule = module {
+
     single { MediaPlayer() }
 
     factory<TrackPlayerInteractor> { (url: String) ->

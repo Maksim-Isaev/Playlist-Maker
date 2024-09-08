@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.practicum.playlistmaker.player.domain.api.TrackPlayerInteractor
 import com.practicum.playlistmaker.player.domain.model.PlayingState
 
-
 class TrackPlayerViewModel(
     private val trackPlayerInteractor: TrackPlayerInteractor,
 ) : ViewModel() {
@@ -27,9 +26,14 @@ class TrackPlayerViewModel(
     }
 
     private fun onPrepare() {
-        trackPlayerInteractor.prepare()
-        playingState.postValue(PlayingState.Prepared)
-        positionState.postValue(0)
+        try {
+            trackPlayerInteractor.prepare()
+            playingState.postValue(PlayingState.Prepared)
+            positionState.postValue(0)
+        } catch (e: IllegalStateException) {
+            e.printStackTrace()
+            playingState.postValue(PlayingState.Default)
+        }
     }
 
     private fun onPlay() {
@@ -42,8 +46,8 @@ class TrackPlayerViewModel(
         trackPlayerInteractor.pause()
         playingState.postValue(PlayingState.Paused)
         pauseTimer()
-
     }
+
     fun stateControl() {
         playingState.postValue(trackPlayerInteractor.state)
     }
@@ -73,11 +77,13 @@ class TrackPlayerViewModel(
         handler.removeCallbacks(timerRunnable)
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    fun release() {
         pauseTimer()
         trackPlayerInteractor.release()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        release()
+    }
 }
-
