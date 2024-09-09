@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker.search.ui
 
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -19,8 +18,7 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivitySearchBinding
 import com.practicum.playlistmaker.player.ui.TrackPlayerActivity
 import com.practicum.playlistmaker.search.domain.model.Track
-
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 class SearchActivity : AppCompatActivity() {
     private var searchValue = TEXT_DEF
 
@@ -28,16 +26,10 @@ class SearchActivity : AppCompatActivity() {
         ActivitySearchBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(
-            this,
-            SearchViewModel.getViewModelFactory()
-        )[SearchViewModel::class.java]
-    }
+    private val viewModel by viewModel<SearchViewModel>()
 
-    private lateinit var searchAdapter: TrackAdapter
-    private lateinit var historyAdapter: TrackAdapter
-
+    private var searchAdapter: TrackAdapter? = null
+    private var historyAdapter: TrackAdapter? = null
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
@@ -58,16 +50,19 @@ class SearchActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
         viewModel.observeSearchState().observe(this) { state ->
             renderState(state)
         }
+
         binding.searchBar.requestFocus()
         binding.searchBar.setText(searchValue)
         binding.cancelButton.setOnClickListener {
             binding.searchBar.text.clear()
-            searchAdapter.notifyItemRangeChanged(0, searchAdapter.itemCount)
+            searchAdapter?.notifyItemRangeChanged(0, searchAdapter?.itemCount ?: 0)
             showHistory()
         }
+
         binding.searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.searchBar.text.isEmpty()) {
                 showHistory()
@@ -140,24 +135,28 @@ class SearchActivity : AppCompatActivity() {
 
     private fun updateContentSearch(tracks: List<Track>) {
         showLoading(false)
-        searchAdapter.items.clear()
-        searchAdapter.items.addAll(tracks)
-        searchAdapter.notifyItemRangeChanged(0, searchAdapter.itemCount)
+        searchAdapter?.let { adapter ->
+            adapter.items.clear()
+            adapter.items.addAll(tracks)
+            adapter.notifyItemRangeChanged(0, adapter.itemCount)
+        }
         showContentSearch()
     }
 
     private fun showHistory() {
         binding.recycleView.isVisible = false
         binding.placeholderLayout.isVisible = false
-        binding.historyLayout.isVisible = (historyAdapter.itemCount != 0)
+        binding.historyLayout.isVisible = historyAdapter?.itemCount != 0
     }
 
     private fun updateSearchHistoryAdapter(sdata: SearchState) {
-        historyAdapter.items.clear()
-        if (sdata is SearchState.ContentHistory) {
-            historyAdapter.items.addAll(sdata.data)
+        historyAdapter?.let { adapter ->
+            adapter.items.clear()
+            if (sdata is SearchState.ContentHistory) {
+                adapter.items.addAll(sdata.data)
+            }
+            adapter.notifyItemRangeChanged(0, adapter.itemCount)
         }
-        historyAdapter.notifyItemRangeChanged(0, historyAdapter.itemCount)
         showHistory()
     }
 
@@ -200,7 +199,7 @@ class SearchActivity : AppCompatActivity() {
         binding.placeholderLayout.isVisible = true
         binding.updateResponse.isVisible = false
         binding.placeholderMessage.text = getString(R.string.nothing)
-        searchAdapter.notifyItemRangeChanged(0, searchAdapter.itemCount)
+        searchAdapter?.notifyItemRangeChanged(0, searchAdapter?.itemCount ?: 0)
         binding.placeholderImage.setImageResource(R.drawable.nothing)
     }
 
@@ -210,7 +209,7 @@ class SearchActivity : AppCompatActivity() {
         binding.historyLayout.isVisible = false
         binding.placeholderLayout.isVisible = true
         binding.updateResponse.isVisible = true
-        searchAdapter.notifyItemRangeChanged(0, searchAdapter.itemCount)
+        searchAdapter?.notifyItemRangeChanged(0, searchAdapter?.itemCount ?: 0)
         binding.placeholderImage.setImageResource(R.drawable.connect_error)
         binding.placeholderMessage.text = getString(R.string.connect_error)
         if (additionalMessage.isNotEmpty()) {

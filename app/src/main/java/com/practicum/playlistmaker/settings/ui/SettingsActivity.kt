@@ -13,13 +13,14 @@ import com.practicum.playlistmaker.sharing.domain.model.MailData
 import com.practicum.playlistmaker.sharing.domain.model.ShareData
 import com.practicum.playlistmaker.sharing.domain.model.TermsData
 import com.practicum.playlistmaker.utils.App
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
     private val binding: ActivitySettingsBinding by lazy {
         ActivitySettingsBinding.inflate(layoutInflater)
     }
 
-    private lateinit var viewModel: SettingsViewModel
+    private val viewModel by viewModel<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +32,7 @@ class SettingsActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        viewModel = ViewModelProvider(
-            this,
-            SettingsViewModel.getViewModelFactory()
-        )[SettingsViewModel::class.java]
+
 
         binding.darkTheme.isChecked = viewModel.observeThemeState().value!!
         binding.darkTheme.setOnCheckedChangeListener { _, checked ->

@@ -1,18 +1,19 @@
 package com.practicum.playlistmaker.player.ui
 
+import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
 import com.practicum.playlistmaker.player.domain.model.PlayingState
 import com.practicum.playlistmaker.search.domain.model.Track
 import com.practicum.playlistmaker.search.ui.SearchActivity
-import com.practicum.playlistmaker.utils.dpToPx
 import com.practicum.playlistmaker.utils.getReleaseYear
 import java.util.Locale
 
@@ -21,9 +22,14 @@ class TrackPlayerActivity : AppCompatActivity() {
     private val binding: ActivityPlayerBinding by lazy {
         ActivityPlayerBinding.inflate(layoutInflater)
     }
-    private lateinit var viewModel: TrackPlayerViewModel
 
     private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
+
+    // Инициализация ViewModel через Koin
+    private val viewModel: TrackPlayerViewModel by viewModel {
+        val track = intent.getParcelableExtra<Track>(SearchActivity.TRACK_DATA)
+        parametersOf(track?.previewUrl)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +39,10 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        val track = intent.getParcelableExtra(SearchActivity.TRACK_DATA) as? Track
 
+        val track = intent.getParcelableExtra<Track>(SearchActivity.TRACK_DATA)
         if (track != null) {
-            viewModel = ViewModelProvider(
-                this,
-                TrackPlayerViewModel.getViewModelFactory(track.previewUrl)
-            )[TrackPlayerViewModel::class.java]
-            render(track)
+            render(track, viewModel)
 
             viewModel.observePlayingState().observe(this) { state ->
                 binding.playButton.isEnabled = state != PlayingState.Default
@@ -56,8 +58,7 @@ class TrackPlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun render(track: Track) {
-
+    private fun render(track: Track, viewModel: TrackPlayerViewModel) {
         Glide.with(this)
             .load(track.getCoverArtwork())
             .placeholder(R.drawable.ic_placeholder)
@@ -105,8 +106,12 @@ class TrackPlayerActivity : AppCompatActivity() {
         }
     }
 
+    private fun dpToPx(dp: Float, context: Context): Int {
+        return (dp * context.resources.displayMetrics.density).toInt()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.release()
+    }
 }
-
-// это для коммита - т.к. у меня был конфликт веток при пуше коммита.
-
-

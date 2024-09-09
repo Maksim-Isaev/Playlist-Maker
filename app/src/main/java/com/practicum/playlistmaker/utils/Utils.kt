@@ -3,7 +3,9 @@ package com.practicum.playlistmaker.utils
 import android.content.Context
 import android.util.TypedValue
 
-fun dpToPx(dp: Float, context: Context): Int {
+const val PLAYLISTMAKER_PREFERENCES = "_preferences"
+
+fun convertToPx(dp: Float, context: Context): Int {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         dp,

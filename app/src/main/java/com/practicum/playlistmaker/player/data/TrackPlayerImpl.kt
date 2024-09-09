@@ -10,33 +10,44 @@ class TrackPlayerImpl(
 ) : TrackPlayerInteractor {
 
     override var state: PlayingState = PlayingState.Default
+
     override fun prepare() {
-        mediaPlayer.setDataSource(trackUrl)
-        mediaPlayer.prepareAsync()
-        mediaPlayer.setOnPreparedListener {
-            state = PlayingState.Prepared
-        }
-        mediaPlayer.setOnCompletionListener {
-            state = PlayingState.Complete
+        try {
+            mediaPlayer.reset()
+            mediaPlayer.setDataSource(trackUrl)
+            mediaPlayer.prepareAsync()
+            mediaPlayer.setOnPreparedListener {
+                state = PlayingState.Prepared
+            }
+            mediaPlayer.setOnCompletionListener {
+                state = PlayingState.Complete
+            }
+        } catch (e: IllegalStateException) {
+            e.printStackTrace()
+            state = PlayingState.Default
         }
     }
 
     override fun start() {
-        mediaPlayer.start()
-        state = PlayingState.Playing
+        if (state == PlayingState.Prepared || state == PlayingState.Paused) {
+            mediaPlayer.start()
+            state = PlayingState.Playing
+        }
     }
 
     override fun pause() {
-        mediaPlayer.pause()
-        state = PlayingState.Paused
+        if (state == PlayingState.Playing) {
+            mediaPlayer.pause()
+            state = PlayingState.Paused
+        }
     }
 
     override fun release() {
         mediaPlayer.release()
+        state = PlayingState.Default
     }
 
     override fun getCurrentPosition(): Int {
         return mediaPlayer.currentPosition
     }
-
 }
