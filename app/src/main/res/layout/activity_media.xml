@@ -11,10 +11,7 @@
         style="@style/toolbar_dimensions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/media">
-
-    </androidx.appcompat.widget.Toolbar>
-
+        app:title="@string/media"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"

@@ -18,11 +18,10 @@ class MediaActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
-        setContentView(R.layout.activity_media)
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
         binding.viewPager.adapter = MediaAdapter(supportFragmentManager, lifecycle)
         tabMediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
@@ -39,5 +38,4 @@ class MediaActivity : AppCompatActivity() {
         tabMediator.detach()
         _binding = null
     }
-
 }
