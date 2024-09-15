@@ -11,21 +11,21 @@
         style="@style/toolbar_dimensions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/media">
+        app:title="@string/media"/>
 
-    </androidx.appcompat.widget.Toolbar>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/TabLayout"
+        android:layout_width="match_parent"
+        app:tabTextColor="?attr/colorOnPrimary"
+        android:layout_height="@dimen/dp_48"
+        android:background="?attr/colorPrimary"
+        app:tabIndicatorColor="?attr/colorOnPrimary"
+        app:tabMode="fixed"/>
 
-    <ImageView
-        style="@style/work_in_progress_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-    <TextView
-        style="@style/work_in_progress_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:titleTextColor="?attr/colorOnPrimary" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

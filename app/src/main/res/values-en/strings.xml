@@ -31,4 +31,9 @@
     <string name="album">Album</string>
     <string name="time_zero">00:00</string>
     <string name="application_not_found">Application not found</string>
+    <string name="empty_favorites">Your media library is empty</string>
+    <string name="create_playlist">New playlist</string>
+    <string name="empty_playlists">You haven\'t created any playlists</string>
+    <string name="playlists">Playlists</string>
+    <string name="favorite_tracks">Favorite tracks</string>
 </resources>

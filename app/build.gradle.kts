@@ -42,7 +42,7 @@ android {
 
 dependencies {
     implementation("io.insert-koin:koin-android:3.4.0")
-    //implementation("io.insert-koin:koin-androidx-ext:3.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("com.google.android.material:material:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

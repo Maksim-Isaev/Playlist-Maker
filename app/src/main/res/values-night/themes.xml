@@ -31,7 +31,6 @@
         <item name="toolbarNavigationButtonStyle">@style/TintedNavigation</item>
         <item name="android:statusBarColor">@color/yp_black</item>
         <item name="android:navigationBarColor">@color/yp_black</item>
-
     </style>
 
     <style name="Theme.PlaylistMakerSettings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
