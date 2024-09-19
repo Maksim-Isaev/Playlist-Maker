@@ -3,7 +3,6 @@ package com.practicum.playlistmaker.search.ui
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
-import android.os.SystemClock
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,20 +15,18 @@ import com.practicum.playlistmaker.search.domain.model.Track
 class SearchViewModel(
     application: Application,
     private val trackInteractor: TrackInteractor,
-    private val searchHistorySaver: SearchHistoryInteractor
-) : AndroidViewModel(application) {
-
+    private val searchHistorySaver: SearchHistoryInteractor,
+) :
+    AndroidViewModel(application) {
     private var latestSearchText: String? = null
 
-    companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 1000L
-        private val SEARCH_REQUEST_TOKEN = Any()
+    override fun onCleared() {
+        stopSearch()
     }
 
-    override fun onCleared() {
+    fun stopSearch() {
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
     }
-
     private val searchState = MutableLiveData<SearchState>()
     fun observeSearchState(): LiveData<SearchState> = searchState
 
@@ -50,16 +47,21 @@ class SearchViewModel(
     }
 
     private val consumer = object : TrackInteractor.TrackConsumer {
-        override fun consume(foundTracks: Resource<List<Track>>) {
+        override fun consume(foundTracks: Resource<List<Track>>, request: String) {
             when (foundTracks) {
                 is Resource.Error -> renderState(
                     SearchState.Error(
-                        errorMessage = application.getString(R.string.connect_error)
+                        errorMessage = application.getString(
+                            R.string.connect_error
+                        )
                     )
                 )
+
                 is Resource.Success -> {
                     if (foundTracks.data?.isNotEmpty() == true) {
-                        renderState(SearchState.ContentSearch(foundTracks.data))
+                        if (request == latestSearchText) {
+                            renderState(SearchState.ContentSearch(foundTracks.data))
+                        }
                     } else {
                         renderState(SearchState.NothingFound)
                     }
@@ -70,7 +72,9 @@ class SearchViewModel(
         override fun onFailure(t: Throwable) {
             renderState(
                 SearchState.Error(
-                    errorMessage = application.getString(R.string.connect_error)
+                    errorMessage = application.getString(
+                        R.string.connect_error
+                    )
                 )
             )
         }
@@ -85,18 +89,27 @@ class SearchViewModel(
     }
 
     fun searchRequest(newSearchText: String) {
+        latestSearchText = newSearchText
         renderState(SearchState.Loading)
-        trackInteractor.search(newSearchText, consumer)
+        trackInteractor
+            .search(newSearchText, consumer)
     }
 
     fun searchDebounce(changedText: String) {
         if (latestSearchText == changedText) {
             return
         }
-        latestSearchText = changedText
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
         val searchRunnable = Runnable { searchRequest(changedText) }
-        val postTime = SystemClock.uptimeMillis() + SEARCH_DEBOUNCE_DELAY
-        handler.postAtTime(searchRunnable, SEARCH_REQUEST_TOKEN, postTime)
+        handler.postDelayed(
+            searchRunnable,
+            SEARCH_REQUEST_TOKEN,
+            SEARCH_DEBOUNCE_DELAY_MILLIS,
+        )
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 1000L
+        private val SEARCH_REQUEST_TOKEN = Any()
     }
 }
