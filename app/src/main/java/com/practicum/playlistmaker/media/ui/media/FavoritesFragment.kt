@@ -1,13 +1,11 @@
 package com.practicum.playlistmaker.media.ui.media
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.practicum.playlistmaker.databinding.FragmentFavoritesBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import com.practicum.playlistmaker.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
 
