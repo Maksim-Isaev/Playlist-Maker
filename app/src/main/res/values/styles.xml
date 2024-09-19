@@ -56,9 +56,9 @@
     <style name="TintedNavigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">?attr/colorOnPrimary</item>
     </style>
-    <!-- __________________Стили для тулбара на всех activity кроме main________________________ -->
-    <style name="toolbar_dimensions" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"> <!-- Стиль для тулбара -->
-        <item name="navigationIcon">@drawable/ic_left_arrow</item>
+    <!-- __________________Стили для title на всех фрагментах________________________ -->
+
+    <style name="fragment_title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"> <!-- Стиль для текста тулбара главного экрана -->
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
