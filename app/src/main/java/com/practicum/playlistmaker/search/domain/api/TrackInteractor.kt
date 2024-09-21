@@ -9,5 +9,6 @@ interface TrackInteractor {
     interface TrackConsumer {
         fun consume(foundTracks: Resource<List<Track>>)
         fun onFailure(t: Throwable)
+        fun consume(foundTracks: Resource<List<Track>>, request: String)
     }
 }

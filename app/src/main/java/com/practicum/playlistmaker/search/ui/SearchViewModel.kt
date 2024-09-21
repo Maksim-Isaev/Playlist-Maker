@@ -47,6 +47,10 @@ class SearchViewModel(
     }
 
     private val consumer = object : TrackInteractor.TrackConsumer {
+        override fun consume(foundTracks: Resource<List<Track>>) {
+            TODO("Not yet implemented")
+        }
+
         override fun consume(foundTracks: Resource<List<Track>>, request: String) {
             when (foundTracks) {
                 is Resource.Error -> renderState(
