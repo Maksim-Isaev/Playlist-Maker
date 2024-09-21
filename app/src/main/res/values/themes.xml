@@ -1,5 +1,5 @@
 <resources>
-
+    <!--> Тема для main-->
     <style name="Theme.PlaylistMakerMain" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/yp_blue</item>
         <item name="colorPrimaryVariant">@color/yp_white</item>

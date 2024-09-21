@@ -11,10 +11,15 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/fragment_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="@string/settings" />
+        android:layout_height="56dp"
+        android:foreground="?attr/selectableItemBackground"
+        app:contentInsetStartWithNavigation="0dp"
+        app:tint="?attr/colorOnPrimary"
+        app:title="@string/settings"
+        app:titleTextAppearance="@style/fragment_title"
+        app:titleTextColor="?attr/colorOnPrimary" />
+
 
     <FrameLayout
         android:layout_width="match_parent"

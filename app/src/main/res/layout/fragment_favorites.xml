@@ -31,5 +31,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placeholder_image" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@
         app:cornerRadius="@dimen/dp_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/media_placeholder_iv"
@@ -33,7 +33,7 @@
         android:src="@drawable/nothing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_playlist_button" />
+        app:layout_constraintTop_toBottomOf="@+id/create_playlist_button"/>
 
     <TextView
         android:id="@+id/media_placeholder_tv"
@@ -44,6 +44,6 @@
         android:text="@string/empty_playlists"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/media_placeholder_iv" />
+        app:layout_constraintTop_toBottomOf="@+id/media_placeholder_iv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
