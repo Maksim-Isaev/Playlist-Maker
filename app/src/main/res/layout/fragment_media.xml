@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.PlaylistMakerMedia"
+    tools:context=".media.ui.media.MediaFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/toolbar_dimensions"
+        style="@style/fragment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/media"/>
@@ -20,8 +23,8 @@
         app:tabTextColor="?attr/colorOnPrimary"
         android:layout_height="@dimen/dp_48"
         android:background="?attr/colorPrimary"
-        app:tabIndicatorColor="?attr/colorOnPrimary"
-        app:tabMode="fixed"/>
+        app:tabMode="fixed"
+        app:tabIndicatorColor="?attr/colorOnPrimary"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
@@ -29,3 +32,5 @@
         android:layout_height="match_parent" />
 
 </LinearLayout>
+
+

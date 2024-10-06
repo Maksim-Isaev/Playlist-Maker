@@ -15,7 +15,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/dp_12"
         android:scaleType="fitCenter"
-        tools:srcCompat="@drawable/ic_placeholder" />
+        tools:srcCompat="@drawable/ic_placeholder"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +33,7 @@
             android:gravity="start|center_vertical"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="@dimen/text_16"
-            tools:text="No Reply" />
+            tools:text="No Reply"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="@dimen/text_11"
-                tools:text="The Beatles" />
+                tools:text="The Beatles"/>
 
             <TextView
                 android:id="@+id/text_spacer"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_separator"
                 android:textColor="?attr/colorOnSecondary"
-                android:textSize="@dimen/text_11" />
+                android:textSize="@dimen/text_11"/>
 
             <TextView
                 android:id="@+id/track_time"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="@dimen/text_11"
-                tools:text="5:12" />
+                tools:text="5:12"/>
 
         </LinearLayout>
 
@@ -81,7 +81,6 @@
         android:layout_marginStart="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_12"
         android:backgroundTint="?attr/colorSecondaryVariant"
-        app:srcCompat="@drawable/ic_forward_arrow" />
-
+        app:srcCompat="@drawable/ic_forward_arrow"/>
 
 </LinearLayout>

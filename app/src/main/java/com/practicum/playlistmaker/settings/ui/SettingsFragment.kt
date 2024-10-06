@@ -4,61 +4,68 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
+import com.practicum.playlistmaker.databinding.FragmentSettingsBinding
 import com.practicum.playlistmaker.sharing.domain.model.MailData
 import com.practicum.playlistmaker.sharing.domain.model.ShareData
 import com.practicum.playlistmaker.sharing.domain.model.TermsData
 import com.practicum.playlistmaker.utils.App
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsActivity : AppCompatActivity() {
-    private val binding: ActivitySettingsBinding by lazy {
-        ActivitySettingsBinding.inflate(layoutInflater)
-    }
+
+class SettingsFragment : Fragment() {
+
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel by viewModel<SettingsViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        window.statusBarColor = resources.getColor(R.color.status_bar, theme)
-        window.navigationBarColor = resources.getColor(R.color.navigation_bar, theme)
-
-        binding.toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
-
-
 
         binding.darkTheme.isChecked = viewModel.observeThemeState().value!!
         binding.darkTheme.setOnCheckedChangeListener { _, checked ->
-            (applicationContext as App).switchTheme(checked)
+            (requireActivity().application as App).switchTheme(checked)
             viewModel.updateThemeState(checked)
         }
 
         binding.share.setOnClickListener {
-            viewModel.shareState.observe(this) { sData ->
+            viewModel.observeShareState().observe(viewLifecycleOwner) { sData ->
                 shareTo(sData)
             }
         }
 
         binding.support.setOnClickListener {
-            viewModel.supportState.observe(this) { mData ->
+            viewModel.observeSupportState().observe(viewLifecycleOwner) { mData ->
                 supportTo(mData)
             }
         }
 
         binding.terms.setOnClickListener {
-            viewModel.termsState.observe(this) { tData ->
+            viewModel.observeTermsState().observe(viewLifecycleOwner) { tData ->
                 termsTo(tData)
             }
         }
     }
-
     private fun termsTo(tData: TermsData) {
         val share = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_VIEW
@@ -66,7 +73,6 @@ class SettingsActivity : AppCompatActivity() {
         }, null)
         startActivity(share)
     }
-
     private fun supportTo(mData: MailData) {
         val share = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_SENDTO
@@ -78,7 +84,7 @@ class SettingsActivity : AppCompatActivity() {
         try {
             startActivity(share)
         } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.application_not_found, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.application_not_found, Toast.LENGTH_SHORT).show()
         }
     }
 

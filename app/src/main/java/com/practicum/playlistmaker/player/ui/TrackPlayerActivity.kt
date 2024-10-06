@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker.player.ui
 
 import android.content.Context
+import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,7 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
 import com.practicum.playlistmaker.player.domain.model.PlayingState
 import com.practicum.playlistmaker.search.domain.model.Track
-import com.practicum.playlistmaker.search.ui.SearchActivity
+
 import com.practicum.playlistmaker.utils.getReleaseYear
 import java.util.Locale
 
@@ -27,7 +28,7 @@ class TrackPlayerActivity : AppCompatActivity() {
 
     // Инициализация ViewModel через Koin
     private val viewModel: TrackPlayerViewModel by viewModel {
-        val track = intent.getParcelableExtra<Track>(SearchActivity.TRACK_DATA)
+        val track = intent.getParcelableExtra(TRACK_KEY) as? Track
         parametersOf(track?.previewUrl)
     }
 
@@ -40,7 +41,7 @@ class TrackPlayerActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        val track = intent.getParcelableExtra<Track>(SearchActivity.TRACK_DATA)
+        val track = intent.getParcelableExtra(TRACK_KEY) as? Track
         if (track != null) {
             render(track, viewModel)
 
@@ -63,7 +64,7 @@ class TrackPlayerActivity : AppCompatActivity() {
             .load(track.getCoverArtwork())
             .placeholder(R.drawable.ic_placeholder)
             .centerCrop()
-            .transform(RoundedCorners(dpToPx(8f, this)))
+            .transform(RoundedCorners(dpToPx(8f)))
             .into(binding.albumCover)
         binding.title.text = track.trackName
         binding.artistName.text = track.artistName
@@ -106,12 +107,18 @@ class TrackPlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun dpToPx(dp: Float, context: Context): Int {
-        return (dp * context.resources.displayMetrics.density).toInt()
+    companion object {
+
+        const val TRACK_KEY = "TRACK_KEY"
+
+        fun newInstance(context: Context, track: Track): Intent {
+            return Intent(context, TrackPlayerActivity::class.java).apply {
+                putExtra(TRACK_KEY, track)
+            }
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.release()
+    private fun dpToPx(dp: Float): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 }

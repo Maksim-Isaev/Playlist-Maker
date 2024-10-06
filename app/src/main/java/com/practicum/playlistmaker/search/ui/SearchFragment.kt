@@ -1,68 +1,73 @@
 package com.practicum.playlistmaker.search.ui
-
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.databinding.ActivitySearchBinding
+import com.practicum.playlistmaker.databinding.FragmentSearchBinding
 import com.practicum.playlistmaker.player.ui.TrackPlayerActivity
 import com.practicum.playlistmaker.search.domain.model.Track
-import org.koin.androidx.viewmodel.ext.android.viewModel
-class SearchActivity : AppCompatActivity() {
-    private var searchValue = TEXT_DEF
 
-    private val binding: ActivitySearchBinding by lazy {
-        ActivitySearchBinding.inflate(layoutInflater)
-    }
+
+class SearchFragment : Fragment() {
+    private var searchValue = TEXT_DEF
 
     private val viewModel by viewModel<SearchViewModel>()
 
     private var searchAdapter: TrackAdapter? = null
-    private var historyAdapter: TrackAdapter? = null
+    private lateinit var historyAdapter: TrackAdapter
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val TEXT_DEF = ""
-        const val TRACK_DATA = "track_data"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        window.statusBarColor = resources.getColor(R.color.status_bar, theme)
-        window.navigationBarColor = resources.getColor(R.color.navigation_bar, theme)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentSearchBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        binding.toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-        viewModel.observeSearchState().observe(this) { state ->
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        viewModel.observeSearchState().observe(viewLifecycleOwner) { state ->
             renderState(state)
         }
-
         binding.searchBar.requestFocus()
         binding.searchBar.setText(searchValue)
         binding.cancelButton.setOnClickListener {
             binding.searchBar.text.clear()
-            searchAdapter?.notifyItemRangeChanged(0, searchAdapter?.itemCount ?: 0)
+            searchAdapter?.itemCount?.let { it1 -> searchAdapter?.notifyItemRangeChanged(0, it1) }
             showHistory()
         }
-
         binding.searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.searchBar.text.isEmpty()) {
                 showHistory()
@@ -70,48 +75,51 @@ class SearchActivity : AppCompatActivity() {
                 showContentSearch()
             }
         }
-
         binding.clearHistory.setOnClickListener {
             viewModel.clearHistory()
             binding.historyLayout.isVisible = false
         }
-
         binding.searchBar.doOnTextChanged { s, _, _, _ ->
             clearButtonVisibility(s, binding.cancelButton)
             searchValue = s.toString()
-            if (binding.searchBar.hasFocus() && s?.isEmpty() == true)
+            if (binding.searchBar.hasFocus() && s?.isEmpty() == true) {
+                viewModel.stopSearch()
+                searchAdapter?.itemCount?.let { it1 ->
+                    searchAdapter?.notifyItemRangeChanged(
+                        0,
+                        it1
+                    )
+                }
                 showHistory()
-            else
+            } else
                 viewModel.searchDebounce(searchValue)
         }
 
         binding.searchBar.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.searchRequest(searchValue)
+                viewModel.searchDebounce(searchValue)
             }
             false
         }
-
         val onHistoryItemClickListener = OnItemClickListener { item ->
             openPlayer(item)
         }
         historyAdapter = TrackAdapter(onHistoryItemClickListener)
-        binding.recycleHistoryView.layoutManager = LinearLayoutManager(this)
+        binding.recycleHistoryView.layoutManager = LinearLayoutManager(context)
         binding.recycleHistoryView.adapter = historyAdapter
 
         val onItemClickListener = OnItemClickListener { item ->
             openPlayer(item)
         }
 
-        binding.recycleView.layoutManager = LinearLayoutManager(this)
+        binding.recycleView.layoutManager = LinearLayoutManager(context)
         searchAdapter = TrackAdapter(onItemClickListener)
         binding.recycleView.adapter = searchAdapter
 
         binding.updateResponse.setOnClickListener {
-            viewModel.searchDebounce(searchValue)
+            viewModel.searchRequest(searchValue)
         }
     }
-
     private fun renderState(state: SearchState) {
         when (state) {
             is SearchState.ContentHistory -> updateSearchHistoryAdapter(state)
@@ -122,52 +130,40 @@ class SearchActivity : AppCompatActivity() {
             is SearchState.NothingFound -> showEmptyView()
         }
     }
-
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
     }
-
     private fun showContentSearch() {
         binding.recycleView.isVisible = true
         binding.placeholderLayout.isVisible = false
         binding.historyLayout.isVisible = false
     }
-
     private fun updateContentSearch(tracks: List<Track>) {
         showLoading(false)
-        searchAdapter?.let { adapter ->
-            adapter.items.clear()
-            adapter.items.addAll(tracks)
-            adapter.notifyItemRangeChanged(0, adapter.itemCount)
-        }
+        searchAdapter?.items?.clear()
+        searchAdapter?.items?.addAll(tracks)
+        searchAdapter?.itemCount?.let { searchAdapter?.notifyItemRangeChanged(0, it) }
         showContentSearch()
     }
-
     private fun showHistory() {
         binding.recycleView.isVisible = false
         binding.placeholderLayout.isVisible = false
-        binding.historyLayout.isVisible = historyAdapter?.itemCount != 0
+        binding.historyLayout.isVisible = (historyAdapter.itemCount != 0)
     }
-
     private fun updateSearchHistoryAdapter(sdata: SearchState) {
-        historyAdapter?.let { adapter ->
-            adapter.items.clear()
-            if (sdata is SearchState.ContentHistory) {
-                adapter.items.addAll(sdata.data)
-            }
-            adapter.notifyItemRangeChanged(0, adapter.itemCount)
+        historyAdapter.items.clear()
+        if (sdata is SearchState.ContentHistory) {
+            historyAdapter.items.addAll(sdata.data)
         }
+        historyAdapter.notifyItemRangeChanged(0, historyAdapter.itemCount)
         showHistory()
     }
-
     private fun openPlayer(track: Track) {
         binding.searchBar.text.clear()
         if (clickDebounce()) {
             binding.searchBar.text.clear()
             viewModel.addToHistory(track)
-            val intent = Intent(this, TrackPlayerActivity::class.java)
-            intent.putExtra(TRACK_DATA, track)
-            startActivity(intent)
+            startActivity(TrackPlayerActivity.newInstance(requireContext(), track))
         }
     }
 
@@ -176,19 +172,27 @@ class SearchActivity : AppCompatActivity() {
         outState.putString(SEARCH_TEXT, searchValue)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        searchValue = savedInstanceState.getString(SEARCH_TEXT, TEXT_DEF)
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null) {
+            searchValue = savedInstanceState.getString(SEARCH_TEXT, TEXT_DEF)
+        }
     }
 
     private fun clearButtonVisibility(s: CharSequence?, v: ImageView) {
         if (s.isNullOrEmpty()) {
             v.isVisible = false
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
+            view?.let { activity?.hideKeyboard() }
         } else {
             v.isVisible = true
+        }
+    }
+
+    private fun Activity.hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 
@@ -199,25 +203,23 @@ class SearchActivity : AppCompatActivity() {
         binding.placeholderLayout.isVisible = true
         binding.updateResponse.isVisible = false
         binding.placeholderMessage.text = getString(R.string.nothing)
-        searchAdapter?.notifyItemRangeChanged(0, searchAdapter?.itemCount ?: 0)
+        searchAdapter?.let { searchAdapter?.notifyItemRangeChanged(0, it.itemCount) }
         binding.placeholderImage.setImageResource(R.drawable.nothing)
     }
-
     private fun showErrorMessage(additionalMessage: String) {
         showLoading(false)
         binding.recycleView.isVisible = false
         binding.historyLayout.isVisible = false
         binding.placeholderLayout.isVisible = true
         binding.updateResponse.isVisible = true
-        searchAdapter?.notifyItemRangeChanged(0, searchAdapter?.itemCount ?: 0)
+        searchAdapter?.let { searchAdapter?.notifyItemRangeChanged(0, it.itemCount) }
         binding.placeholderImage.setImageResource(R.drawable.connect_error)
         binding.placeholderMessage.text = getString(R.string.connect_error)
         if (additionalMessage.isNotEmpty()) {
-            Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
+            Toast.makeText(context, additionalMessage, Toast.LENGTH_LONG)
                 .show()
         }
     }
-
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {

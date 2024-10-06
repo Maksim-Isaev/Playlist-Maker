@@ -1,13 +1,17 @@
 <resources>
-
+    <!--> Тема для main-->
     <style name="Theme.PlaylistMakerMain" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/yp_blue</item>
         <item name="colorPrimaryVariant">@color/yp_white</item>
         <item name="colorOnPrimary">@color/yp_black</item>
         <item name="colorSecondary">@color/yp_white</item>
-        <item name="android:statusBarColor">@color/yp_blue</item>
-        <item name="android:navigationBarColor">@color/yp_blue</item>
-
+        <item name="android:statusBarColor">@color/yp_white</item>
+        <item name="android:navigationBarColor">@color/yp_white</item>
+        <item name="colorSecondaryVariant">@color/yp_white</item>
+        <item name="thumbTint">@color/yp_text_gray</item>
+        <item name="trackTint">@color/yp_light_gray</item>
+        <item name="buttonStyle">@color/yp_black</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.PlaylistMakerSearch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
