@@ -1,16 +1,18 @@
 package com.practicum.playlistmaker.search.ui
 
 import android.app.Application
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.search.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.search.domain.api.TrackInteractor
 import com.practicum.playlistmaker.search.domain.model.Resource
 import com.practicum.playlistmaker.search.domain.model.Track
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SearchViewModel(
     application: Application,
@@ -19,14 +21,16 @@ class SearchViewModel(
 ) :
     AndroidViewModel(application) {
     private var latestSearchText: String? = null
+    private var searchJob: Job? = null
 
     override fun onCleared() {
         stopSearch()
     }
 
     fun stopSearch() {
-        handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
+        searchJob?.cancel()
     }
+
     private val searchState = MutableLiveData<SearchState>()
     fun observeSearchState(): LiveData<SearchState> = searchState
 
@@ -40,15 +44,12 @@ class SearchViewModel(
         renderState(SearchState.EmptyHistory)
     }
 
-    private val handler = Handler(Looper.getMainLooper())
-
     private fun renderState(state: SearchState) {
         searchState.postValue(state)
     }
 
     private val consumer = object : TrackInteractor.TrackConsumer {
         override fun consume(foundTracks: Resource<List<Track>>) {
-            TODO("Not yet implemented")
         }
 
         override fun consume(foundTracks: Resource<List<Track>>, request: String) {
@@ -103,17 +104,14 @@ class SearchViewModel(
         if (latestSearchText == changedText) {
             return
         }
-        handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
-        val searchRunnable = Runnable { searchRequest(changedText) }
-        handler.postDelayed(
-            searchRunnable,
-            SEARCH_REQUEST_TOKEN,
-            SEARCH_DEBOUNCE_DELAY_MILLIS,
-        )
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(SEARCH_DEBOUNCE_DELAY_MILLIS)
+            searchRequest(changedText)
+        }
     }
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 1000L
-        private val SEARCH_REQUEST_TOKEN = Any()
     }
 }
