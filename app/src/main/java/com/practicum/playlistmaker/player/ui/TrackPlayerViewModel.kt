@@ -1,12 +1,14 @@
 package com.practicum.playlistmaker.player.ui
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.player.domain.api.TrackPlayerInteractor
 import com.practicum.playlistmaker.player.domain.model.PlayingState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class TrackPlayerViewModel(
     private val trackPlayerInteractor: TrackPlayerInteractor,
@@ -20,6 +22,8 @@ class TrackPlayerViewModel(
     companion object {
         private const val TIMER_UPDATE_DELAY = 250L
     }
+
+    private var timerJob: Job? = null
 
     init {
         onPrepare()
@@ -57,24 +61,18 @@ class TrackPlayerViewModel(
         else onPlay()
     }
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val timerRunnable by lazy {
-        object : Runnable {
-            override fun run() {
-                if (playingState.value is PlayingState.Playing) {
-                    positionState.postValue(trackPlayerInteractor.getCurrentPosition())
-                    handler.postDelayed(this, TIMER_UPDATE_DELAY)
-                }
+    private fun startTimer() {
+        timerJob?.cancel()
+        timerJob = viewModelScope.launch {
+            while (playingState.value is PlayingState.Playing) {
+                positionState.postValue(trackPlayerInteractor.getCurrentPosition())
+                delay(TIMER_UPDATE_DELAY)
             }
         }
     }
 
-    private fun startTimer() {
-        handler.post(timerRunnable)
-    }
-
     private fun pauseTimer() {
-        handler.removeCallbacks(timerRunnable)
+        timerJob?.cancel()
     }
 
     fun release() {
