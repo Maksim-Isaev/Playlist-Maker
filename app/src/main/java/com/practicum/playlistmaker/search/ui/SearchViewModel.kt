@@ -8,19 +8,18 @@ import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.search.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.search.domain.api.TrackInteractor
+import com.practicum.playlistmaker.search.domain.model.Resource
 import com.practicum.playlistmaker.search.domain.model.Track
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
     application: Application,
     private val trackInteractor: TrackInteractor,
     private val searchHistorySaver: SearchHistoryInteractor,
-) : AndroidViewModel(application) {
-
+) :
+    AndroidViewModel(application) {
     private var latestSearchText: String? = null
     private var searchJob: Job? = null
 
@@ -49,6 +48,43 @@ class SearchViewModel(
         searchState.postValue(state)
     }
 
+    private val consumer = object : TrackInteractor.TrackConsumer {
+        override fun consume(foundTracks: Resource<List<Track>>) {
+        }
+
+        override fun consume(foundTracks: Resource<List<Track>>, request: String) {
+            when (foundTracks) {
+                is Resource.Error -> renderState(
+                    SearchState.Error(
+                        errorMessage = application.getString(
+                            R.string.connect_error
+                        )
+                    )
+                )
+
+                is Resource.Success -> {
+                    if (foundTracks.data?.isNotEmpty() == true) {
+                        if (request == latestSearchText) {
+                            renderState(SearchState.ContentSearch(foundTracks.data))
+                        }
+                    } else {
+                        renderState(SearchState.NothingFound)
+                    }
+                }
+            }
+        }
+
+        override fun onFailure(t: Throwable) {
+            renderState(
+                SearchState.Error(
+                    errorMessage = application.getString(
+                        R.string.connect_error
+                    )
+                )
+            )
+        }
+    }
+
     init {
         val searchHistory = searchHistorySaver.getHistory()
         if (searchHistory.isEmpty())
@@ -60,21 +96,8 @@ class SearchViewModel(
     fun searchRequest(newSearchText: String) {
         latestSearchText = newSearchText
         renderState(SearchState.Loading)
-        searchJob = viewModelScope.launch {
-            trackInteractor.search(newSearchText)
-                .catch {
-                    renderState(SearchState.Error(errorMessage = getApplication<Application>().getString(R.string.connect_error)))
-                }
-                .collect { tracks ->
-                    if (tracks.isNotEmpty()) {
-                        if (newSearchText == latestSearchText) {
-                            renderState(SearchState.ContentSearch(tracks))
-                        }
-                    } else {
-                        renderState(SearchState.NothingFound)
-                    }
-                }
-        }
+        trackInteractor
+            .search(newSearchText, consumer)
     }
 
     fun searchDebounce(changedText: String) {
