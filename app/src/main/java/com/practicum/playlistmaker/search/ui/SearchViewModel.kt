@@ -6,11 +6,13 @@ import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.search.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.search.domain.api.TrackInteractor
 import com.practicum.playlistmaker.search.domain.model.Resource
 import com.practicum.playlistmaker.search.domain.model.Track
+import com.practicum.playlistmaker.utils.debounce
 
 class SearchViewModel(
     application: Application,
@@ -20,13 +22,6 @@ class SearchViewModel(
     AndroidViewModel(application) {
     private var latestSearchText: String? = null
 
-    override fun onCleared() {
-        stopSearch()
-    }
-
-    fun stopSearch() {
-        handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
-    }
     private val searchState = MutableLiveData<SearchState>()
     fun observeSearchState(): LiveData<SearchState> = searchState
 
@@ -39,8 +34,6 @@ class SearchViewModel(
         searchHistorySaver.clearHistory()
         renderState(SearchState.EmptyHistory)
     }
-
-    private val handler = Handler(Looper.getMainLooper())
 
     private fun renderState(state: SearchState) {
         searchState.postValue(state)
@@ -98,22 +91,20 @@ class SearchViewModel(
         trackInteractor
             .search(newSearchText, consumer)
     }
+    private val trackSearchDebounce =
+        debounce<String>(SEARCH_DEBOUNCE_DELAY_MILLIS, viewModelScope, true) { changedText ->
+            searchRequest(changedText)
+        }
 
     fun searchDebounce(changedText: String) {
         if (latestSearchText == changedText) {
             return
         }
-        handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
-        val searchRunnable = Runnable { searchRequest(changedText) }
-        handler.postDelayed(
-            searchRunnable,
-            SEARCH_REQUEST_TOKEN,
-            SEARCH_DEBOUNCE_DELAY_MILLIS,
-        )
+        trackSearchDebounce(changedText)
     }
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 1000L
-        private val SEARCH_REQUEST_TOKEN = Any()
+
     }
 }

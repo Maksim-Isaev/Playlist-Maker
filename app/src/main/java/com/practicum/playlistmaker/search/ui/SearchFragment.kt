@@ -14,12 +14,14 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.FragmentSearchBinding
 import com.practicum.playlistmaker.player.ui.TrackPlayerActivity
 import com.practicum.playlistmaker.search.domain.model.Track
+import com.practicum.playlistmaker.utils.debounce
 
 
 class SearchFragment : Fragment() {
@@ -32,15 +34,13 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private lateinit var onTrackClickDebounce: (Track) -> Unit
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val TEXT_DEF = ""
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
-
-    private var isClickAllowed = true
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,7 +83,7 @@ class SearchFragment : Fragment() {
             clearButtonVisibility(s, binding.cancelButton)
             searchValue = s.toString()
             if (binding.searchBar.hasFocus() && s?.isEmpty() == true) {
-                viewModel.stopSearch()
+
                 searchAdapter?.itemCount?.let { it1 ->
                     searchAdapter?.notifyItemRangeChanged(
                         0,
@@ -108,9 +108,21 @@ class SearchFragment : Fragment() {
         binding.recycleHistoryView.layoutManager = LinearLayoutManager(context)
         binding.recycleHistoryView.adapter = historyAdapter
 
-        val onItemClickListener = OnItemClickListener { item ->
-            openPlayer(item)
+// Функция для обработки кликов на трек с задержкой
+        onTrackClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { track ->
+            openPlayer(track)
         }
+
+// Создаем слушатель для кликов на элементы
+        val onItemClickListener = OnItemClickListener { item ->
+
+            onTrackClickDebounce(item)
+        }
+
 
         binding.recycleView.layoutManager = LinearLayoutManager(context)
         searchAdapter = TrackAdapter(onItemClickListener)
@@ -160,11 +172,9 @@ class SearchFragment : Fragment() {
     }
     private fun openPlayer(track: Track) {
         binding.searchBar.text.clear()
-        if (clickDebounce()) {
-            binding.searchBar.text.clear()
-            viewModel.addToHistory(track)
-            startActivity(TrackPlayerActivity.newInstance(requireContext(), track))
-        }
+        viewModel.addToHistory(track)
+        startActivity(TrackPlayerActivity.newInstance(requireContext(), track))
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -220,12 +230,5 @@ class SearchFragment : Fragment() {
                 .show()
         }
     }
-    private fun clickDebounce(): Boolean {
-        val current = isClickAllowed
-        if (isClickAllowed) {
-            isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
-        }
-        return current
-    }
+
 }
