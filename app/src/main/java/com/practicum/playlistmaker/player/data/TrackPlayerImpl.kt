@@ -2,52 +2,39 @@ package com.practicum.playlistmaker.player.data
 
 import android.media.MediaPlayer
 import com.practicum.playlistmaker.player.domain.api.TrackPlayerInteractor
-import com.practicum.playlistmaker.player.domain.model.PlayingState
 
-class TrackPlayerImpl(
+
+
+abstract class TrackPlayerImpl(
     private val mediaPlayer: MediaPlayer,
     private val trackUrl: String,
 ) : TrackPlayerInteractor {
 
-    override var state: PlayingState = PlayingState.Default
-
-    override fun prepare() {
-        try {
-            mediaPlayer.reset()
-            mediaPlayer.setDataSource(trackUrl)
-            mediaPlayer.prepareAsync()
-            mediaPlayer.setOnPreparedListener {
-                state = PlayingState.Prepared
-            }
-            mediaPlayer.setOnCompletionListener {
-                state = PlayingState.Complete
-            }
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-            state = PlayingState.Default
+    override fun prepare(onCompletionListener: () -> Unit) {
+        mediaPlayer.setDataSource(trackUrl)
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnCompletionListener {
+            onCompletionListener()
         }
     }
 
     override fun start() {
-        if (state == PlayingState.Prepared || state == PlayingState.Paused) {
-            mediaPlayer.start()
-            state = PlayingState.Playing
-        }
+        mediaPlayer.start()
     }
 
     override fun pause() {
-        if (state == PlayingState.Playing) {
-            mediaPlayer.pause()
-            state = PlayingState.Paused
-        }
+        mediaPlayer.pause()
     }
 
     override fun release() {
         mediaPlayer.release()
-        state = PlayingState.Default
     }
-
     override fun getCurrentPosition(): Int {
         return mediaPlayer.currentPosition
     }
+
+    override fun isPlaying(): Boolean {
+        return mediaPlayer.isPlaying
+    }
+
 }
