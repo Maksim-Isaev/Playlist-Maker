@@ -17,7 +17,6 @@ import com.practicum.playlistmaker.sharing.domain.model.ShareData
 import com.practicum.playlistmaker.sharing.domain.model.TermsData
 import com.practicum.playlistmaker.utils.App
 
-
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
@@ -47,25 +46,19 @@ class SettingsFragment : Fragment() {
             (requireActivity().application as App).switchTheme(checked)
             viewModel.updateThemeState(checked)
         }
-
         binding.share.setOnClickListener {
-            viewModel.observeShareState().observe(viewLifecycleOwner) { sData ->
-                shareTo(sData)
-            }
+            shareTo(viewModel.getShareData())
         }
 
         binding.support.setOnClickListener {
-            viewModel.observeSupportState().observe(viewLifecycleOwner) { mData ->
-                supportTo(mData)
-            }
+            supportTo(viewModel.getMailData())
         }
 
         binding.terms.setOnClickListener {
-            viewModel.observeTermsState().observe(viewLifecycleOwner) { tData ->
-                termsTo(tData)
-            }
+            termsTo(viewModel.getTermsData())
         }
     }
+
     private fun termsTo(tData: TermsData) {
         val share = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_VIEW
@@ -73,6 +66,7 @@ class SettingsFragment : Fragment() {
         }, null)
         startActivity(share)
     }
+
     private fun supportTo(mData: MailData) {
         val share = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_SENDTO
