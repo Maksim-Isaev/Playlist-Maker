@@ -3,9 +3,7 @@ package com.practicum.playlistmaker.player.data
 import android.media.MediaPlayer
 import com.practicum.playlistmaker.player.domain.api.TrackPlayerInteractor
 
-
-
-abstract class TrackPlayerImpl(
+class TrackPlayerImpl(
     private val mediaPlayer: MediaPlayer,
     private val trackUrl: String,
 ) : TrackPlayerInteractor {
@@ -29,6 +27,7 @@ abstract class TrackPlayerImpl(
     override fun release() {
         mediaPlayer.release()
     }
+
     override fun getCurrentPosition(): Int {
         return mediaPlayer.currentPosition
     }
