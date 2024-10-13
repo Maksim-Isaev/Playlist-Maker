@@ -12,25 +12,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
-import com.practicum.playlistmaker.player.domain.model.PlayingState
+import com.practicum.playlistmaker.player.ui.model.PlayerState
 import com.practicum.playlistmaker.search.domain.model.Track
-
+import com.practicum.playlistmaker.utils.convertDpToPx
 import com.practicum.playlistmaker.utils.getReleaseYear
 import java.util.Locale
-
 class TrackPlayerActivity : AppCompatActivity() {
-
     private val binding: ActivityPlayerBinding by lazy {
         ActivityPlayerBinding.inflate(layoutInflater)
     }
 
-    private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
-
-    // Инициализация ViewModel через Koin
-    private val viewModel: TrackPlayerViewModel by viewModel {
-        val track = intent.getParcelableExtra(TRACK_KEY) as? Track
-        parametersOf(track?.previewUrl)
-    }
+    private val dateFormat by lazy { SimpleDateFormat(TIME_PATTERN, Locale.getDefault()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,31 +32,26 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
         val track = intent.getParcelableExtra(TRACK_KEY) as? Track
         if (track != null) {
+            val viewModel: TrackPlayerViewModel by viewModel {
+                parametersOf(track.previewUrl)
+            }
             render(track, viewModel)
 
             viewModel.observePlayingState().observe(this) { state ->
-                binding.playButton.isEnabled = state != PlayingState.Default
                 updateState(state)
-                viewModel.stateControl()
             }
 
-            viewModel.observePositionState().observe(this) {
-                binding.playingTime.text = dateFormat.format(it)
-            }
         } else {
             binding.albumCover.setImageResource(R.drawable.nothing)
         }
     }
 
     private fun render(track: Track, viewModel: TrackPlayerViewModel) {
-        Glide.with(this)
-            .load(track.getCoverArtwork())
-            .placeholder(R.drawable.ic_placeholder)
-            .centerCrop()
-            .transform(RoundedCorners(dpToPx(8f)))
+        binding.playButton.isEnabled = false
+        Glide.with(this).load(track.getCoverArtwork()).placeholder(R.drawable.ic_placeholder)
+            .centerCrop().transform(RoundedCorners(convertDpToPx(8f, this)))
             .into(binding.albumCover)
         binding.title.text = track.trackName
         binding.artistName.text = track.artistName
@@ -79,46 +66,19 @@ class TrackPlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateState(state: PlayingState) {
-        when (state) {
-            PlayingState.Default,
-            PlayingState.Prepared,
-            PlayingState.Paused,
-            -> binding.playButton.setImageDrawable(
-                AppCompatResources.getDrawable(
-                    this, R.drawable.ic_play
-                )
-            )
-
-            PlayingState.Playing -> binding.playButton.setImageDrawable(
-                AppCompatResources.getDrawable(
-                    this, R.drawable.ic_pause
-                )
-            )
-
-            PlayingState.Complete -> {
-                binding.playButton.setImageDrawable(
-                    AppCompatResources.getDrawable(
-                        this, R.drawable.ic_play
-                    )
-                )
-                binding.playingTime.text = getString(R.string.time_zero)
-            }
-        }
+    private fun updateState(state: PlayerState) {
+        binding.playButton.isEnabled = state.isPlayButtonEnabled
+        binding.playingTime.text = state.progress
+        binding.playButton.setImageDrawable(AppCompatResources.getDrawable(this, state.buttonIcon))
     }
 
     companion object {
-
+        private const val TIME_PATTERN = "mm:ss"
         const val TRACK_KEY = "TRACK_KEY"
-
         fun newInstance(context: Context, track: Track): Intent {
             return Intent(context, TrackPlayerActivity::class.java).apply {
                 putExtra(TRACK_KEY, track)
             }
         }
-    }
-
-    private fun dpToPx(dp: Float): Int {
-        return (dp * resources.displayMetrics.density).toInt()
     }
 }

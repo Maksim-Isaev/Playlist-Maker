@@ -1,9 +1,10 @@
 package com.practicum.playlistmaker.settings.ui
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
+import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.settings.domain.MainThemeInteractor
 import com.practicum.playlistmaker.sharing.domain.api.SharingRepository
 import com.practicum.playlistmaker.sharing.domain.model.MailData
@@ -11,29 +12,11 @@ import com.practicum.playlistmaker.sharing.domain.model.ShareData
 import com.practicum.playlistmaker.sharing.domain.model.TermsData
 
 class SettingsViewModel(
-    sharingRepository: SharingRepository,
+    private val application: Application,
     private val themeInteractor: MainThemeInteractor,
-) : ViewModel() {
+) : ViewModel(), SharingRepository {
 
 
-    private val _termsState = MutableLiveData<TermsData>()
-    val termsState: LiveData<TermsData> get() = _termsState
-
-    private val _shareState = MutableLiveData<ShareData>()
-    val shareState: LiveData<ShareData> get() = _shareState
-
-    private val _supportState = MutableLiveData<MailData>()
-    val supportState: LiveData<MailData> get() = _supportState
-
-    init {
-        _termsState.postValue(sharingRepository.getTermsData())
-        _shareState.postValue(sharingRepository.getShareData())
-        _supportState.postValue(sharingRepository.getMailData())
-    }
-
-    fun observeTermsState(): LiveData<TermsData> = termsState
-    fun observeShareState(): LiveData<ShareData> = shareState
-    fun observeSupportState(): LiveData<MailData> = supportState
 
     private val isNightThemeEnabled = MutableLiveData(themeInteractor.isNightTheme())
     fun updateThemeState(isNightTheme: Boolean) {
@@ -42,4 +25,26 @@ class SettingsViewModel(
     }
 
     fun observeThemeState(): LiveData<Boolean> = isNightThemeEnabled
+
+    override fun getShareData(): ShareData {
+        return ShareData(
+            url = application.getString(R.string.practicum_Web),
+            title = application.getString(R.string.practikumHeader)
+        )
+    }
+
+    override fun getMailData(): MailData {
+        return MailData(
+            mail = application.getString(R.string.supportMail),
+            subject = application.getString(R.string.suportSubject),
+            text = application.getString(R.string.supportText),
+            title = application.getString(R.string.practikumHeader)
+        )
+    }
+
+    override fun getTermsData(): TermsData {
+        return TermsData(
+            link = application.getString(R.string.termsLink),
+        )
+    }
 }

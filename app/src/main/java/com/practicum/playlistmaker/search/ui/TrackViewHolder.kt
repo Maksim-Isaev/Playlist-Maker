@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.search.domain.model.Track
-import com.practicum.playlistmaker.utils.convertToPx
+import com.practicum.playlistmaker.utils.convertDpToPx
 
 import java.util.Locale
 
@@ -29,7 +29,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .load(model.artworkUrl100)
             .placeholder(R.drawable.ic_placeholder)
             .centerCrop()
-            .transform(RoundedCorners(convertToPx(2f, itemView.context)))
+            .transform(RoundedCorners(convertDpToPx(2f, itemView.context)))
             .into(albumImage)
 
     }

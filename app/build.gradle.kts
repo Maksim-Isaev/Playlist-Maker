@@ -58,5 +58,6 @@ dependencies {
     implementation("androidx.room:room-ktx:2.4.3")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     testImplementation(libs.junit.junit)
 }
