@@ -9,6 +9,14 @@
     android:theme="@style/Theme.PlaylistMakerMedia"
     tools:context=".media.ui.media.FavoritesFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_16"
+        android:visibility="gone"
+        tools:listitem="@layout/item_search" />
+
     <ImageView
         android:id="@+id/placeholder_image"
         android:layout_width="wrap_content"
