@@ -1,7 +1,7 @@
-package com.practicum.playlistmaker.search.data.repository
+package com.practicum.playlistmaker.media.data.repository
 
-import com.practicum.playlistmaker.search.data.db.AppDatabase
-import com.practicum.playlistmaker.search.data.db.entity.FavoritesEntity
+import com.practicum.playlistmaker.media.data.db.AppDatabase
+import com.practicum.playlistmaker.media.data.db.entity.FavoritesEntity
 import com.practicum.playlistmaker.search.domain.model.Track
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow

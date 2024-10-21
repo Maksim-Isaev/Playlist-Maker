@@ -5,11 +5,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import com.practicum.playlistmaker.media.ui.media.FavoritesViewModel
 import com.practicum.playlistmaker.media.ui.media.PlaylistViewModel
-import com.practicum.playlistmaker.search.data.db.AppDatabase
-import com.practicum.playlistmaker.search.data.repository.FavoritesRepo
-import com.practicum.playlistmaker.search.data.repository.FavoritesRepoImpl
+import com.practicum.playlistmaker.media.data.db.AppDatabase
+import com.practicum.playlistmaker.media.data.repository.FavoritesRepo
+import com.practicum.playlistmaker.media.data.repository.FavoritesRepoImpl
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.scope.get
 
 val mediaModule = module {
     viewModel {

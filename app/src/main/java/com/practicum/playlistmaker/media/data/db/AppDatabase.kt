@@ -1,9 +1,9 @@
-package com.practicum.playlistmaker.search.data.db
+package com.practicum.playlistmaker.media.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.practicum.playlistmaker.search.data.db.dao.FavoritesDao
-import com.practicum.playlistmaker.search.data.db.entity.FavoritesEntity
+import com.practicum.playlistmaker.media.data.db.dao.FavoritesDao
+import com.practicum.playlistmaker.media.data.db.entity.FavoritesEntity
 
 
 @Database(entities = [FavoritesEntity::class], version = 1)
