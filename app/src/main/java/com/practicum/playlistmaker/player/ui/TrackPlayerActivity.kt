@@ -8,15 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
 import com.practicum.playlistmaker.player.ui.model.PlayerState
 import com.practicum.playlistmaker.search.domain.model.Track
 import com.practicum.playlistmaker.utils.convertDpToPx
 import com.practicum.playlistmaker.utils.getReleaseYear
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.util.Locale
+
 class TrackPlayerActivity : AppCompatActivity() {
     private val binding: ActivityPlayerBinding by lazy {
         ActivityPlayerBinding.inflate(layoutInflater)
@@ -38,6 +39,14 @@ class TrackPlayerActivity : AppCompatActivity() {
                 parametersOf(track.previewUrl)
             }
             render(track, viewModel)
+
+            binding.favoriteBtn.setOnClickListener {
+                viewModel.onFavoriteClick(track)
+            }
+
+            viewModel.observeFavoriteState().observe(this) { state ->
+                updateFavoriteState(state)
+            }
 
             viewModel.observePlayingState().observe(this) { state ->
                 updateState(state)
@@ -63,6 +72,15 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.country.text = track.country
         binding.playButton.setOnClickListener {
             viewModel.playingControl()
+        }
+        updateFavoriteState(track.isFavorite)
+    }
+
+    private fun updateFavoriteState(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.favoriteBtn.setImageResource(R.drawable.ic_liked)
+        } else {
+            binding.favoriteBtn.setImageResource(R.drawable.ic_like)
         }
     }
 

@@ -15,12 +15,12 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.FragmentSearchBinding
 import com.practicum.playlistmaker.player.ui.TrackPlayerActivity
 import com.practicum.playlistmaker.search.domain.model.Track
 import com.practicum.playlistmaker.utils.debounce
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SearchFragment : Fragment() {
@@ -59,11 +59,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val onHistoryItemClickListener = OnItemClickListener { item ->
-            openPlayer(item)
-        }
-        historyAdapter = TrackAdapter(onHistoryItemClickListener)
-
         binding.cancelButton.setOnClickListener {
             binding.searchBar.text.clear()
             clearSearchAdapter()
@@ -100,15 +95,19 @@ class SearchFragment : Fragment() {
             false
         }
 
-        binding.recycleHistoryView.layoutManager = LinearLayoutManager(context)
-        binding.recycleHistoryView.adapter = historyAdapter
+
         onTrackClickDebounce = debounce<Track>(
             CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false
         ) { track -> openPlayer(track) }
         val onItemClickListener = OnItemClickListener { item ->
             onTrackClickDebounce(item)
         }
-
+        val onHistoryItemClickListener = OnItemClickListener { item ->
+            onTrackClickDebounce(item)
+        }
+        historyAdapter = TrackAdapter(onHistoryItemClickListener)
+        binding.recycleHistoryView.layoutManager = LinearLayoutManager(context)
+        binding.recycleHistoryView.adapter = historyAdapter
         binding.recycleSearchView.layoutManager = LinearLayoutManager(context)
         searchAdapter = TrackAdapter(onItemClickListener)
         binding.recycleSearchView.adapter = searchAdapter

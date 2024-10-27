@@ -60,9 +60,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_16"
         android:visibility="gone"
-        tools:listitem="@layout/item_search"/>
-
-
+        tools:listitem="@layout/track_item" />
 
     <LinearLayout
         android:id="@+id/placeholder_layout"
@@ -124,7 +122,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_weight="1"
-            tools:listitem="@layout/item_search">
+            tools:listitem="@layout/track_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 

@@ -2,19 +2,18 @@ package com.practicum.playlistmaker.search.ui
 
 
 import android.app.Application
-
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.search.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.search.domain.api.TrackInteractor
 import com.practicum.playlistmaker.search.domain.model.SearchResult
 import com.practicum.playlistmaker.search.domain.model.Track
 import com.practicum.playlistmaker.utils.debounce
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class SearchViewModel(
     application: Application,
@@ -38,7 +37,11 @@ class SearchViewModel(
     }
 
     fun updateHistory() {
-        renderState(SearchState.ContentHistory(searchHistorySaver.getHistory()))
+        viewModelScope.launch {
+            searchHistorySaver.getHistory().collect { tracks ->
+                renderState(SearchState.ContentHistory(tracks))
+            }
+        }
     }
 
     private fun renderState(state: SearchState) {

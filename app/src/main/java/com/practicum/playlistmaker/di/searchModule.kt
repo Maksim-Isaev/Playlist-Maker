@@ -14,12 +14,12 @@ import com.practicum.playlistmaker.search.domain.api.TrackRepository
 import com.practicum.playlistmaker.search.domain.impl.SearchHistoryInteractorImpl
 import com.practicum.playlistmaker.search.domain.impl.TrackInteractorImpl
 import com.practicum.playlistmaker.search.ui.SearchViewModel
+import com.practicum.playlistmaker.utils.PLAYLISTMAKER_PREFERENCES
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.practicum.playlistmaker.utils.PLAYLISTMAKER_PREFERENCES
 
 val searchModule = module {
     single {
@@ -37,9 +37,19 @@ val searchModule = module {
 
 
     single<TrackRepository> { TrackRepositoryImpl(get()) }
-    single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
+    single<SearchHistoryRepository> {
+        SearchHistoryRepositoryImpl(
+            get(),
+            get()
+        )
+    }
 
-    factory<SearchHistoryInteractor> { SearchHistoryInteractorImpl(get()) }
+    factory<SearchHistoryInteractor> {
+        SearchHistoryInteractorImpl(
+            get(),
+            get()
+        )
+    }
     factory<TrackInteractor> { TrackInteractorImpl(get()) }
 
     viewModel {

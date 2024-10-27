@@ -2,11 +2,12 @@ package com.practicum.playlistmaker.media.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.practicum.playlistmaker.media.data.db.dao.FavoritesDao
-import com.practicum.playlistmaker.media.data.db.entity.FavoritesEntity
+import com.practicum.playlistmaker.media.data.db.dao.TrackDao
+import com.practicum.playlistmaker.media.data.db.entity.TrackEntity
 
 
-@Database(entities = [FavoritesEntity::class], version = 1)
+@Database(version = 1, entities = [TrackEntity::class])
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun favoritesDao(): FavoritesDao
+
+    abstract fun trackDao(): TrackDao
 }

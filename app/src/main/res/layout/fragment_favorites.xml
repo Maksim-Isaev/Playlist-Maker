@@ -6,16 +6,26 @@
     android:id="@+id/media_favorites"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PlaylistMakerMedia"
+    android:theme="@style/Theme.PlaylistMakerSearch"
     tools:context=".media.ui.media.FavoritesFragment">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_tags="placeholder" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favorites"
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_16"
         android:visibility="gone"
-        tools:listitem="@layout/item_search" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/track_item" />
 
     <ImageView
         android:id="@+id/placeholder_image"

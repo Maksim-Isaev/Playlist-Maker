@@ -7,7 +7,7 @@ import com.practicum.playlistmaker.R
 sealed class PlayerState(
     val isPlayButtonEnabled: Boolean,
     @DrawableRes val buttonIcon: Int,
-    val progress: String
+    val progress: String,
 ) {
     class Default : PlayerState(false, R.drawable.ic_play, "00:00")
 
