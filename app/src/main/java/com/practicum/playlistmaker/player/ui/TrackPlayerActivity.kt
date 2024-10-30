@@ -18,7 +18,6 @@ import com.practicum.playlistmaker.utils.convertDpToPx
 import com.practicum.playlistmaker.utils.getPreviewUrl
 import com.practicum.playlistmaker.utils.getReleaseYear
 import java.util.Locale
-import kotlin.getValue
 
 class TrackPlayerActivity : AppCompatActivity() {
     private val binding: ActivityPlayerBinding by lazy {
@@ -69,7 +68,7 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.playingTime.text = getString(R.string.time_zero)
         binding.duration.text = dateFormat.format(track.trackTimeMillis)
         binding.album.text = track.collectionName
-        binding.year.text = getReleaseYear(track.releaseDate)
+        binding.year.text = getReleaseYear(track.releaseDate ?: "")
         binding.genre.text = track.primaryGenreName
         binding.country.text = track.country
         binding.playButton.setOnClickListener {

@@ -95,7 +95,6 @@ class SearchFragment : Fragment() {
             false
         }
 
-
         onTrackClickDebounce = debounce<Track>(
             CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false
         ) { track -> openPlayer(track) }
@@ -169,10 +168,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun openPlayer(track: Track) {
-        binding.searchBar.text.clear()
+
         viewModel.addToHistory(track)
         startActivity(TrackPlayerActivity.newInstance(requireContext(), track))
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

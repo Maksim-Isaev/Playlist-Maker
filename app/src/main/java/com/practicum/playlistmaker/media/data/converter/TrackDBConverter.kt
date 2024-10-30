@@ -2,6 +2,7 @@ package com.practicum.playlistmaker.media.data.converter
 
 import com.practicum.playlistmaker.media.data.db.entity.TrackEntity
 import com.practicum.playlistmaker.search.domain.model.Track
+import com.practicum.playlistmaker.utils.getPreviewUrl
 
 class TrackDBConverter {
     fun map(track: Track): TrackEntity {
@@ -11,9 +12,9 @@ class TrackDBConverter {
             artistName = track.artistName,
             trackTimeMillis = track.trackTimeMillis,
             artworkUrl100 = track.artworkUrl100,
-            previewUrl = track.previewUrl,
+            previewUrl = getPreviewUrl(track.previewUrl),
             collectionName = track.collectionName,
-            primaryGenreName = track.primaryGenreName,
+            primaryGenreName = track.primaryGenreName ?: "unknown",
             releaseDate = track.releaseDate.orEmpty(),
             country = track.country,
             addedAt = System.currentTimeMillis().toString()
