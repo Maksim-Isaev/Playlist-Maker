@@ -3,7 +3,7 @@ package com.practicum.playlistmaker.media.data.repository
 import com.practicum.playlistmaker.media.data.converter.TrackDBConverter
 import com.practicum.playlistmaker.media.data.db.AppDatabase
 import com.practicum.playlistmaker.media.data.db.entity.TrackEntity
-import com.practicum.playlistmaker.media.domain.db.FavoritesRepository
+import com.practicum.playlistmaker.media.domain.api.FavoritesRepository
 import com.practicum.playlistmaker.search.domain.model.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

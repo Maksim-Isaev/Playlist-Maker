@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.media.ui.media
+package com.practicum.playlistmaker.media.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,11 +32,11 @@ class FavoritesFragment : Fragment() {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val onTrackClickDebounce = debounce<Track>(
@@ -73,6 +73,7 @@ class FavoritesFragment : Fragment() {
         super.onResume()
         viewModel.refreshFavoriteTracks()
     }
+
     companion object {
         fun newInstance() = FavoritesFragment()
         private const val CLICK_DEBOUNCE_DELAY = 1000L

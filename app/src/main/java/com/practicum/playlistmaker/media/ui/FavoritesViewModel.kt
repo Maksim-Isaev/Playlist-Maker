@@ -1,10 +1,10 @@
-package com.practicum.playlistmaker.media.ui.media
+package com.practicum.playlistmaker.media.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practicum.playlistmaker.media.domain.db.FavoritesInteractor
+import com.practicum.playlistmaker.media.domain.api.FavoritesInteractor
 import com.practicum.playlistmaker.search.domain.model.Track
 import kotlinx.coroutines.launch
 
@@ -24,6 +24,4 @@ class FavoritesViewModel(private val favoritesInteractor: FavoritesInteractor) :
     init {
         refreshFavoriteTracks()
     }
-
-
 }

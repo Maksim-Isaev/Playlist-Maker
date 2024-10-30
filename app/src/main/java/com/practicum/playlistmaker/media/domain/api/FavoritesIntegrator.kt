@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.media.domain.db
+package com.practicum.playlistmaker.media.domain.api
 
 
 import com.practicum.playlistmaker.search.domain.model.Track

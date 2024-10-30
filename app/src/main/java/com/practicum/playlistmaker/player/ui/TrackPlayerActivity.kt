@@ -8,15 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
 import com.practicum.playlistmaker.player.ui.model.PlayerState
 import com.practicum.playlistmaker.search.domain.model.Track
 import com.practicum.playlistmaker.utils.convertDpToPx
+import com.practicum.playlistmaker.utils.getPreviewUrl
 import com.practicum.playlistmaker.utils.getReleaseYear
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import java.util.Locale
+import kotlin.getValue
 
 class TrackPlayerActivity : AppCompatActivity() {
     private val binding: ActivityPlayerBinding by lazy {
@@ -36,7 +38,7 @@ class TrackPlayerActivity : AppCompatActivity() {
         val track = intent.getParcelableExtra(TRACK_KEY) as? Track
         if (track != null) {
             val viewModel: TrackPlayerViewModel by viewModel {
-                parametersOf(track.previewUrl)
+                parametersOf(getPreviewUrl(track.previewUrl))
             }
             render(track, viewModel)
 
