@@ -7,7 +7,7 @@
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
     android:theme="@style/Theme.PlaylistMakerMedia"
-    tools:context=".media.ui.media.MediaFragment">
+    tools:context=".media.ui.MediaFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

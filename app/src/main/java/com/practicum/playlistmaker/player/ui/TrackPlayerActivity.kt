@@ -15,8 +15,10 @@ import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
 import com.practicum.playlistmaker.player.ui.model.PlayerState
 import com.practicum.playlistmaker.search.domain.model.Track
 import com.practicum.playlistmaker.utils.convertDpToPx
+import com.practicum.playlistmaker.utils.getPreviewUrl
 import com.practicum.playlistmaker.utils.getReleaseYear
 import java.util.Locale
+
 class TrackPlayerActivity : AppCompatActivity() {
     private val binding: ActivityPlayerBinding by lazy {
         ActivityPlayerBinding.inflate(layoutInflater)
@@ -35,9 +37,17 @@ class TrackPlayerActivity : AppCompatActivity() {
         val track = intent.getParcelableExtra(TRACK_KEY) as? Track
         if (track != null) {
             val viewModel: TrackPlayerViewModel by viewModel {
-                parametersOf(track.previewUrl)
+                parametersOf(getPreviewUrl(track.previewUrl))
             }
             render(track, viewModel)
+
+            binding.favoriteBtn.setOnClickListener {
+                viewModel.onFavoriteClick(track)
+            }
+
+            viewModel.observeFavoriteState().observe(this) { state ->
+                updateFavoriteState(state)
+            }
 
             viewModel.observePlayingState().observe(this) { state ->
                 updateState(state)
@@ -58,11 +68,20 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.playingTime.text = getString(R.string.time_zero)
         binding.duration.text = dateFormat.format(track.trackTimeMillis)
         binding.album.text = track.collectionName
-        binding.year.text = getReleaseYear(track.releaseDate)
+        binding.year.text = getReleaseYear(track.releaseDate ?: "")
         binding.genre.text = track.primaryGenreName
         binding.country.text = track.country
         binding.playButton.setOnClickListener {
             viewModel.playingControl()
+        }
+        updateFavoriteState(track.isFavorite)
+    }
+
+    private fun updateFavoriteState(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.favoriteBtn.setImageResource(R.drawable.ic_liked)
+        } else {
+            binding.favoriteBtn.setImageResource(R.drawable.ic_like)
         }
     }
 

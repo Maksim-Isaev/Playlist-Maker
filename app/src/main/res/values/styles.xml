@@ -31,7 +31,7 @@
         <item name="android:textColorHint">?attr/colorSecondaryVariant</item>
         <item name="android:inputType">text</item>
         <item name="android:drawableStart">@drawable/ic_search</item>
-        <item name="android:drawableTint">?attr/colorOnSecondary</item>
+        <item name="android:drawableTint">?attr/colorSecondaryVariant</item>
         <item name="android:drawablePadding">@dimen/dp_16</item>
         <item name="android:padding">@dimen/dp_8</item>
         <item name="android:paddingStart">@dimen/dp_13</item>
