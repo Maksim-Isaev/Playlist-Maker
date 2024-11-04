@@ -31,7 +31,7 @@
             android:autofillHints=""
             android:imeOptions="actionDone"
             android:singleLine="true"
-            tools:text="WWwwwWWWWWWWwWWWwwwWWWwwwWWW"/>
+            tools:text="WWwwwWWWWWWWwWWWwwwWWWwwwWWW" />
 
         <ImageView
             android:id="@+id/cancel_button"
@@ -43,7 +43,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_cancel"
             android:visibility="gone"
-            app:tint="?attr/colorOnSecondary"/>
+            app:tint="?attr/colorSecondaryVariant"/>
     </FrameLayout>
 
     <ProgressBar
