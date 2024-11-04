@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_8"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/track_name"
@@ -33,10 +34,13 @@
             android:gravity="start|center_vertical"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="@dimen/text_16"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="No Reply"/>
 
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_1"
             android:layout_marginBottom="@dimen/dp_14"
@@ -47,40 +51,44 @@
                 android:id="@+id/artist_name"
                 style="@style/SearchTextStyleView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="@dimen/text_11"
+                android:maxLines="1"
+
                 tools:text="The Beatles"/>
 
-            <TextView
-                android:id="@+id/text_spacer"
-                style="@style/SearchTextStyleView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_separator"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="@dimen/text_11"/>
 
-            <TextView
-                android:id="@+id/track_time"
-                style="@style/SearchTextStyleView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="@dimen/text_11"
-                tools:text="5:12"/>
+      <TextView
+          android:id="@+id/text_spacer"
+          style="@style/SearchTextStyleView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/text_separator"
+          android:textColor="?attr/colorOnSecondary"
+          android:textSize="@dimen/text_11"/>
 
-        </LinearLayout>
+      <TextView
+          android:id="@+id/track_time"
+          style="@style/SearchTextStyleView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="?attr/colorOnSecondary"
+          android:textSize="@dimen/text_11"
+          tools:text="5:12"/>
 
-    </LinearLayout>
+  </LinearLayout>
 
-    <ImageView
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/dp_8"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:backgroundTint="?attr/colorSecondaryVariant"
-        app:srcCompat="@drawable/ic_forward_arrow"/>
+</LinearLayout>
+
+<ImageView
+  android:layout_width="@dimen/dp_24"
+  android:layout_height="@dimen/dp_24"
+  android:layout_gravity="center"
+  android:layout_marginStart="@dimen/dp_8"
+  android:layout_marginEnd="@dimen/dp_12"
+  android:backgroundTint="?attr/colorSecondaryVariant"
+  app:srcCompat="@drawable/ic_forward_arrow"/>
 
 </LinearLayout>
