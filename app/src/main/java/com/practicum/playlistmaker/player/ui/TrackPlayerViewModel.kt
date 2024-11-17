@@ -1,24 +1,27 @@
 package com.practicum.playlistmaker.player.ui
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practicum.playlistmaker.media.domain.api.FavoritesInteractor
-import com.practicum.playlistmaker.player.domain.api.TrackPlayerInteractor
-import com.practicum.playlistmaker.player.ui.model.PlayerState
-import com.practicum.playlistmaker.search.domain.model.Track
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.practicum.playlistmaker.media.domain.api.FavoritesInteractor
+import com.practicum.playlistmaker.media.domain.api.PlaylistInteractor
+import com.practicum.playlistmaker.media.ui.model.Playlist
+import com.practicum.playlistmaker.player.domain.api.TrackPlayerInteractor
+import com.practicum.playlistmaker.player.ui.model.AddToPlaylistState
+import com.practicum.playlistmaker.player.ui.model.PlayerState
+import com.practicum.playlistmaker.search.domain.model.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class TrackPlayerViewModel(
     private val trackPlayerInteractor: TrackPlayerInteractor,
     private val favoritesInteractor: FavoritesInteractor,
+    private val playlistInteractor: PlaylistInteractor,
 ) : ViewModel() {
 
     private val playerState = MutableLiveData<PlayerState>(PlayerState.Default())
@@ -27,7 +30,11 @@ class TrackPlayerViewModel(
     private val favoriteState = MutableLiveData<Boolean>()
     fun observeFavoriteState(): LiveData<Boolean> = favoriteState
 
+    private val addedToPlaylistState = MutableLiveData<AddToPlaylistState>()
+    fun observeAddingToPlaylistState(): LiveData<AddToPlaylistState> = addedToPlaylistState
 
+    private val playlists = MutableLiveData<List<Playlist>>()
+    fun observePlaylists(): LiveData<List<Playlist>> = playlists
 
     private var timerJob: Job? = null
 
@@ -39,8 +46,7 @@ class TrackPlayerViewModel(
         trackPlayerInteractor.prepare(onCompletionListener = {
             timerJob?.cancel()
             playerState.postValue(PlayerState.Prepared())
-        }
-        )
+        })
         playerState.postValue(PlayerState.Prepared())
     }
 
@@ -77,6 +83,7 @@ class TrackPlayerViewModel(
             "mm:ss", Locale.getDefault()
         ).format(trackPlayerInteractor.getCurrentPosition()) ?: "00:00"
     }
+
     fun onFavoriteClick(track: Track) {
         when (track.isFavorite) {
             true -> {
@@ -94,6 +101,27 @@ class TrackPlayerViewModel(
         favoriteState.postValue(!track.isFavorite)
     }
 
+    fun onAddToPlaylistClick(trackId: String, playlist: Playlist) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addedToPlaylistState.postValue(
+                AddToPlaylistState(
+                    playlistInteractor.addToPlaylist(
+                        trackId,
+                        playlist.id
+                    ), playlist
+                )
+            )
+        }
+    }
+
+    fun updatePlaylists() {
+        viewModelScope.launch(Dispatchers.IO) {
+            playlistInteractor.getPlaylists().collect {
+                playlists.postValue(it)
+            }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         playerState.value = PlayerState.Default()
@@ -104,3 +132,4 @@ class TrackPlayerViewModel(
         private const val TIMER_UPDATE_DELAY = 300L
     }
 }
+
