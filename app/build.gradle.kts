@@ -7,7 +7,7 @@ plugins {
 
 
 android {
-    namespace = "ru.xrom.playlistmaker"
+    namespace = "com.practicum.playlistmaker"
     compileSdk = 35
 
     defaultConfig {
