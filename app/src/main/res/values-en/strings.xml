@@ -36,4 +36,18 @@
     <string name="empty_playlists">You haven\'t created any playlists</string>
     <string name="playlists">Playlists</string>
     <string name="favorite_tracks">Favorite tracks</string>
+    <string name="new_playlist">New playlist</string>
+    <string name="playlist_name">Title*</string>
+    <string name="playlist_description">Description</string>
+    <string name="create">To create</string>
+    <string name="exit_title">Finish creating a playlist?</string>
+    <string name="exit_message">All unsaved data will be lost</string>
+    <string name="finish">Complete</string>
+    <string name="trackss">%d tracks</string>
+    <string name="track">%d track</string>
+    <string name="tracks">%d of the track</string>
+    <string name="playlist_created">Playlist %s created</string>
+    <string name="add_to_playlist">Add to Playlist</string>
+    <string name="playlist_added">Added to %s playlist</string>
+    <string name="playlist_not_added">The track has already been added to the playlist %s</string>
 </resources>
