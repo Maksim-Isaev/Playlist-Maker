@@ -19,6 +19,7 @@ val playerModule = module {
     viewModel { (url: String) ->
         TrackPlayerViewModel(
             trackPlayerInteractor = get<TrackPlayerInteractor>(parameters = { parametersOf(url) }),
+            get(),
             get()
         )
     }
