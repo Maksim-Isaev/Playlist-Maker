@@ -162,12 +162,12 @@ class TrackPlayerActivity : AppCompatActivity() {
 
 
         } else {
-            binding.albumCover.setImageResource(R.drawable.ic_nothing_found)
+            binding.albumCover.setImageResource(R.drawable.nothing)
         }
     }
     private fun render(track: Track, viewModel: TrackPlayerViewModel) {
         binding.playButton.isEnabled = false
-        Glide.with(this).load(track.getCoverArtwork()).placeholder(R.drawable.ic_cover_placeholder)
+        Glide.with(this).load(track.getCoverArtwork()).placeholder(R.drawable.ic_placeholder)
             .centerCrop().transform(RoundedCorners(convertDpToPx(8f, this)))
             .into(binding.albumCover)
         binding.title.text = track.trackName
@@ -175,7 +175,7 @@ class TrackPlayerActivity : AppCompatActivity() {
         binding.playingTime.text = getString(R.string.time_zero)
         binding.duration.text = dateFormat.format(track.trackTimeMillis)
         binding.album.text = track.collectionName
-        binding.year.text = getReleaseYear(track.releaseDate)
+        binding.year.text = track.releaseDate?.let { getReleaseYear(it) }
         binding.genre.text = track.primaryGenreName
         binding.country.text = track.country
         binding.playButton.setOnClickListener {
@@ -185,9 +185,9 @@ class TrackPlayerActivity : AppCompatActivity() {
     }
     private fun updateFavoriteState(isFavorite: Boolean) {
         if (isFavorite) {
-            binding.favoriteBtn.setImageResource(R.drawable.ic_favorite_liked)
+            binding.favoriteBtn.setImageResource(R.drawable.ic_liked)
         } else {
-            binding.favoriteBtn.setImageResource(R.drawable.ic_favorite_unliked)
+            binding.favoriteBtn.setImageResource(R.drawable.ic_like)
         }
     }
     private fun updateState(state: PlayerState) {

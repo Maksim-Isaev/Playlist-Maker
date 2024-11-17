@@ -32,9 +32,6 @@
             android:textColor="?attr/colorOnPrimary"
             tools:text="Playlist name" />
 
-
-
-
         <TextView
             android:id="@+id/playlist_tracks"
             android:layout_width="match_parent"
