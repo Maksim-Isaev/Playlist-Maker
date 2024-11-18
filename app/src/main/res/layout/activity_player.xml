@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:theme="@style/Theme.PlaylistMakerSearch"
     tools:context=".player.ui.TrackPlayerActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -29,8 +27,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_height="?attr/actionBarSize"
             app:contentInsetStartWithNavigation="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -43,26 +40,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/dp_24" />
+            app:layout_constraintGuide_percent="0.1" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/rightBorder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/dp_24" />
+            app:layout_constraintGuide_percent="0.9" />
 
         <ImageView
             android:id="@+id/album_cover"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/dp_26"
+            android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_placeholder"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/rightBorder"
             app:layout_constraintStart_toStartOf="@id/leftBorder"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintHeight_percent="0.4" />
 
         <TextView
             android:id="@+id/title"
@@ -141,7 +139,7 @@
 
         <TextView
             android:id="@+id/duration_label"
-            style="@style/TrackPlayerActivityLeftText"
+            style="@style/PlayerTextLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_16"
@@ -152,7 +150,7 @@
 
         <TextView
             android:id="@+id/album_label"
-            style="@style/TrackPlayerActivityLeftText"
+            style="@style/PlayerTextLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/album"
@@ -164,7 +162,7 @@
 
         <TextView
             android:id="@+id/year_label"
-            style="@style/TrackPlayerActivityLeftText"
+            style="@style/PlayerTextLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/year"
@@ -174,7 +172,7 @@
 
         <TextView
             android:id="@+id/genre_label"
-            style="@style/TrackPlayerActivityLeftText"
+            style="@style/PlayerTextLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/genre"
@@ -184,7 +182,7 @@
 
         <TextView
             android:id="@+id/country_label"
-            style="@style/TrackPlayerActivityLeftText"
+            style="@style/PlayerTextLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/country"
@@ -194,7 +192,7 @@
 
         <TextView
             android:id="@+id/duration"
-            style="@style/TrackPlayerActivityRightText"
+            style="@style/PlayerTextRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_16"
@@ -205,7 +203,7 @@
 
         <TextView
             android:id="@+id/album"
-            style="@style/TrackPlayerActivityRightText"
+            style="@style/PlayerTextRight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
@@ -216,11 +214,11 @@
             app:layout_constraintEnd_toEndOf="@id/duration"
             app:layout_constraintStart_toEndOf="@id/album_label"
             app:layout_constraintTop_toBottomOf="@id/duration"
-            tools:text="Yesterday (Remastered 2009)" />
+            tools:text="[Yesterday (Remastered 2009)]" />
 
         <TextView
             android:id="@+id/year"
-            style="@style/TrackPlayerActivityRightText"
+            style="@style/PlayerTextRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/genre"
@@ -230,7 +228,7 @@
 
         <TextView
             android:id="@+id/genre"
-            style="@style/TrackPlayerActivityRightText"
+            style="@style/PlayerTextRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/country"
@@ -240,13 +238,28 @@
 
         <TextView
             android:id="@+id/country"
-            style="@style/TrackPlayerActivityRightText"
+            style="@style/PlayerTextRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/duration"
             app:layout_constraintTop_toBottomOf="@id/genre"
             tools:text="Великобритания" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -256,7 +269,6 @@
         android:background="#99000000"
         android:clickable="true"
         android:visibility="gone" />
-
 
     <LinearLayout
         android:id="@+id/playlists_bottom_sheet"
@@ -308,3 +320,5 @@
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
