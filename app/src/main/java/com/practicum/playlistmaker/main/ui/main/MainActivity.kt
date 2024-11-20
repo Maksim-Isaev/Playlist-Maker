@@ -2,6 +2,7 @@ package com.practicum.playlistmaker.main.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,11 +27,12 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.newPlaylist -> {
-                    bottomNavigationView.visibility = BottomNavigationView.GONE
+                    bottomNavigationView.isVisible = false
                 }
 
-                else ->
-                    bottomNavigationView.visibility = BottomNavigationView.VISIBLE
+                else -> {
+                    bottomNavigationView.isVisible = true
+                }
             }
         }
     }
