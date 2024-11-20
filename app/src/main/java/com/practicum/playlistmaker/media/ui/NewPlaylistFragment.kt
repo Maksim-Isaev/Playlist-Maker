@@ -1,5 +1,7 @@
 package com.practicum.playlistmaker.media.ui
 
+import android.app.AlertDialog
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -113,13 +115,21 @@ class NewPlaylistFragment(val fromNavController: Boolean = true) : Fragment() {
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (binding.playlistName.text.toString().isNotEmpty()) {
-                MaterialAlertDialogBuilder(context!!).setTitle(R.string.exit_title)
+                val dialog = MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.exit_title)
                     .setMessage(R.string.exit_message)
-                    .setNeutralButton(android.R.string.cancel) { dialog, which ->
-
-                    }.setPositiveButton(R.string.finish) { dialog, which ->
+                    .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton(R.string.finish) { _, _ ->
                         closeFragment()
-                    }.show()
+                    }
+                    .show()
+                // Устанавливаем цвет кнопок для ночной темы
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(resources.getColor(R.color.yp_white, null))
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(resources.getColor(R.color.yp_white, null))
+                }
             } else closeFragment()
         }
     }
