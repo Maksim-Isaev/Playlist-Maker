@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textColor="?attr/colorSecondaryContainer"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="@dimen/text_11"
             tools:text="157 треков" />
 
