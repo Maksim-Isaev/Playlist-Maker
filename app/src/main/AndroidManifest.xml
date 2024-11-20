@@ -24,7 +24,7 @@
             android:name=".main.ui.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.PlaylistMakerMain"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
