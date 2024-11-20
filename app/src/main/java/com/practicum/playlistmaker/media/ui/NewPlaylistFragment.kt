@@ -118,7 +118,7 @@ class NewPlaylistFragment(val fromNavController: Boolean = true) : Fragment() {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.exit_title)
                     .setMessage(R.string.exit_message)
-                    .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                    .setNeutralButton(android.R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .setPositiveButton(R.string.finish) { _, _ ->
@@ -128,7 +128,7 @@ class NewPlaylistFragment(val fromNavController: Boolean = true) : Fragment() {
                 // Устанавливаем цвет кнопок для ночной темы
                 if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(resources.getColor(R.color.yp_white, null))
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(resources.getColor(R.color.yp_white, null))
+                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(resources.getColor(R.color.yp_white, null))
                 }
             } else closeFragment()
         }
