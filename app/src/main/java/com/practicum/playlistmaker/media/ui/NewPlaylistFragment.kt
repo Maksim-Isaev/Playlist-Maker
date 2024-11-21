@@ -1,0 +1,155 @@
+package com.practicum.playlistmaker.media.ui
+
+import android.app.AlertDialog
+import android.content.res.Configuration
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.databinding.FragmentNewplaylistBinding
+import com.practicum.playlistmaker.utils.convertDpToPx
+
+
+class NewPlaylistFragment(val fromNavController: Boolean = true) : Fragment() {
+
+    private var _binding: FragmentNewplaylistBinding? = null
+    private val binding get() = _binding!!
+    private var imageUri: Uri = Uri.EMPTY
+    private val viewModel: NewPlaylistViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        _binding = FragmentNewplaylistBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, callback)
+        binding.btnCreate.isEnabled = false
+        binding.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+        binding.playlistName.doOnTextChanged { s, _, _, _ ->
+            binding.btnCreate.isEnabled = s?.isEmpty() != true
+        }
+
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    binding.image.scaleType = ImageView.ScaleType.CENTER_CROP
+                    Glide.with(this)
+                        .load(uri)
+                        .apply(
+                            RequestOptions().transform(
+                                MultiTransformation(
+                                    CenterCrop(),
+                                    RoundedCorners(
+                                        convertDpToPx(
+                                            8f,
+                                            requireContext()
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                        .into(binding.image)
+                    imageUri = uri
+                } else {
+                    Log.d("PhotoPicker", "No media selected")
+                }
+            }
+
+        binding.image.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        binding.btnCreate.setOnClickListener {
+            val playlistName = binding.playlistName.text.toString()
+            viewModel.createPlaylist(
+                playlistName,
+                binding.playlistDescription.text.toString(),
+                imageUri,
+                binding.image.drawable.toBitmap()
+            )
+            Toast.makeText(
+                context,
+                context?.getString(R.string.playlist_created)?.format(playlistName),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            closeFragment()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (binding.playlistName.text.toString().isNotEmpty()) {
+                val dialog = MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.exit_title)
+                    .setMessage(R.string.exit_message)
+                    .setNeutralButton(android.R.string.cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton(R.string.finish) { _, _ ->
+                        closeFragment()
+                    }
+                    .show()
+                // Устанавливаем цвет кнопок для ночной темы
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(resources.getColor(R.color.yp_white, null))
+                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(resources.getColor(R.color.yp_white, null))
+                }
+            } else closeFragment()
+        }
+    }
+
+    private fun closeFragment() {
+        val result = Bundle()
+        if (fromNavController)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(RESULT, result)
+        else
+            parentFragmentManager.setFragmentResult(RESULT, result)
+
+        parentFragmentManager.popBackStack()
+    }
+
+    companion object {
+        const val RESULT = "RESULT_KEY"
+        fun newInstance(fromNavController: Boolean) = NewPlaylistFragment(fromNavController)
+    }
+}
+
+
+
+
