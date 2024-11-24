@@ -214,7 +214,7 @@
             app:layout_constraintEnd_toEndOf="@id/duration"
             app:layout_constraintStart_toEndOf="@id/album_label"
             app:layout_constraintTop_toBottomOf="@id/duration"
-            tools:text="[Yesterday (Remastered 2009)]" />
+            tools:text="Yesterday (Remastered 2009)" />
 
         <TextView
             android:id="@+id/year"
