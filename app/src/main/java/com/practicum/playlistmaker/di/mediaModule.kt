@@ -39,6 +39,7 @@ val mediaModule = module {
     }
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "play-list-maker-db")
+            .fallbackToDestructiveMigration()
             .build()
     }
     single {
