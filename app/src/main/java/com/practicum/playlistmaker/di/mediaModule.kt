@@ -15,6 +15,8 @@ import com.practicum.playlistmaker.media.domain.impl.PlaylistInteractorImpl
 import com.practicum.playlistmaker.media.ui.FavoritesViewModel
 import com.practicum.playlistmaker.media.ui.NewPlaylistViewModel
 import com.practicum.playlistmaker.media.ui.PlaylistViewModel
+import com.practicum.playlistmaker.media.data.converter.TrackAtPlaylistDBConverter
+import com.practicum.playlistmaker.media.ui.PlaylistViewerViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.scope.get
@@ -32,6 +34,9 @@ val mediaModule = module {
     viewModel {
         NewPlaylistViewModel(get(), get())
     }
+    viewModel {
+        PlaylistViewerViewModel(get())
+    }
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "play-list-maker-db")
             .build()
@@ -42,13 +47,16 @@ val mediaModule = module {
     single {
         PlaylistDBConverter()
     }
+    single {
+        TrackAtPlaylistDBConverter()
+    }
     single<FavoritesRepository> { FavoritesRepositoryImpl(get(), get()) }
 
     single<FavoritesInteractor> {
         FavoritesInteractorImpl(get())
     }
     single<PlaylistRepository> {
-        PlaylistRepositoryImpl(get(), get())
+        PlaylistRepositoryImpl(get(), get(), get())
     }
 
     single<PlaylistInteractor> {

@@ -3,12 +3,15 @@ package com.practicum.playlistmaker.media.ui
 import android.app.Application
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Environment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.practicum.playlistmaker.media.domain.api.PlaylistInteractor
+import com.practicum.playlistmaker.media.ui.model.Playlist
+import com.practicum.playlistmaker.utils.getDefaultCacheImagePath
 import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
@@ -17,6 +20,9 @@ class NewPlaylistViewModel(
     private val interactor: PlaylistInteractor,
     private val application: Application,
 ) : ViewModel() {
+
+    private val playlist = MutableLiveData<Playlist?>()
+    fun observePlaylist(): LiveData<Playlist?> = playlist
 
     fun createPlaylist(
         playlistName: String,
@@ -39,14 +45,40 @@ class NewPlaylistViewModel(
         }
         return result
     }
+    fun updatePlaylist(
+        playlistName: String,
+        playlistDescription: String,
+        bitmap: Bitmap,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val playlistImage = "${UUID.randomUUID()}.png"
+            interactor.updatePlaylist(
+                playlist.value!!.copy(
+                    name = playlistName,
+                    description = playlistDescription,
+                    imagePath = playlistImage
+                )
+            )
+            saveImageToPrivateStorage(bitmap, playlistImage)
+        }
+    }
+
+    fun getPlaylist(playlistId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.getPlaylistById(playlistId).collect {
+                playlist.postValue(it)
+            }
+        }
+    }
 
     private fun saveImageToPrivateStorage(bitmap: Bitmap, fileName: String): Boolean {
         if (fileName.isEmpty()) return false
         val filePath =
-            File(application.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "cache")
+            getDefaultCacheImagePath(application)
         if (!filePath.exists()) {
             filePath.mkdirs()
         }
+
         val file = File(filePath, fileName)
         val outputStream = FileOutputStream(file)
         return bitmap

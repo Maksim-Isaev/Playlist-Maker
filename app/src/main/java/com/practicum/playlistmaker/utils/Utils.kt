@@ -1,11 +1,13 @@
 package com.practicum.playlistmaker.utils
 
 import android.content.Context
+import android.os.Environment
 import android.util.TypedValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 const val PLAYLISTMAKER_PREFERENCES = "_preferences"
 
@@ -56,3 +58,5 @@ fun <T> debounce(
     }
 
 }
+fun getDefaultCacheImagePath(context: Context): File =
+    File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "cache")
