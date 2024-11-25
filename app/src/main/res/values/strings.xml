@@ -51,7 +51,7 @@
     <string name="playlist_not_added">Трек уже добавлен в плейлист %s</string>
     <string name="playlist_info">%1$s минут · %2$s</string>
     <string name="share_playlist">Поделиться</string>
-    <string name="edit_playlist">Редактировать инфорацию</string>
+    <string name="edit_playlist">Редактировать информацию</string>
     <string name="delete_playlist">Удалить плейлист</string>
     <string name="delete_playlist_message">Хотите удалить плейлист \«%1$s\»?</string>
     <string name="no">Нет</string>
