@@ -32,7 +32,8 @@ class TrackRepositoryImpl(
                             releaseDate = it.releaseDate,
                             country = it.country,
                             previewUrl = it.previewUrl,
-                            isFavorite = appDB.trackDao().isFavorite(it.trackId)
+                            isFavorite = appDB.trackDao().isFavorite(it.trackId),
+                            addedTime = System.currentTimeMillis()
                         )
                     }
                     emit(Resource.Success(trackList))
