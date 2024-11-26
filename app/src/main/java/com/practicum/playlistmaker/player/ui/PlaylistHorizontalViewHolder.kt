@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.media.ui.model.Playlist
 import com.practicum.playlistmaker.utils.convertDpToPx
+import com.practicum.playlistmaker.utils.getDefaultCacheImagePath
 import java.io.File
 
 class PlaylistHorizontalViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,7 +28,7 @@ class PlaylistHorizontalViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         if (!playlist.imagePath.isNullOrEmpty()) {
             cover.scaleType = ImageView.ScaleType.CENTER_CROP
             val filePath =
-                File(itemView.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "cache")
+                getDefaultCacheImagePath(itemView.context)
             val file = File(filePath, playlist.imagePath)
             Glide.with(itemView)
                 .load(file.toUri())
@@ -55,7 +56,7 @@ class PlaylistHorizontalViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun getPluralForm(num: Int): String {
+    private fun getPluralForm(num: Int): String {
         val n = num % 100
         return when {
             n in 11..14 -> itemView.context.getString(R.string.trackss)
